@@ -1,10 +1,14 @@
 {
-  "name": "my-module",
-  "version": "1.0.0",
-  "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
+  "name": "nuxt-qrcode",
+  "version": "0.0.0",
+  "description": "A Nuxt module to provide support for QR Code generation and read.",
+  "repository": "https://github.com/sandros94/nuxt-qrcode",
   "license": "MIT",
   "type": "module",
+  "author": {
+    "name": "Sandro Circi",
+    "email": "sandro.circi@digitoolmedia.com"
+  },
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -22,7 +26,7 @@
     "dev": "nuxi dev playground",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --patch --release && npm publish && git push --follow-tags",
     "lint": "eslint .",
     "test": "vitest run",
     "test:watch": "vitest watch"
