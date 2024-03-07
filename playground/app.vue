@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { QrcodeStream } from '#components'
+import { QrcodeStream } from 'vue-qrcode-reader'
 import { useQrCodeRead } from '#imports'
 import type { BarcodeFormat } from '../src/runtime/types'
 
