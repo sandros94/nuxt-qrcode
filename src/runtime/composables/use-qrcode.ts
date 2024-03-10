@@ -4,7 +4,7 @@ import { useDevicesList } from '@vueuse/core'
 import { defu } from 'defu'
 import { useRuntimeConfig } from '#app'
 
-export function useQrCodeRead(
+export function useQrcodeRead(
   {
     barcodeFormats
   }: {

@@ -80,7 +80,7 @@
 
 <script setup lang="ts">
 import { QrcodeStream } from 'vue-qrcode-reader'
-import { useQrCodeRead } from '#imports'
+import { useQrcodeRead } from '#imports'
 import type { BarcodeFormat } from '../src/runtime/types'
 
 const {
@@ -94,7 +94,7 @@ const {
   result,
   trackFunctionOptions,
   trackFunctionSelected
-} = useQrCodeRead()
+} = useQrcodeRead()
 </script>
 
 <style scoped>
