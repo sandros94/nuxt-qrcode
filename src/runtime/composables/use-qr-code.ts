@@ -17,7 +17,6 @@ export function useQrCodeRead(
 
   const result = ref<string[]>([])
   function onDetect(detectedCodes: DetectedBarcode[]) {
-    console.log(detectedCodes)
     result.value = detectedCodes.map((code) => code.rawValue)
   }
 
@@ -25,8 +24,8 @@ export function useQrCodeRead(
   const selectedCamera = ref<MediaDeviceInfo | null>(null)
 
   const _barcodeFormats = reactive<BarcodeFormats>(defu(barcodeFormats, defaultFormats))
-  const selectedFormats = computed(() => {
-    return Object.keys(_barcodeFormats).filter((format) => _barcodeFormats[format as BarcodeFormat])
+  const selectedFormats = computed<BarcodeFormat[]>(() => {
+    return Object.keys(_barcodeFormats).filter((format) => _barcodeFormats[format as BarcodeFormat]) as BarcodeFormat[]
   })
 
   onMounted(() => {
