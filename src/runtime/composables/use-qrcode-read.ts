@@ -2,7 +2,7 @@ import type { DetectedBarcode, BarcodeFormat, BarcodeFormats } from '../types'
 import { computed, ref, reactive, onMounted, watch } from 'vue'
 import { useDevicesList } from '@vueuse/core'
 import { defu } from 'defu'
-import { useRuntimeConfig } from '#app'
+import { useRuntimeConfig } from '#imports'
 
 export function useQrcodeRead(
   {
