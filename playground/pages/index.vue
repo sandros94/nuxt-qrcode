@@ -11,6 +11,11 @@
           Full Example
         </NuxtLink>
       </li>
+      <li>
+        <NuxtLink to="/generate">
+          Generate
+        </NuxtLink>
+      </li>
     </ul>
   </div>
 </template>
