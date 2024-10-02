@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@nuxt/kit": "^3.13.2",
-    "@vueuse/nuxt": "^11.1.0",
+    "@vueuse/core": "^11.1.0",
     "barcode-detector": "^2.2.8",
     "uqr": "^0.1.2",
     "vue-qrcode-reader": "^5.5.10"
