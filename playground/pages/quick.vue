@@ -4,11 +4,7 @@
       <QrcodeStream
         @error="onError"
         @detect="onDetect"
-      >
-        <div v-show="state.loading">
-          Loading the camera...
-        </div>
-      </QrcodeStream>
+      />
       <div v-if="result">
         <h5>
           Scanned QRCodes
@@ -18,11 +14,6 @@
             {{ r }}
           </li>
         </ul>
-      </div>
-      <div v-else>
-        <h5>
-          Scan a qrcode
-        </h5>
       </div>
     </div>
     <div v-else>
@@ -43,7 +34,6 @@ const result = ref<string[]>()
 const state = reactive({
   errorMsg: '',
   error: false,
-  loading: true,
 })
 
 function onDetect(detectedCodes: DetectedBarcode[]) {
