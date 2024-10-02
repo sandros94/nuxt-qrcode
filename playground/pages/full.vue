@@ -96,7 +96,7 @@ function onDetect(detectedCodes: DetectedBarcode[]) {
   result.value = detectedCodes.map(code => code.rawValue)
 }
 
-function onError(err: any) {
+function onError(err: Error) {
   error.value = `[${err.name}]: `
 
   if (err.name === 'NotAllowedError') {

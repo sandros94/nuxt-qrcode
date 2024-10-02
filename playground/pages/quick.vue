@@ -40,34 +40,8 @@ function onDetect(detectedCodes: DetectedBarcode[]) {
   result.value = detectedCodes.map(code => code.rawValue)
 }
 
-function onError(err: any) {
+function onError(err: Error) {
   state.error = true
-  state.errorMsg = `[${err.name}]: `
-
-  if (err.name === 'NotAllowedError') {
-    state.errorMsg += 'you need to grant camera access permission'
-  }
-  else if (err.name === 'NotFoundError') {
-    state.errorMsg += 'no camera on this device'
-  }
-  else if (err.name === 'NotSupportedError') {
-    state.errorMsg += 'secure context required (HTTPS, localhost)'
-  }
-  else if (err.name === 'NotReadableError') {
-    state.errorMsg += 'is the camera already in use?'
-  }
-  else if (err.name === 'OverconstrainedError') {
-    state.errorMsg += 'installed cameras are not suitable'
-  }
-  else if (err.name === 'StreamApiNotSupportedError') {
-    state.errorMsg += 'Stream API is not supported in this browser'
-  }
-  else if (err.name === 'InsecureContextError') {
-    state.errorMsg
-        += 'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
-  }
-  else {
-    state.errorMsg += err.message
-  }
+  state.errorMsg = `[${err.name}]: ${err.message}`
 }
 </script>
