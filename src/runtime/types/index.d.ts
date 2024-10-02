@@ -1,3 +1,3 @@
 export * from 'barcode-detector'
 
-export type BarcodeFormats = Record<BarcodeFormat, boolean>
+export type BarcodeFormats = Record<BarcodeFormat, boolean | undefined>

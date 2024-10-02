@@ -1,42 +1,87 @@
-import { computed, ref, reactive, onMounted, watch } from 'vue'
 import { useDevicesList } from '@vueuse/core'
 import { defu } from 'defu'
 import type { DetectedBarcode, BarcodeFormat, BarcodeFormats } from '../types'
-import { useRuntimeConfig } from '#imports'
+import {
+  computed,
+  reactive,
+  ref,
+  watch,
+  onNuxtReady,
+  onBeforeUnmount,
+  useRuntimeConfig,
+} from '#imports'
 
 export function useQrcodeRead(
   {
-    barcodeFormats,
+    formats,
   }: {
-    barcodeFormats?: Partial<BarcodeFormats>
+    formats?: Partial<BarcodeFormats>
   } = {},
 ) {
-  const { barcodeFormats: defaultFormats } = useRuntimeConfig().public.nuxtQrcode
+  const defFormats = useRuntimeConfig().public.qrcode.formats as BarcodeFormat[]
+  const defaultFormats = defFormats.reduce((result, option) => {
+    result[option] = true
+    return result
+  }, {
+    aztec: false,
+    code_128: false,
+    code_39: false,
+    code_93: false,
+    codabar: false,
+    databar: false,
+    databar_expanded: false,
+    data_matrix: false,
+    dx_film_edge: false,
+    ean_13: false,
+    ean_8: false,
+    itf: false,
+    maxi_code: false,
+    micro_qr_code: false,
+    pdf417: false,
+    qr_code: false,
+    rm_qr_code: false,
+    upc_a: false,
+    upc_e: false,
+    linear_codes: false,
+    matrix_codes: false,
+    unknown: false,
+  })
+
+  const constraints = ref({ facingMode: 'environment' })
+  const constraintOptions = [
+    { label: 'rear camera', value: { facingMode: 'environment' } },
+    { label: 'front camera', value: { facingMode: 'user' } },
+  ]
 
   /** * detection handling */
-
-  const result = ref<string[]>([])
-  function onDetect(detectedCodes: DetectedBarcode[]) {
-    result.value = detectedCodes.map(code => code.rawValue)
-  }
 
   const { videoInputs: cameras } = useDevicesList({ constraints: { audio: false, video: true } })
   const selectedCamera = ref<MediaDeviceInfo | null>(null)
 
-  const _barcodeFormats = reactive<BarcodeFormats>(defu(barcodeFormats, defaultFormats))
-  const selectedFormats = computed<BarcodeFormat[]>(() => {
-    return Object.keys(_barcodeFormats).filter(format => _barcodeFormats[format as BarcodeFormat]) as BarcodeFormat[]
+  const availableFormats = reactive<BarcodeFormats>(defu(formats, defaultFormats))
+  const _formats = computed<BarcodeFormat[]>(() => {
+    return Object.keys(availableFormats).filter(format => availableFormats[format as BarcodeFormat]) as BarcodeFormat[]
   })
 
-  onMounted(() => {
-    watch(cameras, (newCameras) => {
+  onNuxtReady(() => {
+    const stop = watch(cameras, (newCameras) => {
       if (newCameras.length > 0 && !selectedCamera.value) {
         selectedCamera.value = newCameras[0]
       }
     })
+
+    onBeforeUnmount(() => stop())
   })
 
   /** * track functons */
+
+  const trackOptions = [
+    { label: 'nothing (default)', value: undefined },
+    { label: 'outline', value: paintOutline },
+    { label: 'centered text', value: paintCenterText },
+    { label: 'bounding box', value: paintBoundingBox },
+  ]
+  const track = ref(trackOptions[1].value)
 
   function paintOutline(detectedCodes: DetectedBarcode[], ctx: CanvasRenderingContext2D) {
     for (const detectedCode of detectedCodes) {
@@ -85,58 +130,15 @@ export function useQrcodeRead(
       ctx.fillText(rawValue, centerX, centerY)
     }
   }
-  const trackFunctionOptions = [
-    { text: 'nothing (default)', value: undefined },
-    { text: 'outline', value: paintOutline },
-    { text: 'centered text', value: paintCenterText },
-    { text: 'bounding box', value: paintBoundingBox },
-  ]
-  const trackFunctionSelected = ref(trackFunctionOptions[1])
-
-  /** * error handling */
-
-  const error = ref('')
-
-  function onError(err: any) {
-    error.value = `[${err.name}]: `
-
-    if (err.name === 'NotAllowedError') {
-      error.value += 'you need to grant camera access permission'
-    }
-    else if (err.name === 'NotFoundError') {
-      error.value += 'no camera on this device'
-    }
-    else if (err.name === 'NotSupportedError') {
-      error.value += 'secure context required (HTTPS, localhost)'
-    }
-    else if (err.name === 'NotReadableError') {
-      error.value += 'is the camera already in use?'
-    }
-    else if (err.name === 'OverconstrainedError') {
-      error.value += 'installed cameras are not suitable'
-    }
-    else if (err.name === 'StreamApiNotSupportedError') {
-      error.value += 'Stream API is not supported in this browser'
-    }
-    else if (err.name === 'InsecureContextError') {
-      error.value
-        += 'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
-    }
-    else {
-      error.value += err.message
-    }
-  }
 
   return {
-    barcodeFormats: _barcodeFormats,
+    availableFormats,
     cameras,
-    error,
-    onDetect,
-    onError,
-    result,
     selectedCamera,
-    selectedFormats,
-    trackFunctionOptions,
-    trackFunctionSelected,
+    formats: _formats,
+    constraintOptions,
+    constraints,
+    trackOptions,
+    track,
   }
 }

@@ -1,7 +1,8 @@
 import { fileURLToPath } from 'node:url'
-import { defineNuxtModule, addComponent, addImportsDir, createResolver, installModule } from '@nuxt/kit'
+import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
 import defu from 'defu'
-import type { BarcodeFormats } from './runtime/types'
+
+export type * from './runtime/types'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -11,71 +12,53 @@ export interface ModuleOptions {
    * @default false
    */
   autoImport: boolean
-  barcodeFormats: BarcodeFormats
+  formats: BarcodeFormat[]
+  global: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'my-module',
-    configKey: 'myModule',
+    name: 'nuxt-qrcode',
+    configKey: 'qrcode',
   },
   // Default configuration options of the Nuxt module
-  defaults: {
-    autoImport: false,
-    barcodeFormats: {
-      aztec: false,
-      code_128: false,
-      code_39: false,
-      code_93: false,
-      codabar: false,
-      databar: false,
-      databar_expanded: false,
-      data_matrix: false,
-      dx_film_edge: false,
-      ean_13: false,
-      ean_8: false,
-      itf: false,
-      maxi_code: false,
-      micro_qr_code: false,
-      pdf417: false,
-      qr_code: true,
-      rm_qr_code: false,
-      upc_a: false,
-      upc_e: false,
-      linear_codes: false,
-      matrix_codes: false,
-      unknown: false,
-    },
-  },
+  defaults: {},
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
 
-    const nuxtQrcode = nuxt.options.runtimeConfig.public.nuxtQrcode = defu(
-      nuxt.options.runtimeConfig.public.nuxtQrcode,
+    const qrcode = nuxt.options.runtimeConfig.public.qrcode = defu(
+      nuxt.options.runtimeConfig.public.qrcode,
+      options,
       {
-        autoImport: options.autoImport,
-        barcodeFormats: options.barcodeFormats,
+        autoImport: false,
+        formats: [],
+        global: false,
       },
     )
-
-    await installModule('@vueuse/nuxt')
+    if (qrcode.formats.length === 0) qrcode.formats = ['qr_code']
 
     addImportsDir(resolve(runtimeDir, 'composables'))
 
-    if (nuxtQrcode.autoImport) {
+    addComponentsDir({
+      path: resolve(runtimeDir, 'components'),
+      global: qrcode.global,
+      watch: false,
+    })
+
+    if (qrcode.autoImport) {
       addComponent({
-        name: 'QrcodeCapture',
+        name: 'VueQrcodeCapture',
         export: 'QrcodeCapture',
         filePath: 'vue-qrcode-reader',
       })
       addComponent({
-        name: 'QrcodeDropZone',
+        name: 'VueQrcodeDropZone',
         export: 'QrcodeDropZone',
         filePath: 'vue-qrcode-reader',
       })
       addComponent({
-        name: 'QrcodeStream',
+        name: 'VueQrcodeStream',
         export: 'QrcodeStream',
         filePath: 'vue-qrcode-reader',
       })
@@ -85,10 +68,10 @@ export default defineNuxtModule<ModuleOptions>({
 
 declare module '@nuxt/schema' {
   interface NuxtOptions {
-    nuxtQrcode?: ModuleOptions
+    qrcode: ModuleOptions
     runtimeConfig: {
       public: {
-        nuxtQrcode: ModuleOptions
+        qrcode: ModuleOptions
       }
     }
   }
