@@ -3,7 +3,6 @@ import { encode } from 'uqr'
 import { ref } from 'vue'
 
 export function useQrcodeGenerate(outCanvas?: HTMLCanvasElement) {
-
   function encoded(data: QrCodeGenerateData, options?: QrCodeGenerateOptions): HTMLCanvasElement {
     const canvas = document.createElement('canvas')
     canvas.width = width
@@ -21,6 +20,6 @@ export function useQrcodeGenerate(outCanvas?: HTMLCanvasElement) {
 
   return {
     encode,
-    encoded
+    encoded,
   }
 }
