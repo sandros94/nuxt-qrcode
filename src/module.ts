@@ -1,4 +1,5 @@
 import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
+import type { QrCodeGenerateOptions } from 'uqr'
 import defu from 'defu'
 
 export type * from './runtime/types'
@@ -13,6 +14,7 @@ export interface ModuleOptions {
   autoImport: boolean
   formats: BarcodeFormat[]
   global: boolean
+  options: Omit<QrCodeGenerateOptions, 'onEncoded'>
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -21,7 +23,19 @@ export default defineNuxtModule<ModuleOptions>({
     configKey: 'qrcode',
   },
   // Default configuration options of the Nuxt module
-  defaults: {},
+  defaults: {
+    autoImport: false,
+    formats: [],
+    global: false,
+    options: {
+      ecc: 'L',
+      maskPattern: -1,
+      boostEcc: undefined,
+      minVersion: 1,
+      maxVersion: 40,
+      border: 1,
+    },
+  },
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
     const runtimeDir = resolve('./runtime')
@@ -31,11 +45,6 @@ export default defineNuxtModule<ModuleOptions>({
     const qrcode = nuxt.options.runtimeConfig.public.qrcode = defu(
       nuxt.options.runtimeConfig.public.qrcode,
       options,
-      {
-        autoImport: false,
-        formats: [],
-        global: false,
-      },
     )
     if (qrcode.formats.length === 0) qrcode.formats = ['qr_code']
 
