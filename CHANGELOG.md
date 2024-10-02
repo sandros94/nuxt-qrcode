@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.1.1
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.1.0...v0.1.1)
+
+### 🏡 Chore
+
+- Add new qrcode styles ([692b1c9](https://github.com/sandros94/nuxt-qrcode/commit/692b1c9))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.1.0
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.0.2...v0.1.0)
