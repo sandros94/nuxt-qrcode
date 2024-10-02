@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'node:url'
 import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
 import defu from 'defu'
 
@@ -25,7 +24,7 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {},
   async setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
-    const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
+    const runtimeDir = resolve('./runtime')
 
     const qrcode = nuxt.options.runtimeConfig.public.qrcode = defu(
       nuxt.options.runtimeConfig.public.qrcode,
