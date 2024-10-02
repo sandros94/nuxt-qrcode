@@ -2,13 +2,10 @@
   <div>
     Test
     <input v-model="text">
-    <pre>
-      {{ data }}
-    </pre>
+    <Qrcode style="height: 80svh;" :value="text" />
   </div>
 </template>
 
 <script setup lang="ts">
 const text = ref('')
-const { data } = useQrcode(text)
 </script>
