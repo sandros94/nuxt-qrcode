@@ -26,6 +26,8 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
     const runtimeDir = resolve('./runtime')
 
+    nuxt.options.alias['#qrcode'] = runtimeDir
+
     const qrcode = nuxt.options.runtimeConfig.public.qrcode = defu(
       nuxt.options.runtimeConfig.public.qrcode,
       options,
