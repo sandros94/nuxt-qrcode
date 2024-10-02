@@ -1,22 +1,19 @@
+# .gitignore v1.4.0
+# https://gist.github.com/Sandros94/7f3dc1539c8f5905c495aa1bb417589c
+
 # Dependencies
 node_modules
-
-# Logs
-*.log*
 
 # Temp directories
 .temp
 .tmp
 .cache
 
-# Yarn
-**/.yarn/cache
-**/.yarn/*state*
-
 # Generated dirs
 dist
 
 # Nuxt
+.nitro
 .nuxt
 .output
 .data
@@ -24,14 +21,27 @@ dist
 .build-*
 .netlify
 
-# Env
+# PNPM
+.pnpm-store
+
+# Yarn
+**/.yarn/cache
+**/.yarn/*state*
+
+# Local env files
 .env
+.env.*
+!.env.example
 
 # Testing
 reports
 coverage
 *.lcov
 .nyc_output
+
+# Logs
+logs
+*.log
 
 # VSCode
 .vscode/*
@@ -54,3 +64,7 @@ coverage
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Project specific
+docs/.vitepress/dist
+docs/.vitepress/cache
