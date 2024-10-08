@@ -7,9 +7,6 @@
 
 Nuxt QRCode is a module to provide easy support in reading and creating [QR Codes](https://en.wikipedia.org/wiki/QR_code).
 
-> [!Warning]
-> This project is currently in stall. Main reason being a lack of experience in html canvas and how to customize generated QR Codes.
-
 > [!Important]
 > This module is still a work in progress.
 > Expect breaking changes to adjust the aim. Feel free to open issue to discuss use cases.
