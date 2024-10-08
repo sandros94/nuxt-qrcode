@@ -18,11 +18,14 @@ The following are the features that I'm currently working on and plan to release
 - Read QRCodes
   - [x] provide upstream components from [vue-qrcode-reader](https://github.com/gruhn/vue-qrcode-reader)
   - [x] composable full of utils to go along with the upstream components
-  - [ ] provide custom Nuxt component to wrap upstream components with opinionated logic
+  - [x] provide custom Nuxt component to wrap upstream components with opinionated logic
 - Generate QRCodes
   - [x] provide upstream from [unjs/uqr](https://github.com/unjs/uqr)
-  - [ ] composable full of utils to generate qrcodes
-  - [ ] provide custom Nuxt component to render QR Codes
+  - [x] composable full of utils to generate qrcodes
+    - [ ] server utils
+  - [x] provide custom Nuxt component to render QR Codes
+    - [x] svg
+    - [ ] png
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
 <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/nuxt-qrcode?file=playground%2Fapp.vue) -->
