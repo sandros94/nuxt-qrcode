@@ -150,7 +150,7 @@ export function renderSVGRounded(
     pixelSize = 10,
     whiteColor = 'white',
     blackColor = 'black',
-    cornerRadius = 0,
+    cornerRadius = 0.5,
   } = options
   const height = result.size * pixelSize
   const width = result.size * pixelSize
