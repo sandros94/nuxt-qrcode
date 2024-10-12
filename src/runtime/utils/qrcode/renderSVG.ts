@@ -50,10 +50,15 @@ export function renderSVGRounded(
     pixelSize = 10,
     whiteColor = 'white',
     blackColor = 'black',
-    cornerRadius = 2,
+    cornerRadius = 0,
   } = options
   const height = result.size * pixelSize
   const width = result.size * pixelSize
+
+  // Clamp cornerRadius between 0 and 1
+  const clampedCornerRadius = Math.max(0, Math.min(1, cornerRadius))
+  // Calculate the actual radius based on the percentage and half of the pixel size
+  const actualRadius = (clampedCornerRadius * pixelSize) / 2
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
 
@@ -63,7 +68,7 @@ export function renderSVGRounded(
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
       if (result.data[row][col] && !visited[row][col]) {
-        const path = tracePath(result.data, visited, row, col, pixelSize, cornerRadius)
+        const path = tracePath(result.data, visited, row, col, pixelSize, actualRadius)
         if (path) paths.push(path)
       }
     }
@@ -119,22 +124,43 @@ function createPixelPath(
   { top, right, bottom, left }: { top: boolean, right: boolean, bottom: boolean, left: boolean },
 ): string {
   const commands: string[] = []
+  const curve = radius * (4 / 3) * Math.tan(Math.PI / 8)
 
   // Top-left corner
-  if (!left && !top) commands.push(`M${x},${y + radius} Q${x},${y} ${x + radius},${y}`)
-  else commands.push(`M${x},${y}`)
+  if (!left && !top) {
+    commands.push(`M${x},${y + radius}`)
+    commands.push(`C${x},${y + radius - curve} ${x + radius - curve},${y} ${x + radius},${y}`)
+  }
+  else {
+    commands.push(`M${x},${y}`)
+  }
 
   // Top-right corner
-  if (!top && !right) commands.push(`L${x + size - radius},${y} Q${x + size},${y} ${x + size},${y + radius}`)
-  else commands.push(`L${x + size},${y}`)
+  if (!top && !right) {
+    commands.push(`L${x + size - radius},${y}`)
+    commands.push(`C${x + size - radius + curve},${y} ${x + size},${y + radius - curve} ${x + size},${y + radius}`)
+  }
+  else {
+    commands.push(`L${x + size},${y}`)
+  }
 
   // Bottom-right corner
-  if (!right && !bottom) commands.push(`L${x + size},${y + size - radius} Q${x + size},${y + size} ${x + size - radius},${y + size}`)
-  else commands.push(`L${x + size},${y + size}`)
+  if (!right && !bottom) {
+    commands.push(`L${x + size},${y + size - radius}`)
+    commands.push(`C${x + size},${y + size - radius + curve} ${x + size - radius + curve},${y + size} ${x + size - radius},${y + size}`)
+  }
+  else {
+    commands.push(`L${x + size},${y + size}`)
+  }
 
   // Bottom-left corner
-  if (!bottom && !left) commands.push(`L${x + radius},${y + size} Q${x},${y + size} ${x},${y + size - radius}`)
-  else commands.push(`L${x},${y + size}`)
+  if (!bottom && !left) {
+    commands.push(`L${x + radius},${y + size}`)
+    commands.push(`C${x + radius - curve},${y + size} ${x},${y + size - radius + curve} ${x},${y + size - radius}`)
+  }
+  else {
+    commands.push(`L${x},${y + size}`)
+  }
 
   commands.push('Z')
 
