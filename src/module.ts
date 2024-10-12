@@ -1,6 +1,7 @@
 import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
-import type { QrCodeGenerateOptions } from 'uqr'
 import defu from 'defu'
+
+import type { RenderSVGOptions } from '#qrcode/utils/qrcode/svg/render'
 
 export type * from './runtime/types'
 
@@ -14,7 +15,7 @@ export interface ModuleOptions {
   autoImport: boolean
   formats: BarcodeFormat[]
   global: boolean
-  options: Omit<QrCodeGenerateOptions, 'onEncoded'>
+  options: Omit<RenderSVGOptions, 'onEncoded'>
 }
 
 export default defineNuxtModule<ModuleOptions>({
