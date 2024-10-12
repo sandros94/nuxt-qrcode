@@ -1,6 +1,14 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 
+function getColors(options: QrCodeGenerateSvgOptions): { backgroundColor: string, foregroundColor: string } {
+  const { whiteColor = 'white', blackColor = 'black', invert = false } = options
+  return {
+    backgroundColor: invert ? blackColor : whiteColor,
+    foregroundColor: invert ? whiteColor : blackColor,
+  }
+}
+
 /**
  * Renders a QR code as an SVG string.
  * The function converts the input data into a QR code and then generates an SVG representation using the specified colours and pixel sizes.
@@ -12,12 +20,13 @@ export function renderSVG(
   data: QrCodeGenerateData,
   options: QrCodeGenerateSvgOptions = {},
 ): string {
-  const result = encode(data, options)
   const {
     pixelSize = 10,
-    whiteColor = 'white',
-    blackColor = 'black',
+    invert,
+    ...opts
   } = options
+  const result = encode(data, opts)
+  const { backgroundColor, foregroundColor } = getColors(options)
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
@@ -34,8 +43,8 @@ export function renderSVG(
     }
   }
 
-  svg += `<rect fill="${whiteColor}" width="${width}" height="${height}"/>`
-  svg += `<path fill="${blackColor}" d="${pathes.join('')}"/>`
+  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+  svg += `<path fill="${foregroundColor}" d="${pathes.join('')}"/>`
 
   svg += '</svg>'
   return svg
@@ -45,14 +54,15 @@ export function renderSVGCircular(
   data: QrCodeGenerateData,
   options: QrCodeGenerateSvgOptions & { cornerRadius?: number, pixelPadding?: number } = {},
 ): string {
-  const result = encode(data, options)
   const {
     pixelSize = 10,
-    whiteColor = 'white',
-    blackColor = 'black',
-    cornerRadius = 0,
+    cornerRadius = 0.5,
     pixelPadding = 0.1,
+    invert,
+    ...opts
   } = options
+  const result = encode(data, opts)
+  const { backgroundColor, foregroundColor } = getColors(options)
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
@@ -69,7 +79,7 @@ export function renderSVGCircular(
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
 
-  svg += `<rect fill="${whiteColor}" width="${width}" height="${height}"/>`
+  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
   // Helper function to check if a position is part of a finder pattern center
   const isFinderPatternCenter = (row: number, col: number) => {
@@ -92,7 +102,7 @@ export function renderSVGCircular(
             const size = 3 * pixelSize
             // Calculate a new radius for the 3x3 pixel
             const finderCenterRadius = (clampedCornerRadius * size) / 2
-            svg += createCircularPixel(x, y, size, finderCenterRadius, blackColor)
+            svg += createCircularPixel(x, y, size, finderCenterRadius, foregroundColor)
           }
           // Skip the other cells of the finder pattern center
           continue
@@ -100,7 +110,7 @@ export function renderSVGCircular(
 
         const x = col * pixelSize + actualPadding
         const y = row * pixelSize + actualPadding
-        svg += createCircularPixel(x, y, actualPixelSize, actualRadius, blackColor)
+        svg += createCircularPixel(x, y, actualPixelSize, actualRadius, foregroundColor)
       }
     }
   }
@@ -145,13 +155,14 @@ export function renderSVGRounded(
   data: QrCodeGenerateData,
   options: QrCodeGenerateSvgOptions & { cornerRadius?: number } = {},
 ): string {
-  const result = encode(data, options)
   const {
     pixelSize = 10,
-    whiteColor = 'white',
-    blackColor = 'black',
     cornerRadius = 0.5,
+    invert,
+    ...opts
   } = options
+  const result = encode(data, opts)
+  const { backgroundColor, foregroundColor } = getColors(options)
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
@@ -174,8 +185,8 @@ export function renderSVGRounded(
     }
   }
 
-  svg += `<rect fill="${whiteColor}" width="${width}" height="${height}"/>`
-  svg += `<path fill="${blackColor}" d="${paths.join(' ')}"/>`
+  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+  svg += `<path fill="${foregroundColor}" d="${paths.join(' ')}"/>`
 
   svg += '</svg>'
   return svg
@@ -271,18 +282,19 @@ export function renderSVGPixelated(
   data: QrCodeGenerateData,
   options: QrCodeGenerateSvgOptions = {},
 ): string {
-  const result = encode(data, options)
   const {
     pixelSize = 10,
-    whiteColor = 'white',
-    blackColor = 'black',
+    invert,
+    ...opts
   } = options
+  const result = encode(data, opts)
+  const { backgroundColor, foregroundColor } = getColors(options)
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges">`
 
-  svg += `<rect fill="${whiteColor}" width="${width}" height="${height}"/>`
+  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
   const notchSize = pixelSize / 4
   const paths: string[] = []
@@ -317,8 +329,8 @@ export function renderSVGPixelated(
     }
   }
 
-  svg += `<path fill="${blackColor}" d="${paths.join('')}"/>`
-  svg += `<path fill="${whiteColor}" d="${notches.join('')}"/>`
+  svg += `<path fill="${foregroundColor}" d="${paths.join('')}"/>`
+  svg += `<path fill="${backgroundColor}" d="${notches.join('')}"/>`
 
   svg += '</svg>'
   return svg
