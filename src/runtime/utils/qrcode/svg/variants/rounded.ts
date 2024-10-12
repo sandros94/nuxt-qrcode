@@ -6,7 +6,7 @@ import {
 } from '../render'
 import { createCircularPixel } from './circular'
 
-function renderPixelsRounded(
+export function renderPixelsRounded(
   result: ReturnType<typeof encode>,
   size: number,
   radius: number,
@@ -79,23 +79,23 @@ export function renderSVGRounded(
   } = {},
 ): string {
   const {
-    pixelSize = 10,
     radius,
+    pixelSize = 10,
     invert,
     ...opts
   } = options
-  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
-  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
 
   const result = encode(data, opts)
   const { backgroundColor, foregroundColor } = getColors(options)
-
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
+  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
+  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
 
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+
   svg += renderPixelsRounded(result, pixelSize, pixelRadius, foregroundColor)
   svg += renderMarkersRounded(result, pixelSize, markerRadius, foregroundColor)
 

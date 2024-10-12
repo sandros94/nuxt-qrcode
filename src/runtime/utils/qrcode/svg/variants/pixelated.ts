@@ -2,7 +2,7 @@ import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import { getColors } from '../render'
 
-function renderPixelsPixelated(
+export function renderPixelsPixelated(
   result: ReturnType<typeof encode>,
   pixelSize: number,
   foregroundColor: string,
@@ -28,13 +28,13 @@ function renderPixelsPixelated(
   }
 
   // TODO: fix with mask
-  return `
-    <path fill="${foregroundColor}" d="${paths.join('')}"/>
-    <path fill="white" d="${notches.join('')}"/>
-  `
+  return `<g shape-rendering="crispEdges">
+  <path fill="${foregroundColor}" d="${paths.join('')}"/>
+  <path fill="white" d="${notches.join('')}"/>
+</g>`
 }
 
-function renderMarkersPixelated(
+export function renderMarkersPixelated(
   result: ReturnType<typeof encode>,
   pixelSize: number,
   foregroundColor: string,
@@ -64,10 +64,10 @@ function renderMarkersPixelated(
   })
 
   // TODO: fix with mask
-  return `
-    <path fill="${foregroundColor}" d="${paths.join('')}"/>
-    <path fill="white" d="${notches.join('')}"/>
-  `
+  return `<g shape-rendering="crispEdges">
+  <path fill="${foregroundColor}" d="${paths.join('')}"/>
+  <path fill="white" d="${notches.join('')}"/>
+</g>`
 }
 
 export function renderSVGPixelated(
@@ -84,9 +84,9 @@ export function renderSVGPixelated(
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges">`
-
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+
   svg += renderPixelsPixelated(result, pixelSize, foregroundColor)
   svg += renderMarkersPixelated(result, pixelSize, foregroundColor)
 

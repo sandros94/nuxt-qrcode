@@ -95,17 +95,17 @@ export function renderSVGCircular(
     ...opts
   } = options
 
-  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
-  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
-
   const result = encode(data, opts)
   const { backgroundColor, foregroundColor } = getColors(options)
   const height = result.size * pixelSize
   const width = result.size * pixelSize
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
+  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
+  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
 
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+
   svg += renderPixelsCircular(result, pixelSize, pixelRadius, pixelPadding, foregroundColor)
   svg += renderMarkersCircular(result, pixelSize, markerRadius, foregroundColor)
 

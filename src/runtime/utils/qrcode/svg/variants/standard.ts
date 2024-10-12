@@ -2,7 +2,7 @@ import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import { getColors } from '../render'
 
-function renderPixelsStandard(
+export function renderPixelsStandard(
   result: ReturnType<typeof encode>,
   pixelSize: number,
   foregroundColor: string,
@@ -22,10 +22,10 @@ function renderPixelsStandard(
     }
   }
 
-  return `<path fill="${foregroundColor}" d="${pathes.join('')}"/>`
+  return `<path fill="${foregroundColor}" d="${pathes.join('')}" shape-rendering="crispEdges"/>`
 }
 
-function renderMarkersStandard(
+export function renderMarkersStandard(
   result: ReturnType<typeof encode>,
   pixelSize: number,
   foregroundColor: string,
@@ -49,10 +49,10 @@ function renderMarkersStandard(
       }
     }
 
-    return `
-      <path fill="${foregroundColor}" d="${outerPaths.join('')}"/>
-      <rect x="${x + 2 * pixelSize}" y="${y + 2 * pixelSize}" width="${markerSize - 4 * pixelSize}" height="${markerSize - 4 * pixelSize}" fill="${foregroundColor}"/>
-    `
+    return `<g shape-rendering="crispEdges">
+  <path fill="${foregroundColor}" d="${outerPaths.join('')}"/>
+  <rect x="${x + 2 * pixelSize}" y="${y + 2 * pixelSize}" width="${markerSize - 4 * pixelSize}" height="${markerSize - 4 * pixelSize}" fill="${foregroundColor}"/>
+</g>`
   }).join('')
 }
 
@@ -71,8 +71,8 @@ export function renderSVGStandard(
   const width = result.size * pixelSize
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges">`
-
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
+
   svg += renderPixelsStandard(result, pixelSize, foregroundColor)
   svg += renderMarkersStandard(result, pixelSize, foregroundColor)
 
