@@ -2,6 +2,74 @@ import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import { getColors } from '../render'
 
+function renderPixelsPixelated(
+  result: ReturnType<typeof encode>,
+  pixelSize: number,
+  foregroundColor: string,
+): string {
+  const notchSize = pixelSize / 4
+  const paths: string[] = []
+  const notches: string[] = []
+
+  for (let row = 1; row < result.size - 1; row++) {
+    for (let col = 1; col < result.size - 1; col++) {
+      // Skip marker areas
+      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
+        continue
+
+      if (result.data[row][col]) {
+        const x = col * pixelSize
+        const y = row * pixelSize
+
+        paths.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
+        addNotches(notches, x, y, pixelSize, notchSize, row, col, result.data)
+      }
+    }
+  }
+
+  // TODO: fix with mask
+  return `
+    <path fill="${foregroundColor}" d="${paths.join('')}"/>
+    <path fill="white" d="${notches.join('')}"/>
+  `
+}
+
+function renderMarkersPixelated(
+  result: ReturnType<typeof encode>,
+  pixelSize: number,
+  foregroundColor: string,
+): string {
+  const notchSize = pixelSize / 4
+  const paths: string[] = []
+  const notches: string[] = []
+
+  const markerPositions = [
+    [1, 1],
+    [1, result.size - 8],
+    [result.size - 8, 1],
+  ]
+
+  markerPositions.forEach(([row, col]) => {
+    for (let i = 0; i < 7; i++) {
+      for (let j = 0; j < 7; j++) {
+        const x = (col + j) * pixelSize
+        const y = (row + i) * pixelSize
+
+        if (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)) {
+          paths.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
+          addNotches(notches, x, y, pixelSize, notchSize, row + i, col + j, result.data)
+        }
+      }
+    }
+  })
+
+  // TODO: fix with mask
+  return `
+    <path fill="${foregroundColor}" d="${paths.join('')}"/>
+    <path fill="white" d="${notches.join('')}"/>
+  `
+}
+
 export function renderSVGPixelated(
   data: QrCodeGenerateData,
   options: QrCodeGenerateSvgOptions = {},
@@ -19,42 +87,8 @@ export function renderSVGPixelated(
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges">`
 
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
-
-  const notchSize = pixelSize / 4
-  const paths: string[] = []
-  const notches: string[] = []
-
-  const isFinderPatternCenter = (row: number, col: number) => {
-    const finderPatternCenters = [
-      [3, 3], [3, result.size - 6], [result.size - 6, 3],
-    ]
-    return finderPatternCenters.some(([r, c]) =>
-      row >= r && row < r + 3 && col >= c && col < c + 3,
-    )
-  }
-
-  for (let row = 0; row < result.size; row++) {
-    for (let col = 0; col < result.size; col++) {
-      if (result.data[row][col]) {
-        const x = col * pixelSize
-        const y = row * pixelSize
-
-        if (isFinderPatternCenter(row, col)) {
-          if (row % 3 === 0 && col % 3 === 0) {
-            paths.push(`M${x},${y}h${pixelSize * 3}v${pixelSize * 3}h-${pixelSize * 3}z`)
-            addNotches(notches, x, y, pixelSize * 3, notchSize * 2, row, col, result.data, true)
-          }
-          continue
-        }
-
-        paths.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
-        addNotches(notches, x, y, pixelSize, notchSize, row, col, result.data)
-      }
-    }
-  }
-
-  svg += `<path fill="${foregroundColor}" d="${paths.join('')}"/>`
-  svg += `<path fill="${backgroundColor}" d="${notches.join('')}"/>`
+  svg += renderPixelsPixelated(result, pixelSize, foregroundColor)
+  svg += renderMarkersPixelated(result, pixelSize, foregroundColor)
 
   svg += '</svg>'
   return svg

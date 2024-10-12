@@ -1,43 +1,103 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
-import { getColors } from '../render'
+import {
+  getColors,
+  limitInput,
+} from '../render'
+import { createCircularPixel } from './circular'
 
-export function renderSVGRounded(
-  data: QrCodeGenerateData,
-  options: QrCodeGenerateSvgOptions & { cornerRadius?: number } = {},
+function renderPixelsRounded(
+  result: ReturnType<typeof encode>,
+  size: number,
+  radius: number,
+  color: string,
 ): string {
-  const {
-    pixelSize = 10,
-    cornerRadius = 0.5,
-    invert,
-    ...opts
-  } = options
-  const result = encode(data, opts)
-  const { backgroundColor, foregroundColor } = getColors(options)
-  const height = result.size * pixelSize
-  const width = result.size * pixelSize
-
-  // Clamp cornerRadius between 0 and 1
-  const clampedCornerRadius = Math.max(0, Math.min(1, cornerRadius))
-  // Calculate the actual radius based on the percentage and half of the pixel size
-  const actualRadius = (clampedCornerRadius * pixelSize) / 2
-
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
-
   const paths: string[] = []
   const visited: boolean[][] = Array(result.size).fill(null).map(() => Array(result.size).fill(false))
+  const clampedRadius = limitInput(radius)
+  const actualRadius = (clampedRadius * size) / 2
 
-  for (let row = 0; row < result.size; row++) {
-    for (let col = 0; col < result.size; col++) {
+  for (let row = 1; row < result.size - 1; row++) {
+    for (let col = 1; col < result.size - 1; col++) {
+      // Skip marker areas
+      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
+        continue
+
       if (result.data[row][col] && !visited[row][col]) {
-        const path = tracePath(result.data, visited, row, col, pixelSize, actualRadius)
+        const path = tracePath(result.data, visited, row, col, size, actualRadius)
         if (path) paths.push(path)
       }
     }
   }
 
+  return `<path fill="${color}" d="${paths.join(' ')}"/>`
+}
+
+export function renderMarkersRounded(
+  result: ReturnType<typeof encode>,
+  size: number,
+  radius: number,
+  color: string,
+): string {
+  let svg = ''
+  const markerPositions = [
+    [1, 1],
+    [1, result.size - 8],
+    [result.size - 8, 1],
+  ]
+  const clampedRadius = limitInput(radius)
+  const actualRadius = (clampedRadius * size) / 2
+
+  markerPositions.forEach(([row, col]) => {
+    const ox = col * size + size / 2
+    const oy = row * size + size / 2
+    const cx = ox + size + size / 2
+    const cy = oy + size + size / 2
+    const outerSize = 7 * size - size
+    const centerSize = 3 * size
+    const rx = actualRadius * 7
+
+    // Outer circle
+    svg += `
+      <rect x="${ox}" y="${oy}" width="${outerSize}" height="${outerSize}" rx="${rx}" fill="none" stroke="${color}" stroke-width="${size}"/>
+    `
+
+    // Center circle
+    svg += createCircularPixel(cx, cy, centerSize, actualRadius * 3, color)
+  })
+
+  return svg
+}
+
+export function renderSVGRounded(
+  data: QrCodeGenerateData,
+  options: QrCodeGenerateSvgOptions & {
+    radius?: number | {
+      marker?: number
+      pixel?: number
+    }
+  } = {},
+): string {
+  const {
+    pixelSize = 10,
+    radius,
+    invert,
+    ...opts
+  } = options
+  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
+  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
+
+  const result = encode(data, opts)
+  const { backgroundColor, foregroundColor } = getColors(options)
+
+  const height = result.size * pixelSize
+  const width = result.size * pixelSize
+
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
+
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
-  svg += `<path fill="${foregroundColor}" d="${paths.join(' ')}"/>`
+  svg += renderPixelsRounded(result, pixelSize, pixelRadius, foregroundColor)
+  svg += renderMarkersRounded(result, pixelSize, markerRadius, foregroundColor)
 
   svg += '</svg>'
   return svg

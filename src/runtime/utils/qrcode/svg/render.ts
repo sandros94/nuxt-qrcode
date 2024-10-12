@@ -7,8 +7,14 @@ import { renderSVGPixelated } from './variants/pixelated'
 export type SVGVariant = 'standard' | 'circular' | 'rounded' | 'pixelated'
 
 export interface RenderSVGOptions extends QrCodeGenerateSvgOptions {
-  variant?: SVGVariant
-  cornerRadius?: number
+  variant?: SVGVariant | {
+    pixel?: SVGVariant
+    marker?: SVGVariant
+  }
+  radius?: number | {
+    marker?: number
+    pixel?: number
+  }
   pixelPadding?: number
 }
 
@@ -16,7 +22,7 @@ export function renderSVG(
   data: QrCodeGenerateData,
   options: RenderSVGOptions = {},
 ): string {
-  const { variant = 'standard', ...restOptions } = options
+  const { variant, ...restOptions } = options
 
   switch (variant) {
     case 'circular':
@@ -37,4 +43,8 @@ export function getColors(options: QrCodeGenerateSvgOptions): { backgroundColor:
     backgroundColor: invert ? blackColor : whiteColor,
     foregroundColor: invert ? whiteColor : blackColor,
   }
+}
+
+export function limitInput(number: number): number {
+  return Math.max(0, Math.min(1, number))
 }
