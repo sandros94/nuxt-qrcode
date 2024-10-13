@@ -1,6 +1,48 @@
 # Changelog
 
 
+## v0.2.0
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.1.1...v0.2.0)
+
+### 🚀 Enhancements
+
+- New svg render util ([eb8f875](https://github.com/sandros94/nuxt-qrcode/commit/eb8f875))
+- New circular svg render variant ([98b7dfc](https://github.com/sandros94/nuxt-qrcode/commit/98b7dfc))
+- New pixelated svg render variant ([cf2d24d](https://github.com/sandros94/nuxt-qrcode/commit/cf2d24d))
+- UseQrcode reactivity ([82ef093](https://github.com/sandros94/nuxt-qrcode/commit/82ef093))
+
+### 🩹 Fixes
+
+- CornerRadius svg render util ([6ec5d7a](https://github.com/sandros94/nuxt-qrcode/commit/6ec5d7a))
+- RenderSVG inverted ([a1d5123](https://github.com/sandros94/nuxt-qrcode/commit/a1d5123))
+- Standardize rendering variants ([5f7cd34](https://github.com/sandros94/nuxt-qrcode/commit/5f7cd34))
+
+### 💅 Refactors
+
+- Simplify `renderSVG` variants ([e3b5e9e](https://github.com/sandros94/nuxt-qrcode/commit/e3b5e9e))
+- Simplify `renderSVG` variants" ([97a21dc](https://github.com/sandros94/nuxt-qrcode/commit/97a21dc))
+- Simplify `renderSVG` variants"" ([3c1a496](https://github.com/sandros94/nuxt-qrcode/commit/3c1a496))
+- RenderSVG variants ([e635f3b](https://github.com/sandros94/nuxt-qrcode/commit/e635f3b))
+- ⚠️  UseQrcode composable now exporting an svg ([8abe22b](https://github.com/sandros94/nuxt-qrcode/commit/8abe22b))
+- ⚠️  Module options ([4ffa0fe](https://github.com/sandros94/nuxt-qrcode/commit/4ffa0fe))
+- ⚠️  Qrcode component ([0169c46](https://github.com/sandros94/nuxt-qrcode/commit/0169c46))
+
+### 🎨 Styles
+
+- Default corner radius for `renderSVGRounded` ([8cd80e8](https://github.com/sandros94/nuxt-qrcode/commit/8cd80e8))
+- Marker circles ([5b461f9](https://github.com/sandros94/nuxt-qrcode/commit/5b461f9))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  UseQrcode composable now exporting an svg ([8abe22b](https://github.com/sandros94/nuxt-qrcode/commit/8abe22b))
+- ⚠️  Module options ([4ffa0fe](https://github.com/sandros94/nuxt-qrcode/commit/4ffa0fe))
+- ⚠️  Qrcode component ([0169c46](https://github.com/sandros94/nuxt-qrcode/commit/0169c46))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.1.1
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.1.0...v0.1.1)
