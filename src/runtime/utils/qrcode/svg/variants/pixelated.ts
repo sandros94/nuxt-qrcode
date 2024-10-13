@@ -1,6 +1,4 @@
-import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
-import { encode } from 'uqr'
-import { getColors } from '../render'
+import type { encode } from 'uqr'
 
 export function renderPixelsPixelated(
   result: ReturnType<typeof encode>,
@@ -68,30 +66,6 @@ export function renderMarkersPixelated(
   <path fill="${foregroundColor}" d="${paths.join('')}"/>
   <path fill="white" d="${notches.join('')}"/>
 </g>`
-}
-
-export function renderSVGPixelated(
-  data: QrCodeGenerateData,
-  options: QrCodeGenerateSvgOptions = {},
-): string {
-  const {
-    pixelSize = 10,
-    invert,
-    ...opts
-  } = options
-  const result = encode(data, opts)
-  const { backgroundColor, foregroundColor } = getColors(options)
-  const height = result.size * pixelSize
-  const width = result.size * pixelSize
-
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
-  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
-
-  svg += renderPixelsPixelated(result, pixelSize, foregroundColor)
-  svg += renderMarkersPixelated(result, pixelSize, foregroundColor)
-
-  svg += '</svg>'
-  return svg
 }
 
 function addNotches(

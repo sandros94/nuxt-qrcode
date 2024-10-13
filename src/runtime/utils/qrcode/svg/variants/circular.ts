@@ -1,9 +1,5 @@
-import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
-import { encode } from 'uqr'
-import {
-  getColors,
-  limitInput,
-} from '../render'
+import type { encode } from 'uqr'
+import { limitInput } from '../render'
 
 export function renderPixelsCircular(
   result: ReturnType<typeof encode>,
@@ -74,42 +70,6 @@ export function renderMarkersCircular(
     svg += createCircularPixel(cx, cy, centerSize, actualRadius * 3, color)
   })
 
-  return svg
-}
-
-export function renderSVGCircular(
-  data: QrCodeGenerateData,
-  options: QrCodeGenerateSvgOptions & {
-    radius?: number | {
-      marker?: number
-      pixel?: number
-    }
-    pixelPadding?: number
-  } = {},
-): string {
-  const {
-    radius,
-    pixelSize = 10,
-    pixelPadding = 0.1,
-    invert,
-    ...opts
-  } = options
-
-  const result = encode(data, opts)
-  const { backgroundColor, foregroundColor } = getColors(options)
-  const height = result.size * pixelSize
-  const width = result.size * pixelSize
-
-  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
-  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
-
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
-  svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
-
-  svg += renderPixelsCircular(result, pixelSize, foregroundColor, pixelRadius, pixelPadding)
-  svg += renderMarkersCircular(result, pixelSize, foregroundColor, markerRadius)
-
-  svg += '</svg>'
   return svg
 }
 
