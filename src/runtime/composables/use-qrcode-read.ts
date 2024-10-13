@@ -18,7 +18,7 @@ export function useQrcodeRead(
     formats?: Partial<BarcodeFormats>
   } = {},
 ) {
-  const defFormats = useRuntimeConfig().public.qrcode.formats as BarcodeFormat[]
+  const defFormats = useRuntimeConfig().public.qrcode.reader.formats as BarcodeFormat[]
   const defaultFormats = defFormats.reduce((result, option) => {
     result[option] = true
     return result

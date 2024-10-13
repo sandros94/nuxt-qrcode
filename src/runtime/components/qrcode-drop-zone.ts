@@ -11,7 +11,7 @@ export default defineComponent<ExtractPropTypes<typeof QrcodeDropZone.props>>({
     },
   },
   setup(props, { attrs, slots }) {
-    const { formats } = useRuntimeConfig().public.qrcode
+    const { formats } = useRuntimeConfig().public.qrcode.reader
 
     return () => h(QrcodeDropZone, {
       ...attrs,

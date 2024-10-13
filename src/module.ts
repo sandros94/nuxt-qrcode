@@ -7,14 +7,16 @@ export type * from './runtime/types'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
-  /**
-   * Whether to auto-import upstream components from `vue-qrcode-reader`
-   *
-   * @default false
-   */
-  autoImport: boolean
-  formats: BarcodeFormat[]
-  global: boolean
+  reader: {
+    /**
+     * Whether to auto-import upstream components from `vue-qrcode-reader`
+     *
+     * @default false
+     */
+    autoImport?: boolean
+    formats?: BarcodeFormat[]
+    global?: boolean
+  }
   options: Omit<RenderSVGOptions, 'onEncoded'>
 }
 
@@ -25,9 +27,11 @@ export default defineNuxtModule<ModuleOptions>({
   },
   // Default configuration options of the Nuxt module
   defaults: {
-    autoImport: false,
-    formats: [],
-    global: false,
+    reader: {
+      autoImport: false,
+      formats: [],
+      global: false,
+    },
     options: {
       ecc: 'L',
       maskPattern: -1,
@@ -47,17 +51,17 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.runtimeConfig.public.qrcode,
       options,
     )
-    if (qrcode.formats.length === 0) qrcode.formats = ['qr_code']
+    if (qrcode.reader.formats?.length === 0) qrcode.reader.formats = ['qr_code']
 
     addImportsDir(resolve(runtimeDir, 'composables'))
 
     addComponentsDir({
       path: resolve(runtimeDir, 'components'),
-      global: qrcode.global,
+      global: qrcode.reader.global,
       watch: false,
     })
 
-    if (qrcode.autoImport) {
+    if (qrcode.reader.autoImport) {
       addComponent({
         name: 'VueQrcodeCapture',
         export: 'QrcodeCapture',
