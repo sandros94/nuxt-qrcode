@@ -42,6 +42,7 @@ export function renderMarkersCircular(
   size: number,
   color: string,
   radius: number,
+  padding: number,
 ): string {
   let svg = ''
   const markerPositions = [
@@ -49,25 +50,37 @@ export function renderMarkersCircular(
     [1, result.size - 8],
     [result.size - 8, 1],
   ]
+
+  // Clamp values between 0 and 1
   const clampedRadius = limitInput(radius)
-  const actualRadius = (clampedRadius * size) / 2
+  const clampedPadding = limitInput(padding)
+
+  // Calculate the actual padding
+  const actualPadding = (clampedPadding * size) / 2
+  // Calculate the actual size of each pixel after padding
+  const actualSize = size - 2 * actualPadding
+  // Calculate the actual radius based on the percentage and half of the actual pixel size
+  const actualRadius = (clampedRadius * actualSize) / 2
 
   markerPositions.forEach(([row, col]) => {
-    const ox = col * size + size / 2
-    const oy = row * size + size / 2
-    const cx = ox + size + size / 2
-    const cy = oy + size + size / 2
-    const outerSize = 7 * size - size
+    const x = col * size
+    const y = row * size
     const centerSize = 3 * size
-    const rx = actualRadius * 7
 
-    // Outer circle
-    svg += `
-      <rect x="${ox}" y="${oy}" width="${outerSize}" height="${outerSize}" rx="${rx}" fill="none" stroke="${color}" stroke-width="${size}"/>
-    `
+    // Render outer pixels
+    for (let i = 0; i < 7; i++) {
+      for (let j = 0; j < 7; j++) {
+        // Skip center 3x3 area
+        if (i >= 1 && i <= 5 && j >= 1 && j <= 5) continue
+
+        const pixelX = x + i * size
+        const pixelY = y + j * size
+        svg += createCircularPixel(pixelX, pixelY, size, actualRadius, color, actualPadding)
+      }
+    }
 
     // Center circle
-    svg += createCircularPixel(cx, cy, centerSize, actualRadius * 3, color)
+    svg += createCircularPixel(x + 2 * size, y + 2 * size, centerSize, actualRadius * 4, color)
   })
 
   return svg

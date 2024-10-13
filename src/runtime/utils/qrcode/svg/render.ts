@@ -58,7 +58,7 @@ export function renderSVG(
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
   svg += pixelVariants(pixelVariant, result, pixelSize, foregroundColor, pixelRadius, pixelPadding)
-  svg += markerVariants(markerVariant, result, pixelSize, foregroundColor, markerRadius)
+  svg += markerVariants(markerVariant, result, pixelSize, foregroundColor, markerRadius, pixelPadding)
 
   svg += '</svg>'
   return svg
@@ -91,10 +91,11 @@ export function markerVariants(
   size: number,
   color: string,
   radius: number,
+  padding: number,
 ): string {
   switch (variant) {
     case 'circular':
-      return renderMarkersCircular(result, size, color, radius)
+      return renderMarkersCircular(result, size, color, radius, padding)
     case 'rounded':
       return renderMarkersRounded(result, size, color, radius)
     case 'pixelated':
