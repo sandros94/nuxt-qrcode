@@ -9,8 +9,8 @@ import { createCircularPixel } from './circular'
 export function renderPixelsRounded(
   result: ReturnType<typeof encode>,
   size: number,
-  radius: number,
   color: string,
+  radius: number,
 ): string {
   const paths: string[] = []
   const visited: boolean[][] = Array(result.size).fill(null).map(() => Array(result.size).fill(false))
@@ -36,8 +36,8 @@ export function renderPixelsRounded(
 export function renderMarkersRounded(
   result: ReturnType<typeof encode>,
   size: number,
-  radius: number,
   color: string,
+  radius: number,
 ): string {
   let svg = ''
   const markerPositions = [
@@ -96,8 +96,8 @@ export function renderSVGRounded(
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
-  svg += renderPixelsRounded(result, pixelSize, pixelRadius, foregroundColor)
-  svg += renderMarkersRounded(result, pixelSize, markerRadius, foregroundColor)
+  svg += renderPixelsRounded(result, pixelSize, foregroundColor, pixelRadius)
+  svg += renderMarkersRounded(result, pixelSize, foregroundColor, markerRadius)
 
   svg += '</svg>'
   return svg
