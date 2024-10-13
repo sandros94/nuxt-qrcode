@@ -3,7 +3,7 @@ import defu from 'defu'
 
 import type { RenderSVGOptions } from './runtime/utils/qrcode/svg/render'
 
-export type * from './runtime/types'
+export type * from './runtime/types/index'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
