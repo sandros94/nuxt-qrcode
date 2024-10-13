@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.1
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.0...v0.2.1)
+
+### 🩹 Fixes
+
+- Module type exports ([5eab1b7](https://github.com/sandros94/nuxt-qrcode/commit/5eab1b7))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.2.0
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.1.1...v0.2.0)
