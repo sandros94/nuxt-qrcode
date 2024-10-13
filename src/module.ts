@@ -1,7 +1,7 @@
 import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
 import defu from 'defu'
 
-import type { RenderSVGOptions } from '#qrcode/utils/qrcode/svg/render'
+import type { RenderSVGOptions } from './runtime/utils/qrcode/svg/render'
 
 export type * from './runtime/types'
 
