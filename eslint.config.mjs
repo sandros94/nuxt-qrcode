@@ -26,5 +26,6 @@ export default createConfigForNuxt({
       }],
 
       // Project Specific
+      'vue/multi-word-component-names': 'off',
     },
   })
