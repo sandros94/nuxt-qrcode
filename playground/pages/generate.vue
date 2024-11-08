@@ -1,5 +1,5 @@
 <template>
-  <div style="width: fit-content;">
+  <div class="container">
     <select v-model="variant">
       <option value="default">
         Default
@@ -17,7 +17,7 @@
     <input v-model="text" style="width: 100%;">
     <br>
     <Qrcode
-      style="height: 80svh;"
+      class="qr-code"
       :value="text"
       :variant
     />
@@ -30,3 +30,19 @@ import type { SVGVariant } from 'nuxt-qrcode'
 const text = ref('https://github.com/sandros94/nuxt-qrcode')
 const variant = ref<SVGVariant>('default')
 </script>
+
+<style scoped>
+.container {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4rem;
+}
+
+.qr-code {
+  width: 24rem;
+  height: 24rem;
+  max-width: 90svw;
+  max-height: 80svh;
+}
+</style>
