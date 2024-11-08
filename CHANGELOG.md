@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.2.2
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.1...v0.2.2)
+
+### 🩹 Fixes
+
+- CornerRadius for rounded variant ([fd2bf2f](https://github.com/sandros94/nuxt-qrcode/commit/fd2bf2f))
+
+### 🏡 Chore
+
+- Update playground ([8b2acc6](https://github.com/sandros94/nuxt-qrcode/commit/8b2acc6))
+- Update playground ([915a025](https://github.com/sandros94/nuxt-qrcode/commit/915a025))
+- Update test deps ([7dc863d](https://github.com/sandros94/nuxt-qrcode/commit/7dc863d))
+- Init test utils ([fea6e48](https://github.com/sandros94/nuxt-qrcode/commit/fea6e48))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.2.1
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.0...v0.2.1)
