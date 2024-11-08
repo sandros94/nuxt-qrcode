@@ -14,12 +14,21 @@
         Rounded
       </option>
     </select>
+    <input
+      v-if="variant === 'circular' || variant === 'rounded'"
+      v-model.number="radius"
+      type="range"
+      min="0"
+      max="1"
+      step="0.05"
+    >
     <input v-model="text" style="width: 100%;">
     <br>
     <Qrcode
       class="qr-code"
       :value="text"
       :variant
+      :radius
     />
   </div>
 </template>
@@ -29,6 +38,7 @@ import type { SVGVariant } from 'nuxt-qrcode'
 
 const text = ref('https://github.com/sandros94/nuxt-qrcode')
 const variant = ref<SVGVariant>('default')
+const radius = ref(0.5)
 </script>
 
 <style scoped>
@@ -40,8 +50,8 @@ const variant = ref<SVGVariant>('default')
 }
 
 .qr-code {
-  width: 36rem;
-  height: 36rem;
+  width: 62rem;
+  height: 62rem;
   max-width: 90svw;
   max-height: 80svh;
 }
