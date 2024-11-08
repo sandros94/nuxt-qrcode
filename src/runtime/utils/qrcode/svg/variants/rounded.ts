@@ -42,7 +42,6 @@ export function renderMarkersRounded(
     [result.size - 8, 1],
   ]
   const clampedRadius = limitInput(radius)
-  const actualRadius = (clampedRadius * size) / 2
 
   markerPositions.forEach(([row, col]) => {
     const ox = col * size + size / 2
@@ -51,15 +50,17 @@ export function renderMarkersRounded(
     const cy = oy + size + size / 2
     const outerSize = 7 * size - size
     const centerSize = 3 * size
-    const rx = actualRadius * 7
 
-    // Outer circle
-    svg += `
-      <rect x="${ox}" y="${oy}" width="${outerSize}" height="${outerSize}" rx="${rx}" fill="none" stroke="${color}" stroke-width="${size}"/>
-    `
+    // Calculate the maximum possible radius for the outer square
+    const maxOuterRadius = outerSize / 2
+    // Apply the clampedRadius (0-1) to the maximum possible radius
+    const outerRadius = clampedRadius * maxOuterRadius
+
+    // Outer square
+    svg += `<rect x="${ox}" y="${oy}" width="${outerSize}" height="${outerSize}" rx="${outerRadius}" fill="none" stroke="${color}" stroke-width="${size}"/>`
 
     // Center circle
-    svg += createCircularPixel(cx, cy, centerSize, actualRadius * 3, color)
+    svg += createCircularPixel(cx, cy, centerSize, (clampedRadius * centerSize) / 2, color)
   })
 
   return svg
@@ -108,12 +109,13 @@ function createPixelPath(
   { top, right, bottom, left }: { top: boolean, right: boolean, bottom: boolean, left: boolean },
 ): string {
   const commands: string[] = []
-  const curve = radius * (4 / 3) * Math.tan(Math.PI / 8)
+  const adjustedRadius = Math.min(radius, size / 2)
+  const curve = adjustedRadius * (4 / 3) * Math.tan(Math.PI / 8)
 
   // Top-left corner
   if (!left && !top) {
-    commands.push(`M${x},${y + radius}`)
-    commands.push(`C${x},${y + radius - curve} ${x + radius - curve},${y} ${x + radius},${y}`)
+    commands.push(`M${x},${y + adjustedRadius}`)
+    commands.push(`C${x},${y + adjustedRadius - curve} ${x + adjustedRadius - curve},${y} ${x + adjustedRadius},${y}`)
   }
   else {
     commands.push(`M${x},${y}`)
@@ -121,8 +123,8 @@ function createPixelPath(
 
   // Top-right corner
   if (!top && !right) {
-    commands.push(`L${x + size - radius},${y}`)
-    commands.push(`C${x + size - radius + curve},${y} ${x + size},${y + radius - curve} ${x + size},${y + radius}`)
+    commands.push(`L${x + size - adjustedRadius},${y}`)
+    commands.push(`C${x + size - adjustedRadius + curve},${y} ${x + size},${y + adjustedRadius - curve} ${x + size},${y + adjustedRadius}`)
   }
   else {
     commands.push(`L${x + size},${y}`)
@@ -130,8 +132,8 @@ function createPixelPath(
 
   // Bottom-right corner
   if (!right && !bottom) {
-    commands.push(`L${x + size},${y + size - radius}`)
-    commands.push(`C${x + size},${y + size - radius + curve} ${x + size - radius + curve},${y + size} ${x + size - radius},${y + size}`)
+    commands.push(`L${x + size},${y + size - adjustedRadius}`)
+    commands.push(`C${x + size},${y + size - adjustedRadius + curve} ${x + size - adjustedRadius + curve},${y + size} ${x + size - adjustedRadius},${y + size}`)
   }
   else {
     commands.push(`L${x + size},${y + size}`)
@@ -139,8 +141,8 @@ function createPixelPath(
 
   // Bottom-left corner
   if (!bottom && !left) {
-    commands.push(`L${x + radius},${y + size}`)
-    commands.push(`C${x + radius - curve},${y + size} ${x},${y + size - radius + curve} ${x},${y + size - radius}`)
+    commands.push(`L${x + adjustedRadius},${y + size}`)
+    commands.push(`C${x + adjustedRadius - curve},${y + size} ${x},${y + size - adjustedRadius + curve} ${x},${y + size - adjustedRadius}`)
   }
   else {
     commands.push(`L${x},${y + size}`)
