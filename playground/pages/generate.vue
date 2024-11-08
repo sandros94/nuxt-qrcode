@@ -40,8 +40,8 @@ const variant = ref<SVGVariant>('default')
 }
 
 .qr-code {
-  width: 24rem;
-  height: 24rem;
+  width: 36rem;
+  height: 36rem;
   max-width: 90svw;
   max-height: 80svh;
 }
