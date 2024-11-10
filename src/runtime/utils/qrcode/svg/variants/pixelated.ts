@@ -4,10 +4,10 @@ import { renderUtils } from '../render'
 export function renderPixelatedPixel(
   result: ReturnType<typeof encode>,
   border: number,
-  pixelSize: number,
+  size: number,
   foregroundColor: string,
 ): string {
-  const notchSize = pixelSize / 4
+  const notchSize = size / 4
   const paths: string[] = []
   const notches: string[] = []
 
@@ -15,11 +15,11 @@ export function renderPixelatedPixel(
     for (let col = 0; col < result.size; col++) {
       // Skip marker areas
       if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
-        const x = col * pixelSize
-        const y = row * pixelSize
+        const x = col * size
+        const y = row * size
 
-        paths.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
-        addNotches(notches, x, y, pixelSize, notchSize, row, col, result.data)
+        paths.push(`M${x},${y}h${size}v${size}h-${size}z`)
+        paths.push(addNotches(result.data, row, col, x, y, size, notchSize))
       }
     }
   }
@@ -31,76 +31,84 @@ export function renderPixelatedPixel(
 </g>`
 }
 
-export function renderPixelatedMarker(
-  result: ReturnType<typeof encode>,
-  border: number,
-  pixelSize: number,
-  foregroundColor: string,
-): string {
-  const notchSize = pixelSize / 4
-  const paths: string[] = []
-  const notches: string[] = []
+export function renderPixelatedMarkerOuter(
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+) {
+  const notchSize = size / 4
+  const outerPaths: string[] = []
 
-  const { markerPositions } = renderUtils(result.size, border)
+  outerPaths.push(`
+M${x},${y}h${7 * size}v${7 * size}h-${7 * size}z
+M${x + 6 * size},${y + size}h-${5 * size}v${5 * size}h${5 * size}z
+M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z
+M${x + 7 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z
+M${x},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z
+M${x + 7 * size - notchSize},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
 
-  markerPositions.forEach(([row, col]) => {
-    for (let i = 0; i < 7; i++) {
-      for (let j = 0; j < 7; j++) {
-        const x = (col + j) * pixelSize
-        const y = (row + i) * pixelSize
-
-        if (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4)) {
-          paths.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
-          addNotches(notches, x, y, pixelSize, notchSize, row + i, col + j, result.data)
-        }
-      }
-    }
-  })
-
-  // TODO: fix with mask
   return `<g shape-rendering="crispEdges">
-  <path fill="${foregroundColor}" d="${paths.join('')}"/>
-  <path fill="white" d="${notches.join('')}"/>
+  <path fill="${color}" d="${outerPaths.join('')}"/>
+</g>`
+}
+
+export function renderPixelatedMarkerInner(
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+) {
+  const notchSize = size / 4
+  const outerPaths: string[] = []
+
+  outerPaths.push(`
+M${x},${y}h${3 * size}v${3 * size}h-${3 * size}z
+M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z
+M${x + 3 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z
+M${x},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z
+M${x + 3 * size - notchSize},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
+
+  return `<g shape-rendering="crispEdges">
+  <path fill="${color}" d="${outerPaths.join('')}"/>
 </g>`
 }
 
 function addNotches(
-  notches: string[],
+  data: boolean[][],
+  row: number,
+  col: number,
   x: number,
   y: number,
   size: number,
   notchSize: number,
-  row: number,
-  col: number,
-  data: boolean[][],
-  isFinderCenter: boolean = false,
 ) {
   const checkPixel = (r: number, c: number) => {
     if (r < 0 || r >= data.length || c < 0 || c >= data[0].length) return false
     return data[r][c]
   }
 
-  const addNotch = (startX: number, startY: number) => {
-    notches.push(`M${startX},${startY}h${notchSize}v${notchSize}h-${notchSize}z`)
-  }
+  let notches = ''
 
   // Top-left corner
   if (!checkPixel(row - 1, col) && !checkPixel(row, col - 1)) {
-    addNotch(x, y)
+    notches += `M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}v-${notchSize}z`
   }
 
   // Top-right corner
-  if (!checkPixel(row - 1, col + (isFinderCenter ? 2 : 0)) && !checkPixel(row, col + (isFinderCenter ? 3 : 1))) {
-    addNotch(x + size - notchSize, y)
+  if (!checkPixel(row - 1, col) && !checkPixel(row, col + 1)) {
+    notches += `M${x + notchSize * 2},${y}h${notchSize}v${notchSize}h${notchSize}v-${notchSize}z`
   }
 
   // Bottom-right corner
-  if (!checkPixel(row + (isFinderCenter ? 2 : 0), col + (isFinderCenter ? 3 : 1)) && !checkPixel(row + (isFinderCenter ? 3 : 1), col + (isFinderCenter ? 2 : 0))) {
-    addNotch(x + size - notchSize, y + size - notchSize)
+  if (!checkPixel(row + 0, col + 1) && !checkPixel(row + 1, col + 0)) {
+    notches += `M${x + size},${y + size - notchSize}h-${notchSize}v${notchSize}h${notchSize}v-${notchSize}z`
   }
 
   // Bottom-left corner
-  if (!checkPixel(row + (isFinderCenter ? 3 : 1), col) && !checkPixel(row + (isFinderCenter ? 2 : 0), col - 1)) {
-    addNotch(x, y + size - notchSize)
+  if (!checkPixel(row + 1, col) && !checkPixel(row + 0, col - 1)) {
+    notches += `M${x + notchSize},${y + size - notchSize}h-${notchSize}v${notchSize}h${notchSize}v-${notchSize}z`
   }
+
+  return notches
 }
