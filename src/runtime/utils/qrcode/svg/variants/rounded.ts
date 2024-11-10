@@ -1,9 +1,13 @@
 import type { encode } from 'uqr'
-import { limitInput } from '../render'
+import {
+  limitInput,
+  renderUtils,
+} from '../render'
 import { createCircularPixel } from './circular'
 
 export function renderPixelsRounded(
   result: ReturnType<typeof encode>,
+  border: number,
   size: number,
   color: string,
   radius: number,
@@ -13,15 +17,11 @@ export function renderPixelsRounded(
   const clampedRadius = limitInput(radius)
   const actualRadius = (clampedRadius * size) / 2
 
-  for (let row = 1; row < result.size - 1; row++) {
-    for (let col = 1; col < result.size - 1; col++) {
+  for (let row = 0; row < result.size; row++) {
+    for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
-        continue
-
-      if (result.data[row][col] && !visited[row][col]) {
-        const path = tracePath(result.data, visited, row, col, size, actualRadius)
-        if (path) paths.push(path)
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col] && !visited[row][col]) {
+        paths.push(tracePath(result.data, visited, row, col, size, actualRadius))
       }
     }
   }
@@ -31,16 +31,13 @@ export function renderPixelsRounded(
 
 export function renderMarkersRounded(
   result: ReturnType<typeof encode>,
+  border: number,
   size: number,
   color: string,
   radius: number,
 ): string {
   let svg = ''
-  const markerPositions = [
-    [1, 1],
-    [1, result.size - 8],
-    [result.size - 8, 1],
-  ]
+  const { markerPositions } = renderUtils(result.size, border)
   const clampedRadius = limitInput(radius)
 
   markerPositions.forEach(([row, col]) => {

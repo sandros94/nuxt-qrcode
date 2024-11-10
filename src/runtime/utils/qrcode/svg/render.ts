@@ -57,8 +57,8 @@ export function renderSVG(
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
-  svg += pixelVariants(pixelVariant, result, pixelSize, foregroundColor, pixelRadius, pixelPadding)
-  svg += markerVariants(markerVariant, result, pixelSize, foregroundColor, markerRadius, pixelPadding)
+  svg += pixelVariants(pixelVariant, result, opts.border, pixelSize, foregroundColor, pixelRadius, pixelPadding)
+  svg += markerVariants(markerVariant, result, opts.border, pixelSize, foregroundColor, markerRadius, pixelPadding)
 
   svg += '</svg>'
   return svg
@@ -67,6 +67,7 @@ export function renderSVG(
 export function pixelVariants(
   variant: SVGVariant = 'default',
   result: ReturnType<typeof encode>,
+  border: number = 1,
   size: number,
   color: string,
   radius: number,
@@ -74,20 +75,21 @@ export function pixelVariants(
 ): string {
   switch (variant) {
     case 'circular':
-      return renderPixelsCircular(result, size, color, radius, padding)
+      return renderPixelsCircular(result, border, size, color, radius, padding)
     case 'rounded':
-      return renderPixelsRounded(result, size, color, radius)
+      return renderPixelsRounded(result, border, size, color, radius)
     case 'pixelated':
-      return renderPixelsPixelated(result, size, color)
+      return renderPixelsPixelated(result, border, size, color)
     case 'default':
     default:
-      return renderPixelsDefault(result, size, color)
+      return renderPixelsDefault(result, border, size, color)
   }
 }
 
 export function markerVariants(
   variant: SVGVariant = 'default',
   result: ReturnType<typeof encode>,
+  border: number = 1,
   size: number,
   color: string,
   radius: number,
@@ -95,14 +97,14 @@ export function markerVariants(
 ): string {
   switch (variant) {
     case 'circular':
-      return renderMarkersCircular(result, size, color, radius, padding)
+      return renderMarkersCircular(result, border, size, color, radius, padding)
     case 'rounded':
-      return renderMarkersRounded(result, size, color, radius)
+      return renderMarkersRounded(result, border, size, color, radius)
     case 'pixelated':
-      return renderMarkersPixelated(result, size, color)
+      return renderMarkersPixelated(result, border, size, color)
     case 'default':
     default:
-      return renderMarkersDefault(result, size, color)
+      return renderMarkersDefault(result, border, size, color)
   }
 }
 
@@ -116,4 +118,38 @@ export function getColors(options: QrCodeGenerateSvgOptions): { backgroundColor:
 
 export function limitInput(number: number): number {
   return Math.max(0, Math.min(1, number))
+}
+
+export function renderUtils(qrSize: number, qrBorder: number, markerSize: number = 7) {
+  const innerSize = qrSize - qrBorder
+
+  const d = (n: number) => n - qrBorder
+
+  const isTopLeft = (row: number, col: number) => d(row) < markerSize && d(col) < markerSize
+  const isTopRight = (row: number, col: number) => d(row) < markerSize && d(col) >= innerSize - markerSize - 1
+  const isBottomLeft = (row: number, col: number) => d(row) >= innerSize - markerSize - 1 && d(col) < markerSize
+
+  const isMarker = (row: number, col: number) => isTopLeft(row, col) || isTopRight(row, col) || isBottomLeft(row, col)
+  const isMarkerCenter = (row: number, col: number) => {
+    let center = false
+    if (isMarker(row, col)) {
+      const localX = isTopRight(row, col) ? d(row) - (innerSize - markerSize) : d(row)
+      const localY = isBottomLeft(row, col) ? d(col) - (innerSize - markerSize) : d(col)
+      center = localX >= 2 && localX <= 4 && localY >= 2 && localY <= 4
+    }
+    return center
+  }
+
+  return {
+    isTopLeft,
+    isTopRight,
+    isBottomLeft,
+    isMarker,
+    isMarkerCenter,
+    markerPositions: [
+      [qrBorder, qrBorder],
+      [qrBorder, innerSize - markerSize],
+      [innerSize - markerSize, qrBorder],
+    ],
+  }
 }
