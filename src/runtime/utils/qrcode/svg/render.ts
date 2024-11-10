@@ -121,13 +121,13 @@ export function limitInput(number: number): number {
 }
 
 export function renderUtils(qrSize: number, qrBorder: number) {
-  const innerSize = qrSize - qrBorder * 2
+  const innerSize = qrSize - qrBorder
   const markerSize = 7
 
   const markerPositions = [
     [qrBorder, qrBorder],
-    [qrBorder, innerSize],
-    [innerSize, qrBorder],
+    [qrBorder, innerSize - markerSize],
+    [innerSize - markerSize, qrBorder],
   ]
 
   const isInMarkerRange = (value: number, markerStart: number) =>
