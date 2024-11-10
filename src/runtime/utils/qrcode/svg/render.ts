@@ -120,41 +120,39 @@ export function limitInput(number: number): number {
   return Math.max(0, Math.min(1, number))
 }
 
-export function renderUtils(qrSize: number, qrBorder: number, markerSize: number = 7) {
-  const innerSize = qrSize - qrBorder
-  const d = (n: number) => n - qrBorder
+export function renderUtils(qrSize: number, qrBorder: number) {
+  const innerSize = qrSize - qrBorder * 2
+  const markerSize = 7
 
   const markerPositions = [
     [qrBorder, qrBorder],
-    [qrBorder, innerSize - markerSize],
-    [innerSize - markerSize, qrBorder],
+    [qrBorder, innerSize],
+    [innerSize, qrBorder],
   ]
 
-  const markerCenterPositions = markerPositions.map(([x, y]) => [x + 2, y + 2])
-
-  const isInRange = (value: number, start: number, end: number) =>
-    value >= start && value < end
+  const isInMarkerRange = (value: number, markerStart: number) =>
+    value >= markerStart && value < markerStart + markerSize
 
   const isMarker = (row: number, col: number) =>
     markerPositions.some(([x, y]) =>
-      isInRange(d(row), x, x + markerSize) && isInRange(d(col), y, y + markerSize),
+      isInMarkerRange(row, x) && isInMarkerRange(col, y),
     )
 
   const isMarkerCenter = (row: number, col: number) =>
-    markerCenterPositions.some(([x, y]) =>
-      isInRange(d(row), x, x + 3) && isInRange(d(col), y, y + 3),
+    markerPositions.some(([x, y]) =>
+      row >= x + 2 && row <= x + 4 && col >= y + 2 && col <= y + 4,
     )
 
   return {
     isTopLeft: (row: number, col: number) =>
-      isInRange(d(row), 0, markerSize) && isInRange(d(col), 0, markerSize),
+      row < markerSize && col < markerSize,
     isTopRight: (row: number, col: number) =>
-      isInRange(d(row), 0, markerSize) && isInRange(d(col), innerSize - markerSize, innerSize),
+      row < markerSize && col >= innerSize - markerSize,
     isBottomLeft: (row: number, col: number) =>
-      isInRange(d(row), innerSize - markerSize, innerSize) && isInRange(d(col), 0, markerSize),
+      row >= innerSize - markerSize && col < markerSize,
     isMarker,
     isMarkerCenter,
     markerPositions,
-    markerCenterPositions,
+    markerCenterPositions: markerPositions.map(([x, y]) => [x + 2, y + 2]),
   }
 }
