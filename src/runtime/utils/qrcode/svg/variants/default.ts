@@ -1,55 +1,63 @@
 import type { encode } from 'uqr'
+import { renderUtils } from '../render'
 
 export function renderPixelsDefault(
   result: ReturnType<typeof encode>,
-  pixelSize: number,
-  foregroundColor: string,
+  border: number,
+  size: number,
+  color: string,
 ): string {
-  const pathes: string[] = []
+  const pixelPaths: string[] = []
 
-  for (let row = 1; row < result.size - 1; row++) {
-    for (let col = 1; col < result.size - 1; col++) {
+  for (let row = 0; row < result.size; row++) {
+    for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
-        continue
-
-      const x = col * pixelSize
-      const y = row * pixelSize
-      if (result.data[row][col])
-        pathes.push(`M${x},${y}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
+        const x = col * size
+        const y = row * size
+        pixelPaths.push(`M${x},${y}h${size}v${size}h-${size}z`)
+      }
     }
   }
 
-  return `<path fill="${foregroundColor}" d="${pathes.join('')}" shape-rendering="crispEdges"/>`
+  return `<path fill="${color}" d="${pixelPaths.join('')}" shape-rendering="crispEdges"/>`
 }
 
 export function renderMarkersDefault(
   result: ReturnType<typeof encode>,
-  pixelSize: number,
-  foregroundColor: string,
+  border: number,
+  size: number,
+  color: string,
 ): string {
-  const markerSize = 7 * pixelSize
-  const markerPositions = [
-    [pixelSize, pixelSize],
-    [pixelSize, (result.size - 8) * pixelSize],
-    [(result.size - 8) * pixelSize, pixelSize],
-  ]
+  let svg = ''
+  const { markerPositions } = renderUtils(result.size, border)
 
-  return markerPositions.map(([x, y]) => {
+  markerPositions.forEach(([row, col]) => {
+    const ox = col * size
+    const oy = row * size
+    const centerSize = 3 * size
+
+    // Outer square
     const outerPaths: string[] = []
     for (let i = 0; i < 7; i++) {
       for (let j = 0; j < 7; j++) {
         if (i === 0 || i === 6 || j === 0 || j === 6) {
-          const xi = x + i * pixelSize
-          const yi = y + j * pixelSize
-          outerPaths.push(`M${xi},${yi}h${pixelSize}v${pixelSize}h-${pixelSize}z`)
+          const xi = ox + i * size
+          const yi = oy + j * size
+          outerPaths.push(`M${xi},${yi}h${size}v${size}h-${size}z`)
         }
       }
     }
 
-    return `<g shape-rendering="crispEdges">
-  <path fill="${foregroundColor}" d="${outerPaths.join('')}"/>
-  <rect x="${x + 2 * pixelSize}" y="${y + 2 * pixelSize}" width="${markerSize - 4 * pixelSize}" height="${markerSize - 4 * pixelSize}" fill="${foregroundColor}"/>
+    // Center square
+    const centerX = ox + 2 * size
+    const centerY = oy + 2 * size
+
+    svg += `<g shape-rendering="crispEdges">
+  <path fill="${color}" d="${outerPaths.join('')}"/>
+  <rect x="${centerX}" y="${centerY}" width="${centerSize}" height="${centerSize}" fill="${color}"/>
 </g>`
-  }).join('')
+  })
+
+  return svg
 }

@@ -1,7 +1,9 @@
 import type { encode } from 'uqr'
+import { renderUtils } from '../render'
 
 export function renderPixelsPixelated(
   result: ReturnType<typeof encode>,
+  border: number,
   pixelSize: number,
   foregroundColor: string,
 ): string {
@@ -9,13 +11,10 @@ export function renderPixelsPixelated(
   const paths: string[] = []
   const notches: string[] = []
 
-  for (let row = 1; row < result.size - 1; row++) {
-    for (let col = 1; col < result.size - 1; col++) {
+  for (let row = 0; row < result.size; row++) {
+    for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
-        continue
-
-      if (result.data[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
         const x = col * pixelSize
         const y = row * pixelSize
 
@@ -34,6 +33,7 @@ export function renderPixelsPixelated(
 
 export function renderMarkersPixelated(
   result: ReturnType<typeof encode>,
+  border: number,
   pixelSize: number,
   foregroundColor: string,
 ): string {
@@ -41,11 +41,7 @@ export function renderMarkersPixelated(
   const paths: string[] = []
   const notches: string[] = []
 
-  const markerPositions = [
-    [1, 1],
-    [1, result.size - 8],
-    [result.size - 8, 1],
-  ]
+  const { markerPositions } = renderUtils(result.size, border)
 
   markerPositions.forEach(([row, col]) => {
     for (let i = 0; i < 7; i++) {

@@ -1,8 +1,12 @@
 import type { encode } from 'uqr'
-import { limitInput } from '../render'
+import {
+  limitInput,
+  renderUtils,
+} from '../render'
 
 export function renderPixelsCircular(
   result: ReturnType<typeof encode>,
+  border: number,
   size: number,
   color: string,
   radius: number,
@@ -23,14 +27,10 @@ export function renderPixelsCircular(
 
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
-      // Skip marker areas
-      if ((row < 8 && (col < 8 || col >= result.size - 8)) || (row >= result.size - 8 && col < 8))
-        continue
-
-      if (result.data[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
         const x = col * size + actualPadding
         const y = row * size + actualPadding
-        svg += createCircularPixel(x, y, actualSize, actualRadius, color, padding)
+        svg += createCircularPixel(x, y, actualSize, actualRadius, color, clampedPadding)
       }
     }
   }
@@ -39,17 +39,15 @@ export function renderPixelsCircular(
 
 export function renderMarkersCircular(
   result: ReturnType<typeof encode>,
+  border: number,
   size: number,
   color: string,
   radius: number,
   padding: number,
 ): string {
   let svg = ''
-  const markerPositions = [
-    [1, 1],
-    [1, result.size - 8],
-    [result.size - 8, 1],
-  ]
+
+  const { markerPositions } = renderUtils(result.size, border)
 
   // Clamp values between 0 and 1
   const clampedRadius = limitInput(radius)
