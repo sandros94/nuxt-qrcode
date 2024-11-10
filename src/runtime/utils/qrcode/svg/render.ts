@@ -122,34 +122,39 @@ export function limitInput(number: number): number {
 
 export function renderUtils(qrSize: number, qrBorder: number, markerSize: number = 7) {
   const innerSize = qrSize - qrBorder
-
   const d = (n: number) => n - qrBorder
 
-  const isTopLeft = (row: number, col: number) => d(row) < markerSize && d(col) < markerSize
-  const isTopRight = (row: number, col: number) => d(row) < markerSize && d(col) >= innerSize - markerSize - 1
-  const isBottomLeft = (row: number, col: number) => d(row) >= innerSize - markerSize - 1 && d(col) < markerSize
+  const markerPositions = [
+    [qrBorder, qrBorder],
+    [qrBorder, innerSize - markerSize],
+    [innerSize - markerSize, qrBorder],
+  ]
 
-  const isMarker = (row: number, col: number) => isTopLeft(row, col) || isTopRight(row, col) || isBottomLeft(row, col)
-  const isMarkerCenter = (row: number, col: number) => {
-    let center = false
-    if (isMarker(row, col)) {
-      const localX = isTopRight(row, col) ? d(row) - (innerSize - markerSize) : d(row)
-      const localY = isBottomLeft(row, col) ? d(col) - (innerSize - markerSize) : d(col)
-      center = localX >= 2 && localX <= 4 && localY >= 2 && localY <= 4
-    }
-    return center
-  }
+  const markerCenterPositions = markerPositions.map(([x, y]) => [x + 2, y + 2])
+
+  const isInRange = (value: number, start: number, end: number) =>
+    value >= start && value < end
+
+  const isMarker = (row: number, col: number) =>
+    markerPositions.some(([x, y]) =>
+      isInRange(d(row), x, x + markerSize) && isInRange(d(col), y, y + markerSize),
+    )
+
+  const isMarkerCenter = (row: number, col: number) =>
+    markerCenterPositions.some(([x, y]) =>
+      isInRange(d(row), x, x + 3) && isInRange(d(col), y, y + 3),
+    )
 
   return {
-    isTopLeft,
-    isTopRight,
-    isBottomLeft,
+    isTopLeft: (row: number, col: number) =>
+      isInRange(d(row), 0, markerSize) && isInRange(d(col), 0, markerSize),
+    isTopRight: (row: number, col: number) =>
+      isInRange(d(row), 0, markerSize) && isInRange(d(col), innerSize - markerSize, innerSize),
+    isBottomLeft: (row: number, col: number) =>
+      isInRange(d(row), innerSize - markerSize, innerSize) && isInRange(d(col), 0, markerSize),
     isMarker,
     isMarkerCenter,
-    markerPositions: [
-      [qrBorder, qrBorder],
-      [qrBorder, innerSize - markerSize],
-      [innerSize - markerSize, qrBorder],
-    ],
+    markerPositions,
+    markerCenterPositions,
   }
 }
