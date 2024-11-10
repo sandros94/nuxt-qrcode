@@ -50,8 +50,8 @@ const radius = ref(0.5)
 }
 
 .qr-code {
-  width: 62rem;
-  height: 62rem;
+  width: 48rem;
+  height: 48rem;
   max-width: 90svw;
   max-height: 80svh;
 }
