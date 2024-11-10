@@ -4,7 +4,7 @@ import {
   renderUtils,
 } from '../render'
 
-export function renderCircularPixel(
+export function renderDotPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -30,14 +30,14 @@ export function renderCircularPixel(
       if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
         const x = col * size + actualPadding
         const y = row * size + actualPadding
-        svg += createCircularPixel(x, y, actualSize, actualRadius, color, clampedPadding)
+        svg += createDotPixel(x, y, actualSize, actualRadius, color, clampedPadding)
       }
     }
   }
   return svg
 }
 
-export function renderCircularMarker(
+export function renderDotMarker(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -73,18 +73,18 @@ export function renderCircularMarker(
 
         const pixelX = x + i * size
         const pixelY = y + j * size
-        svg += createCircularPixel(pixelX, pixelY, size, actualRadius, color, actualPadding)
+        svg += createDotPixel(pixelX, pixelY, size, actualRadius, color, actualPadding)
       }
     }
 
     // Center circle
-    svg += createCircularPixel(x + 2 * size, y + 2 * size, centerSize, actualRadius * 4, color)
+    svg += createDotPixel(x + 2 * size, y + 2 * size, centerSize, actualRadius * 4, color)
   })
 
   return svg
 }
 
-export function renderCircularMarkerOuter(
+export function renderDotMarkerOuter(
   x: number,
   y: number,
   size: number,
@@ -112,14 +112,14 @@ export function renderCircularMarkerOuter(
 
       const _x = i * size + x + actualPadding
       const _y = j * size + y + actualPadding
-      svg += createCircularPixel(_x, _y, actualSize, actualRadius, color, clampedPadding)
+      svg += createDotPixel(_x, _y, actualSize, actualRadius, color, clampedPadding)
     }
   }
 
   return svg
 }
 
-export function renderCircularMarkerInner(
+export function renderDotMarkerInner(
   x: number,
   y: number,
   size: number,
@@ -144,14 +144,14 @@ export function renderCircularMarkerInner(
     for (let j = 0; j < 3; j++) {
       const _x = i * size + x + actualPadding
       const _y = j * size + y + actualPadding
-      svg += createCircularPixel(_x, _y, actualSize, actualRadius, color, clampedPadding)
+      svg += createDotPixel(_x, _y, actualSize, actualRadius, color, clampedPadding)
     }
   }
 
   return svg
 }
 
-export function createCircularPixel(
+export function createDotPixel(
   x: number,
   y: number,
   size: number,

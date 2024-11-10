@@ -2,21 +2,15 @@ import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import {
   renderDefaultPixel,
-} from './variants/default'
-import {
-  renderCircularPixel,
-} from './variants/circular'
-import {
+  renderDotPixel,
   renderRoundedPixel,
-} from './variants/rounded'
-import {
   renderPixelatedPixel,
-} from './variants/pixelated'
+} from './variants'
 import {
   renderMarkers,
 } from './markers'
 
-export type SVGVariant = 'default' | 'circular' | 'rounded' | 'pixelated'
+export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated'
 
 export interface RenderSVGOptions extends QrCodeGenerateSvgOptions {
   variant?: SVGVariant | {
@@ -77,8 +71,8 @@ export function pixelVariants(
   padding: number,
 ): string {
   switch (variant) {
-    case 'circular':
-      return renderCircularPixel(result, border, size, color, radius, padding)
+    case 'dots':
+      return renderDotPixel(result, border, size, color, radius, padding)
     case 'rounded':
       return renderRoundedPixel(result, border, size, color, radius)
     case 'pixelated':

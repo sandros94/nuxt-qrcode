@@ -1,4 +1,4 @@
-export * from './circular'
+export * from './dots'
 export * from './default'
 export * from './pixelated'
 export * from './rounded'
