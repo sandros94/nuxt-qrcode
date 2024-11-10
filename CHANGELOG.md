@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.2.3
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.2...v0.2.3)
+
+### 🩹 Fixes
+
+- Border rendering ([605192c](https://github.com/sandros94/nuxt-qrcode/commit/605192c))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.2.2
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.1...v0.2.2)
