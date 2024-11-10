@@ -1,20 +1,20 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import {
-  renderMarkersDefault,
-  renderPixelsDefault,
+  renderDefaultMarker,
+  renderDefaultPixel,
 } from './variants/default'
 import {
-  renderMarkersCircular,
-  renderPixelsCircular,
+  renderCircularMarker,
+  renderCircularPixel,
 } from './variants/circular'
 import {
-  renderMarkersRounded,
-  renderPixelsRounded,
+  renderRoundedMarker,
+  renderRoundedPixel,
 } from './variants/rounded'
 import {
-  renderMarkersPixelated,
-  renderPixelsPixelated,
+  renderPixelatedMarker,
+  renderPixelatedPixel,
 } from './variants/pixelated'
 
 export type SVGVariant = 'default' | 'circular' | 'rounded' | 'pixelated'
@@ -75,14 +75,14 @@ export function pixelVariants(
 ): string {
   switch (variant) {
     case 'circular':
-      return renderPixelsCircular(result, border, size, color, radius, padding)
+      return renderCircularPixel(result, border, size, color, radius, padding)
     case 'rounded':
-      return renderPixelsRounded(result, border, size, color, radius)
+      return renderRoundedPixel(result, border, size, color, radius)
     case 'pixelated':
-      return renderPixelsPixelated(result, border, size, color)
+      return renderPixelatedPixel(result, border, size, color)
     case 'default':
     default:
-      return renderPixelsDefault(result, border, size, color)
+      return renderDefaultPixel(result, border, size, color)
   }
 }
 
@@ -97,14 +97,14 @@ export function markerVariants(
 ): string {
   switch (variant) {
     case 'circular':
-      return renderMarkersCircular(result, border, size, color, radius, padding)
+      return renderCircularMarker(result, border, size, color, radius, padding)
     case 'rounded':
-      return renderMarkersRounded(result, border, size, color, radius)
+      return renderRoundedMarker(result, border, size, color, radius)
     case 'pixelated':
-      return renderMarkersPixelated(result, border, size, color)
+      return renderPixelatedMarker(result, border, size, color)
     case 'default':
     default:
-      return renderMarkersDefault(result, border, size, color)
+      return renderDefaultMarker(result, border, size, color)
   }
 }
 

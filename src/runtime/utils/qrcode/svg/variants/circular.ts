@@ -4,7 +4,7 @@ import {
   renderUtils,
 } from '../render'
 
-export function renderPixelsCircular(
+export function renderCircularPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -37,7 +37,7 @@ export function renderPixelsCircular(
   return svg
 }
 
-export function renderMarkersCircular(
+export function renderCircularMarker(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,

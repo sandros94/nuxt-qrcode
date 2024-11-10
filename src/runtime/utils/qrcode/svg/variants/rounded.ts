@@ -5,7 +5,7 @@ import {
 } from '../render'
 import { createCircularPixel } from './circular'
 
-export function renderPixelsRounded(
+export function renderRoundedPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -29,7 +29,7 @@ export function renderPixelsRounded(
   return `<path fill="${color}" d="${paths.join(' ')}"/>`
 }
 
-export function renderMarkersRounded(
+export function renderRoundedMarker(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,

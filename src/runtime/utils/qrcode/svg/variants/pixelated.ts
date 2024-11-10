@@ -1,7 +1,7 @@
 import type { encode } from 'uqr'
 import { renderUtils } from '../render'
 
-export function renderPixelsPixelated(
+export function renderPixelatedPixel(
   result: ReturnType<typeof encode>,
   border: number,
   pixelSize: number,
@@ -31,7 +31,7 @@ export function renderPixelsPixelated(
 </g>`
 }
 
-export function renderMarkersPixelated(
+export function renderPixelatedMarker(
   result: ReturnType<typeof encode>,
   border: number,
   pixelSize: number,

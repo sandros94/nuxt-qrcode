@@ -1,7 +1,7 @@
 import type { encode } from 'uqr'
 import { renderUtils } from '../render'
 
-export function renderPixelsDefault(
+export function renderDefaultPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -23,7 +23,7 @@ export function renderPixelsDefault(
   return `<path fill="${color}" d="${pixelPaths.join('')}" shape-rendering="crispEdges"/>`
 }
 
-export function renderMarkersDefault(
+export function renderDefaultMarker(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
