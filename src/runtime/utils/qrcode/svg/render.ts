@@ -1,32 +1,27 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import {
-  renderMarkersDefault,
-  renderPixelsDefault,
-} from './variants/default'
+  renderDefaultPixel,
+  renderDotPixel,
+  renderRoundedPixel,
+  renderPixelatedPixel,
+} from './variants'
 import {
-  renderMarkersCircular,
-  renderPixelsCircular,
-} from './variants/circular'
-import {
-  renderMarkersRounded,
-  renderPixelsRounded,
-} from './variants/rounded'
-import {
-  renderMarkersPixelated,
-  renderPixelsPixelated,
-} from './variants/pixelated'
+  renderMarkers,
+} from './markers'
 
-export type SVGVariant = 'default' | 'circular' | 'rounded' | 'pixelated'
+export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated' | 'circle'
 
 export interface RenderSVGOptions extends QrCodeGenerateSvgOptions {
   variant?: SVGVariant | {
     pixel?: SVGVariant
     marker?: SVGVariant
+    inner?: SVGVariant
   }
   radius?: number | {
-    marker?: number
     pixel?: number
+    marker?: number
+    inner?: number
   }
   pixelPadding?: number
 }
@@ -51,14 +46,16 @@ export function renderSVG(
 
   const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
   const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
+  const innerRadius = typeof radius === 'number' ? radius : radius?.inner ?? markerRadius
   const pixelVariant = typeof variant === 'string' ? variant : variant?.pixel || 'default'
   const markerVariant = typeof variant === 'string' ? variant : variant?.marker || 'default'
+  const innerVariant = typeof variant === 'string' ? variant : variant?.inner || markerVariant
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
   svg += pixelVariants(pixelVariant, result, opts.border, pixelSize, foregroundColor, pixelRadius, pixelPadding)
-  svg += markerVariants(markerVariant, result, opts.border, pixelSize, foregroundColor, markerRadius, pixelPadding)
+  svg += renderMarkers(result, opts.border, pixelSize, foregroundColor, pixelPadding, markerVariant, innerVariant, markerRadius, innerRadius)
 
   svg += '</svg>'
   return svg
@@ -74,37 +71,16 @@ export function pixelVariants(
   padding: number,
 ): string {
   switch (variant) {
-    case 'circular':
-      return renderPixelsCircular(result, border, size, color, radius, padding)
+    case 'circle':
+    case 'dots':
+      return renderDotPixel(result, border, size, color, radius, padding)
     case 'rounded':
-      return renderPixelsRounded(result, border, size, color, radius)
+      return renderRoundedPixel(result, border, size, color, radius)
     case 'pixelated':
-      return renderPixelsPixelated(result, border, size, color)
+      return renderPixelatedPixel(result, border, size, color)
     case 'default':
     default:
-      return renderPixelsDefault(result, border, size, color)
-  }
-}
-
-export function markerVariants(
-  variant: SVGVariant = 'default',
-  result: ReturnType<typeof encode>,
-  border: number = 1,
-  size: number,
-  color: string,
-  radius: number,
-  padding: number,
-): string {
-  switch (variant) {
-    case 'circular':
-      return renderMarkersCircular(result, border, size, color, radius, padding)
-    case 'rounded':
-      return renderMarkersRounded(result, border, size, color, radius)
-    case 'pixelated':
-      return renderMarkersPixelated(result, border, size, color)
-    case 'default':
-    default:
-      return renderMarkersDefault(result, border, size, color)
+      return renderDefaultPixel(result, border, size, color)
   }
 }
 
@@ -120,36 +96,39 @@ export function limitInput(number: number): number {
   return Math.max(0, Math.min(1, number))
 }
 
-export function renderUtils(qrSize: number, qrBorder: number, markerSize: number = 7) {
+export function renderUtils(qrSize: number, qrBorder: number) {
   const innerSize = qrSize - qrBorder
+  const markerSize = 7
 
-  const d = (n: number) => n - qrBorder
+  const markerPositions = [
+    [qrBorder, qrBorder],
+    [qrBorder, innerSize - markerSize],
+    [innerSize - markerSize, qrBorder],
+  ]
 
-  const isTopLeft = (row: number, col: number) => d(row) < markerSize && d(col) < markerSize
-  const isTopRight = (row: number, col: number) => d(row) < markerSize && d(col) >= innerSize - markerSize - 1
-  const isBottomLeft = (row: number, col: number) => d(row) >= innerSize - markerSize - 1 && d(col) < markerSize
+  const isInMarkerRange = (value: number, markerStart: number) =>
+    value >= markerStart && value < markerStart + markerSize
 
-  const isMarker = (row: number, col: number) => isTopLeft(row, col) || isTopRight(row, col) || isBottomLeft(row, col)
-  const isMarkerCenter = (row: number, col: number) => {
-    let center = false
-    if (isMarker(row, col)) {
-      const localX = isTopRight(row, col) ? d(row) - (innerSize - markerSize) : d(row)
-      const localY = isBottomLeft(row, col) ? d(col) - (innerSize - markerSize) : d(col)
-      center = localX >= 2 && localX <= 4 && localY >= 2 && localY <= 4
-    }
-    return center
-  }
+  const isMarker = (row: number, col: number) =>
+    markerPositions.some(([x, y]) =>
+      isInMarkerRange(row, x) && isInMarkerRange(col, y),
+    )
+
+  const isMarkerCenter = (row: number, col: number) =>
+    markerPositions.some(([x, y]) =>
+      row >= x + 2 && row <= x + 4 && col >= y + 2 && col <= y + 4,
+    )
 
   return {
-    isTopLeft,
-    isTopRight,
-    isBottomLeft,
+    isTopLeft: (row: number, col: number) =>
+      row < markerSize && col < markerSize,
+    isTopRight: (row: number, col: number) =>
+      row < markerSize && col >= innerSize - markerSize,
+    isBottomLeft: (row: number, col: number) =>
+      row >= innerSize - markerSize && col < markerSize,
     isMarker,
     isMarkerCenter,
-    markerPositions: [
-      [qrBorder, qrBorder],
-      [qrBorder, innerSize - markerSize],
-      [innerSize - markerSize, qrBorder],
-    ],
+    markerPositions,
+    markerCenterPositions: markerPositions.map(([x, y]) => [x + 2, y + 2]),
   }
 }

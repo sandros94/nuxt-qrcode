@@ -4,8 +4,11 @@
       <option value="default">
         Default
       </option>
-      <option value="circular">
-        Circular
+      <option value="dots">
+        Dots
+      </option>
+      <option value="circle">
+        Circle
       </option>
       <option value="pixelated">
         Pixelated
@@ -15,7 +18,7 @@
       </option>
     </select>
     <input
-      v-if="variant === 'circular' || variant === 'rounded'"
+      v-if="variant === 'dots' || variant === 'circle' || variant === 'rounded'"
       v-model.number="radius"
       type="range"
       min="0"

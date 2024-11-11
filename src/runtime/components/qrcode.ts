@@ -13,7 +13,7 @@ export default defineComponent({
       required: true,
     },
     variant: {
-      type: String as PropType<RenderSVGOptions['variant']>,
+      type: [String, Object] as PropType<RenderSVGOptions['variant']>,
     },
     radius: {
       type: Number as PropType<RenderSVGOptions['radius']>,

@@ -1,7 +1,7 @@
 import type { encode } from 'uqr'
 import { renderUtils } from '../render'
 
-export function renderPixelsDefault(
+export function renderDefaultPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -23,41 +23,24 @@ export function renderPixelsDefault(
   return `<path fill="${color}" d="${pixelPaths.join('')}" shape-rendering="crispEdges"/>`
 }
 
-export function renderMarkersDefault(
-  result: ReturnType<typeof encode>,
-  border: number,
+export function renderDefaultMarkerOuter(
+  x: number,
+  y: number,
   size: number,
   color: string,
-): string {
-  let svg = ''
-  const { markerPositions } = renderUtils(result.size, border)
+) {
+  const outerPaths: string[] = []
 
-  markerPositions.forEach(([row, col]) => {
-    const ox = col * size
-    const oy = row * size
-    const centerSize = 3 * size
+  outerPaths.push(`M${x},${y}h${7 * size}v${7 * size}h-${7 * size}z M${x + 6 * size},${y + size}h-${5 * size}v${5 * size}h${5 * size}z`)
 
-    // Outer square
-    const outerPaths: string[] = []
-    for (let i = 0; i < 7; i++) {
-      for (let j = 0; j < 7; j++) {
-        if (i === 0 || i === 6 || j === 0 || j === 6) {
-          const xi = ox + i * size
-          const yi = oy + j * size
-          outerPaths.push(`M${xi},${yi}h${size}v${size}h-${size}z`)
-        }
-      }
-    }
+  return `<path fill="${color}" d="${outerPaths.join('')}"/>`
+}
 
-    // Center square
-    const centerX = ox + 2 * size
-    const centerY = oy + 2 * size
-
-    svg += `<g shape-rendering="crispEdges">
-  <path fill="${color}" d="${outerPaths.join('')}"/>
-  <rect x="${centerX}" y="${centerY}" width="${centerSize}" height="${centerSize}" fill="${color}"/>
-</g>`
-  })
-
-  return svg
+export function renderDefaultMarkerInner(
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+) {
+  return `<rect x="${x}" y="${y}" width="${3 * size}" height="${3 * size}" fill="${color}"/>`
 }

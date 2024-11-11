@@ -3,9 +3,8 @@ import {
   limitInput,
   renderUtils,
 } from '../render'
-import { createCircularPixel } from './circular'
 
-export function renderPixelsRounded(
+export function renderRoundedPixel(
   result: ReturnType<typeof encode>,
   border: number,
   size: number,
@@ -29,38 +28,35 @@ export function renderPixelsRounded(
   return `<path fill="${color}" d="${paths.join(' ')}"/>`
 }
 
-export function renderMarkersRounded(
-  result: ReturnType<typeof encode>,
-  border: number,
+export function renderRoundedMarkerOuter(
+  x: number,
+  y: number,
   size: number,
   color: string,
   radius: number,
 ): string {
-  let svg = ''
-  const { markerPositions } = renderUtils(result.size, border)
   const clampedRadius = limitInput(radius)
+  const actualRadius = (clampedRadius * size) / 2
 
-  markerPositions.forEach(([row, col]) => {
-    const ox = col * size + size / 2
-    const oy = row * size + size / 2
-    const cx = ox + size + size / 2
-    const cy = oy + size + size / 2
-    const outerSize = 7 * size - size
-    const centerSize = 3 * size
+  const outerPath = createRoundedRectPath(x, y, 7 * size, 7 * size, actualRadius)
+  const innerPath = createReversedRoundedRectPath(x + size, y + size, 5 * size, 5 * size, actualRadius)
 
-    // Calculate the maximum possible radius for the outer square
-    const maxOuterRadius = outerSize / 2
-    // Apply the clampedRadius (0-1) to the maximum possible radius
-    const outerRadius = clampedRadius * maxOuterRadius
+  return `<path fill="${color}" d="${outerPath} ${innerPath}"/>`
+}
 
-    // Outer square
-    svg += `<rect x="${ox}" y="${oy}" width="${outerSize}" height="${outerSize}" rx="${outerRadius}" fill="none" stroke="${color}" stroke-width="${size}"/>`
+export function renderRoundedMarkerInner(
+  x: number,
+  y: number,
+  size: number,
+  color: string,
+  radius: number,
+): string {
+  const clampedRadius = limitInput(radius)
+  const actualRadius = (clampedRadius * size) / 2
 
-    // Center circle
-    svg += createCircularPixel(cx, cy, centerSize, (clampedRadius * centerSize) / 2, color)
-  })
+  const path = createRoundedRectPath(x, y, 3 * size, 3 * size, actualRadius)
 
-  return svg
+  return `<path fill="${color}" d="${path}"/>`
 }
 
 function tracePath(
@@ -148,4 +144,40 @@ function createPixelPath(
   commands.push('Z')
 
   return commands.join(' ')
+}
+
+function createRoundedRectPath(x: number, y: number, width: number, height: number, radius: number): string {
+  const adjustedRadius = Math.min(radius, Math.min(width, height) / 2)
+  const curve = adjustedRadius * (4 / 3) * Math.tan(Math.PI / 8)
+
+  return [
+    `M${x + adjustedRadius},${y}`,
+    `H${x + width - adjustedRadius}`,
+    `C${x + width - adjustedRadius + curve},${y} ${x + width},${y + adjustedRadius - curve} ${x + width},${y + adjustedRadius}`,
+    `V${y + height - adjustedRadius}`,
+    `C${x + width},${y + height - adjustedRadius + curve} ${x + width - adjustedRadius + curve},${y + height} ${x + width - adjustedRadius},${y + height}`,
+    `H${x + adjustedRadius}`,
+    `C${x + adjustedRadius - curve},${y + height} ${x},${y + height - adjustedRadius + curve} ${x},${y + height - adjustedRadius}`,
+    `V${y + adjustedRadius}`,
+    `C${x},${y + adjustedRadius - curve} ${x + adjustedRadius - curve},${y} ${x + adjustedRadius},${y}`,
+    'Z',
+  ].join(' ')
+}
+
+function createReversedRoundedRectPath(x: number, y: number, width: number, height: number, radius: number): string {
+  const adjustedRadius = Math.min(radius, Math.min(width, height) / 2)
+  const curve = adjustedRadius * (4 / 3) * Math.tan(Math.PI / 8)
+
+  return [
+    `M${x + width - adjustedRadius},${y}`,
+    `H${x + adjustedRadius}`,
+    `C${x + adjustedRadius - curve},${y} ${x},${y + adjustedRadius - curve} ${x},${y + adjustedRadius}`,
+    `V${y + height - adjustedRadius}`,
+    `C${x},${y + height - adjustedRadius + curve} ${x + adjustedRadius - curve},${y + height} ${x + adjustedRadius},${y + height}`,
+    `H${x + width - adjustedRadius}`,
+    `C${x + width - adjustedRadius + curve},${y + height} ${x + width},${y + height - adjustedRadius + curve} ${x + width},${y + height - adjustedRadius}`,
+    `V${y + adjustedRadius}`,
+    `C${x + width},${y + adjustedRadius - curve} ${x + width - adjustedRadius + curve},${y} ${x + width - adjustedRadius},${y}`,
+    'Z',
+  ].join(' ')
 }

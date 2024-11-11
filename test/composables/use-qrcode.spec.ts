@@ -10,7 +10,7 @@ describe('useQrcode', () => {
   })
 
   it('custom variant', () => {
-    const result = useQrcode(testData, { variant: 'circular' })
+    const result = useQrcode(testData, { variant: 'pixelated' })
     expect(result.value).toMatchSnapshot()
   })
 
@@ -25,7 +25,7 @@ describe('useQrcode', () => {
   })
 
   it('different pixel and marker variants', () => {
-    const result = useQrcode(testData, { variant: { pixel: 'circular', marker: 'rounded' } })
+    const result = useQrcode(testData, { variant: { pixel: 'dots', marker: 'rounded', inner: 'circle' } })
     expect(result.value).toMatchSnapshot()
   })
 
