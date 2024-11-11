@@ -110,7 +110,10 @@ The `Qrcode` component only requires a `value` prop to work
 ```vue
 <template>
   <div>
-    <Qrcode value="My long string to encode" />
+    <Qrcode
+      value="My string to encode"
+      variant="pixelated"
+    />
   </div>
 </template>
 ```
