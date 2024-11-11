@@ -69,7 +69,84 @@ That's it! You can now use Nuxt QRCode in your Nuxt app ✨
 
 ## How to use it
 
-TODO: add examples to readme, for now follow what is available from the upstream docs or current [playground](/playground/).
+### Customize defaults
+
+You can set default options within your `nuxt.config.ts`
+
+#### `Qrcode` and `useQrcode`
+
+You can customize things like:
+- default variant style
+- radius (`0` is none, `1` is full)
+- and css color for black and white pixels
+
+```ts
+export default defineNuxtConfig({
+  modules: ['nuxt-qrcode'],
+
+  qrcode: {
+    options: {
+      variant: 'pixelated',
+      // OR
+      variant: {
+        inner: 'circle',
+        marker: 'rounded',
+        pixel: 'rounded',
+      },
+      radius: 1,
+      blackColor: 'currentColor', // 'var(--ui-text)' if you are using `@nuxt/ui` v3
+      whiteColor: 'transparent',  // 'var(--ui-bg)'
+    },
+  },
+})
+```
+
+### Use the components
+
+#### `Qrcode`
+
+The `Qrcode` component only requires a `value` prop to work
+
+```vue
+<template>
+  <div>
+    <Qrcode value="My long string to encode" />
+  </div>
+</template>
+```
+
+But it also accepts all the same props available at `qrcode.options` in your `nuxt.config.ts`.
+
+#### `QrcodeStream`
+
+Ready to use component to capture and decode a live feed from the device's camera. As simple as:
+
+```vue
+<template>
+  <div>
+    <QrcodeStream
+      @error="onError"
+      @detect="onDetect"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+import type { DetectedBarcode } from 'nuxt-qrcode'
+
+function onDetect(detectedCodes: DetectedBarcode[]) {
+  // do something with decoded qrcodes `DetectedBarcode['rawValue']
+}
+
+function onError(err: Error) {
+  // do something on stream error
+}
+</script>
+```
+
+#### `QrcodeCaptrue` and `QrcodeDropZone`
+
+TODO: add examples, for now follow what is available from the [upstream docs](https://gruhn.github.io/vue-qrcode-reader/) or current [playground](/playground/) implementation.
 
 ## Development
 
