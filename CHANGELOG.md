@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.3...v0.3.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Add `inner` marker variant control ([d05417f](https://github.com/sandros94/nuxt-qrcode/commit/d05417f))
+- New `circle` variant for markers ([b7a7b6a](https://github.com/sandros94/nuxt-qrcode/commit/b7a7b6a))
+
+### 🩹 Fixes
+
+- `renderUtils` function ([c9bb90c](https://github.com/sandros94/nuxt-qrcode/commit/c9bb90c))
+- **Qrcode:** Variant prop type check ([6e457ab](https://github.com/sandros94/nuxt-qrcode/commit/6e457ab))
+
+### 💅 Refactors
+
+- ⚠️  Internal function naming ([31e2f50](https://github.com/sandros94/nuxt-qrcode/commit/31e2f50))
+- `renderUtils` function ([67451d4](https://github.com/sandros94/nuxt-qrcode/commit/67451d4))
+- ⚠️  Rename `circular` variant to `dots` ([a7231c9](https://github.com/sandros94/nuxt-qrcode/commit/a7231c9))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Add `inner` marker variant control ([d05417f](https://github.com/sandros94/nuxt-qrcode/commit/d05417f))
+- ⚠️  Internal function naming ([31e2f50](https://github.com/sandros94/nuxt-qrcode/commit/31e2f50))
+- ⚠️  Rename `circular` variant to `dots` ([a7231c9](https://github.com/sandros94/nuxt-qrcode/commit/a7231c9))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.2.3
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.2...v0.2.3)
