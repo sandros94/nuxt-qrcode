@@ -10,7 +10,7 @@ import {
   renderMarkers,
 } from './markers'
 
-export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated'
+export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated' | 'circle'
 
 export interface RenderSVGOptions extends QrCodeGenerateSvgOptions {
   variant?: SVGVariant | {
@@ -71,6 +71,7 @@ export function pixelVariants(
   padding: number,
 ): string {
   switch (variant) {
+    case 'circle':
     case 'dots':
       return renderDotPixel(result, border, size, color, radius, padding)
     case 'rounded':

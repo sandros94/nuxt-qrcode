@@ -6,17 +6,17 @@ import {
   renderUtils,
 } from './render'
 import {
-  renderDotMarkerOuter,
-  renderDotMarkerInner,
+  renderCircleMarkerOuter,
+  renderCircleMarkerInner,
   renderDefaultMarkerOuter,
   renderDefaultMarkerInner,
+  renderDotMarkerOuter,
+  renderDotMarkerInner,
   renderPixelatedMarkerOuter,
   renderPixelatedMarkerInner,
   renderRoundedMarkerOuter,
   renderRoundedMarkerInner,
 } from './variants'
-
-type MarkerVariant = SVGVariant
 
 export function renderMarkers(
   result: ReturnType<typeof encode>,
@@ -24,8 +24,8 @@ export function renderMarkers(
   size: number,
   color: string,
   padding: number,
-  outerVariant: MarkerVariant = 'default',
-  innerVariant: MarkerVariant = 'default',
+  outerVariant: SVGVariant = 'default',
+  innerVariant: SVGVariant = 'default',
   outerRadius: number,
   innerRadius: number,
 ) {
@@ -58,6 +58,8 @@ export function markerOuterVariants(
   switch (variant) {
     case 'dots':
       return renderDotMarkerOuter(x, y, size, color, radius, padding)
+    case 'circle':
+      return renderCircleMarkerOuter(x, y, size, color, radius)
     case 'rounded':
       return renderRoundedMarkerOuter(x, y, size, color, radius)
     case 'pixelated':
@@ -80,6 +82,8 @@ export function markerInnerVariants(
   switch (variant) {
     case 'dots':
       return renderDotMarkerInner(x, y, size, color, radius, padding)
+    case 'circle':
+      return renderCircleMarkerInner(x, y, size, color, radius)
     case 'rounded':
       return renderRoundedMarkerInner(x, y, size, color, radius)
     case 'pixelated':
