@@ -39,11 +39,11 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.13.2",
-    "@vueuse/core": "^11.1.0",
-    "barcode-detector": "^2.2.8",
+    "@nuxt/kit": "^3.14.159",
+    "@vueuse/core": "^11.2.0",
+    "barcode-detector": "^2.3.1",
     "uqr": "^0.1.2",
-    "vue-qrcode-reader": "^5.5.10"
+    "vue-qrcode-reader": "^5.5.11"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.6.0",

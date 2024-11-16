@@ -12,19 +12,19 @@ importers:
   .:
     dependencies:
       '@nuxt/kit':
-        specifier: ^3.13.2
+        specifier: ^3.14.159
         version: 3.14.159(magicast@0.3.5)(rollup@3.29.5)
       '@vueuse/core':
-        specifier: ^11.1.0
+        specifier: ^11.2.0
         version: 11.2.0(vue@3.5.13(typescript@5.6.3))
       barcode-detector:
-        specifier: ^2.2.8
+        specifier: ^2.3.1
         version: 2.3.1
       uqr:
         specifier: ^0.1.2
         version: 0.1.2
       vue-qrcode-reader:
-        specifier: ^5.5.10
+        specifier: ^5.5.11
         version: 5.5.11
     devDependencies:
       '@nuxt/devtools':
@@ -70,7 +70,7 @@ importers:
   playground:
     dependencies:
       nuxt:
-        specifier: ^3.14.159
+        specifier: latest
         version: 3.14.159(@parcel/watcher@2.5.0)(@types/node@22.9.0)(eslint@9.15.0(jiti@2.4.0))(ioredis@5.4.1)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.27.2)(terser@5.36.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0)(terser@5.36.0))(vue-tsc@2.1.10(typescript@5.6.3))
       nuxt-qrcode:
         specifier: workspace:*
