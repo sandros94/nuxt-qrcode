@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import type { QrCodeGenerateData } from 'uqr'
 import { defu } from 'defu'
 
