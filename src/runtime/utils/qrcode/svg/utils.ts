@@ -9,14 +9,14 @@ export function getColors(options: QrCodeGenerateSvgOptions) {
   }
 }
 
-export function getSize(size: QrCodeGenerateResult['size'], pixelSize: number) {
+export function getSize(size: QrCodeGenerateResult['size'], pixelSize: number = DEFAULT_PIXEL_SIZE) {
   return {
     height: size * pixelSize,
     width: size * pixelSize
   }
 }
 
-export function getRadius(radius: RenderSVGOptions['radius'], defRadius: number = 0.5) {
+export function getRadius(radius: RenderSVGOptions['radius'], defRadius: number = DEFAULT_RADIUS) {
   const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? defRadius
   const outer = typeof radius === 'number' ? radius : radius?.marker ?? defRadius
   const inner = typeof radius === 'number' ? radius : radius?.inner ?? outer
@@ -84,3 +84,7 @@ export function renderUtils(qrSize: number, qrBorder: number) {
     markerCenterPositions: markerPositions.map(([x, y]) => [x + 2, y + 2]),
   }
 }
+
+export const DEFAULT_RADIUS = 0.5
+export const DEFAULT_PADDING = 0.1
+export const DEFAULT_PIXEL_SIZE = 10

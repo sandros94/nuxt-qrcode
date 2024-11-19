@@ -23,15 +23,15 @@ export function renderMarkers(
   border: number = 1,
   size: number,
   color: string,
-  padding: number,
   variant: {
     outer: SVGVariant,
     inner: SVGVariant,
   },
-  radius: {
+  radius?: {
     outer: number,
     inner: number,
   },
+  padding?: number,
 ) {
   const { markerPositions } = renderUtils(result.size, border)
 
@@ -43,8 +43,8 @@ export function renderMarkers(
     const ix = ox + 2 * size
     const iy = oy + 2 * size
 
-    svg += markerOuterVariants(variant.outer, ox, oy, size, color, radius.outer, padding)
-    svg += markerInnerVariants(variant.inner, ix, iy, size, color, radius.inner, padding)
+    svg += markerOuterVariants(variant.outer, ox, oy, size, color, radius?.outer, padding)
+    svg += markerInnerVariants(variant.inner, ix, iy, size, color, radius?.inner, padding)
   })
 
   return svg
@@ -56,8 +56,8 @@ export function markerOuterVariants(
   y: number,
   size: number,
   color: string,
-  radius: number,
-  padding: number,
+  radius?: number,
+  padding?: number,
 ): string {
   switch (variant) {
     case 'dots':
@@ -80,8 +80,8 @@ export function markerInnerVariants(
   y: number,
   size: number,
   color: string,
-  radius: number,
-  padding: number,
+  radius?: number,
+  padding?: number,
 ): string {
   switch (variant) {
     case 'dots':

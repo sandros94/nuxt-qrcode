@@ -2,6 +2,8 @@ import type { encode } from 'uqr'
 import {
   limitInput,
   renderUtils,
+  DEFAULT_RADIUS,
+  DEFAULT_PADDING,
 } from '../utils'
 
 export function renderDotPixel(
@@ -9,8 +11,8 @@ export function renderDotPixel(
   border: number,
   size: number,
   color: string,
-  radius: number,
-  padding: number,
+  radius: number = DEFAULT_RADIUS,
+  padding: number = DEFAULT_PADDING,
 ): string {
   let svg = ''
 
@@ -42,8 +44,8 @@ export function renderDotMarker(
   border: number,
   size: number,
   color: string,
-  radius: number,
-  padding: number,
+  radius: number = DEFAULT_RADIUS,
+  padding: number = DEFAULT_PADDING,
 ): string {
   let svg = ''
 
@@ -89,8 +91,8 @@ export function renderDotMarkerOuter(
   y: number,
   size: number,
   color: string,
-  radius: number = 0.5,
-  padding: number = 0.1,
+  radius: number = DEFAULT_RADIUS,
+  padding: number = DEFAULT_PADDING,
 ) {
   let svg = ''
 
@@ -124,8 +126,8 @@ export function renderDotMarkerInner(
   y: number,
   size: number,
   color: string,
-  radius: number,
-  padding: number,
+  radius: number = DEFAULT_RADIUS,
+  padding: number = DEFAULT_PADDING,
 ) {
   let svg = ''
 

@@ -2,6 +2,7 @@ import type { encode } from 'uqr'
 import {
   limitInput,
   renderUtils,
+  DEFAULT_RADIUS,
 } from '../utils'
 
 export function renderRoundedPixel(
@@ -9,7 +10,7 @@ export function renderRoundedPixel(
   border: number,
   size: number,
   color: string,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
 ): string {
   const paths: string[] = []
   const visited: boolean[][] = Array(result.size).fill(null).map(() => Array(result.size).fill(false))
@@ -33,7 +34,7 @@ export function renderRoundedMarkerOuter(
   y: number,
   size: number,
   color: string,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
 ): string {
   const clampedRadius = limitInput(radius)
   const actualRadius = (clampedRadius * size) / 2
@@ -49,7 +50,7 @@ export function renderRoundedMarkerInner(
   y: number,
   size: number,
   color: string,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
 ): string {
   const clampedRadius = limitInput(radius)
   const actualRadius = (clampedRadius * size) / 2
@@ -98,7 +99,7 @@ function createPixelPath(
   x: number,
   y: number,
   size: number,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
   { top, right, bottom, left }: { top: boolean, right: boolean, bottom: boolean, left: boolean },
 ): string {
   const commands: string[] = []
@@ -146,7 +147,7 @@ function createPixelPath(
   return commands.join(' ')
 }
 
-function createRoundedRectPath(x: number, y: number, width: number, height: number, radius: number): string {
+function createRoundedRectPath(x: number, y: number, width: number, height: number, radius: number = DEFAULT_RADIUS): string {
   const adjustedRadius = Math.min(radius, Math.min(width, height) / 2)
   const curve = adjustedRadius * (4 / 3) * Math.tan(Math.PI / 8)
 
@@ -164,7 +165,7 @@ function createRoundedRectPath(x: number, y: number, width: number, height: numb
   ].join(' ')
 }
 
-function createReversedRoundedRectPath(x: number, y: number, width: number, height: number, radius: number): string {
+function createReversedRoundedRectPath(x: number, y: number, width: number, height: number, radius: number = DEFAULT_RADIUS): string {
   const adjustedRadius = Math.min(radius, Math.min(width, height) / 2)
   const curve = adjustedRadius * (4 / 3) * Math.tan(Math.PI / 8)
 

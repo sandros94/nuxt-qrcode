@@ -14,9 +14,9 @@ export function renderPixels(
   border: number = 1,
   size: number,
   color: string,
-  padding: number,
   variant: SVGVariant = 'default',
-  radius: number,
+  radius?: number,
+  padding?: number,
 ): string {
   switch (variant) {
     case 'circle':

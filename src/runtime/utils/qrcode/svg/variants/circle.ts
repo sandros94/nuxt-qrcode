@@ -1,16 +1,17 @@
 import {
-  limitInput,
-} from '../utils'
-import {
   createDotPixel,
 } from './dots'
+import {
+  limitInput,
+  DEFAULT_RADIUS,
+} from '../utils'
 
 export function renderCircleMarkerOuter(
   x: number,
   y: number,
   size: number,
   color: string,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
 ): string {
   const clampedRadius = limitInput(radius)
   const _size = 6 * size
@@ -27,7 +28,7 @@ export function renderCircleMarkerInner(
   y: number,
   size: number,
   color: string,
-  radius: number,
+  radius: number = DEFAULT_RADIUS,
 ): string {
   const clampedRadius = limitInput(radius)
 
