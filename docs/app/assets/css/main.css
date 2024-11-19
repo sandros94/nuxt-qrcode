@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@import "@nuxt/ui-pro";
+
+@source "../../../content/**/*.md";
+
+@theme {
+  --font-family-sans: 'Public Sans', sans-serif;
+}
+
+:root {
+  --ui-container-width: 90rem;
+}

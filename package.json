@@ -32,6 +32,8 @@
     "dev": "nuxi dev playground --tunnel",
     "dev:build": "nuxi build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "docs": "nuxi dev docs",
+    "docs:build": "nuxi build docs",
     "release": "nr lint && nr test && nr prepack && changelogen --release --push --publish",
     "lint": "eslint .",
     "test": "vitest run",
