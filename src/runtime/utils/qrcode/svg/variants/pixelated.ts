@@ -37,13 +37,7 @@ export function renderPixelatedMarkerOuter(
   const notchSize = size / 4
   const outerPaths: string[] = []
 
-  outerPaths.push(`
-M${x},${y}h${7 * size}v${7 * size}h-${7 * size}z
-M${x + 6 * size},${y + size}h-${5 * size}v${5 * size}h${5 * size}z
-M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z
-M${x + 7 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z
-M${x},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z
-M${x + 7 * size - notchSize},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
+  outerPaths.push(`M${x},${y}h${7 * size}v${7 * size}h-${7 * size}z M${x + 6 * size},${y + size}h-${5 * size}v${5 * size}h${5 * size}z M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z M${x + 7 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z M${x},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z M${x + 7 * size - notchSize},${y + 7 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
 
   return `<g shape-rendering="crispEdges">
   <path fill="${color}" d="${outerPaths.join('')}"/>
@@ -59,12 +53,7 @@ export function renderPixelatedMarkerInner(
   const notchSize = size / 4
   const outerPaths: string[] = []
 
-  outerPaths.push(`
-M${x},${y}h${3 * size}v${3 * size}h-${3 * size}z
-M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z
-M${x + 3 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z
-M${x},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z
-M${x + 3 * size - notchSize},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
+  outerPaths.push(`M${x},${y}h${3 * size}v${3 * size}h-${3 * size}z M${x + notchSize},${y}h-${notchSize}v${notchSize}h${notchSize}z M${x + 3 * size},${y}h-${notchSize}v${notchSize}h${notchSize}z M${x},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z M${x + 3 * size - notchSize},${y + 3 * size}h${notchSize}v-${notchSize}h-${notchSize}z`)
 
   return `<g shape-rendering="crispEdges">
   <path fill="${color}" d="${outerPaths.join('')}"/>
