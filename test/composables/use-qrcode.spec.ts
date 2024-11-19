@@ -9,6 +9,11 @@ describe('useQrcode', () => {
     expect(result.value).toMatchSnapshot()
   })
 
+  it('custom color', () => {
+    const result = useQrcode(testData, { whiteColor: 'transparent', blackColor: '#F0F' })
+    expect(result.value).toMatchSnapshot()
+  })
+
   it('custom variant', () => {
     const result = useQrcode(testData, { variant: 'pixelated' })
     expect(result.value).toMatchSnapshot()

@@ -1,12 +1,12 @@
 import { defu } from 'defu'
 import { reactivePick } from '@vueuse/core'
 import { type QrCodeGenerateData, encode } from 'uqr'
-import type { RenderSVGOptions } from 'nuxt-qrcode'
-import { type PropType, type VNode, ref, computed, toRefs, defineComponent, h, watchEffect, useRuntimeConfig } from '#imports'
+import type { QrcodeProps, RenderSVGOptions } from 'nuxt-qrcode'
+import { type PropType, type VNode, ref, computed, defineComponent, h, watchEffect, useRuntimeConfig } from '#imports'
 import { renderSVGBody } from '#qrcode/utils/qrcode/svg/render'
 import { getSize } from '#qrcode/utils/qrcode/svg/utils'
 
-export default defineComponent({
+export default defineComponent<QrcodeProps>({
   name: 'Qrcode',
   props: {
     value: {
@@ -56,35 +56,61 @@ export default defineComponent({
       type: Number as PropType<RenderSVGOptions['pixelSize']>,
     },
   },
-  setup(props) {
+  setup(props, { attrs }) {
     const qr = ref<VNode>()
     const _options = reactivePick(props, (_, key) => key !== 'value')
     const options = computed(() => {
-      return defu(
+      return defu<QrcodeProps, RenderSVGOptions[]>(
         _options,
-        useRuntimeConfig().public.qrcode.options,
-      ) as RenderSVGOptions
+        useRuntimeConfig().public.qrcode.options as RenderSVGOptions,
+      )
     })
 
     watchEffect(() => {
       const {
+        value,
         radius,
         pixelSize,
         pixelPadding,
         variant,
+
+        // SVGAttrs
+        width,
+        height,
+        preserveAspectRatio,
+
+        // render body
+        whiteColor,
+        blackColor,
+        invert,
+
+        // encode options
         ...opts
       } = options.value
     
       const result = encode(props.value, opts)
-      const { width, height } = getSize(result.size, pixelSize)
+      const s = getSize(result.size, pixelSize)
 
       qr.value = h('svg', {
+        ...attrs,
+        width,
+        height,
+        preserveAspectRatio,
         xmlns: 'http://www.w3.org/2000/svg',
-        viewBox: `0 0 ${width} ${height}`,
-        preserveAspectRatio: 'xMidYMid meet',
-        width:'100%',
-        height: '100%',
-        innerHTML: renderSVGBody(result, { radius, pixelSize, pixelPadding, variant, border: opts.border })
+        viewBox: `0 0 ${s.width} ${s.height}`,
+        innerHTML: renderSVGBody(
+          result,
+          {
+            radius,
+            pixelSize,
+            pixelPadding,
+            variant,
+            border: opts.border,
+            whiteColor,
+            blackColor,
+            invert,
+          }
+        )
       })
     })
 

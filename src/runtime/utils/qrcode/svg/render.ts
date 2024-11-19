@@ -45,9 +45,9 @@ export function renderSVG(
   const result = encode(data, opts)
   const { width, height } = getSize(result.size, pixelSize)
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" width="100%" height="100%">`
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
 
-  svg += renderSVGBody(result, { radius, pixelSize, pixelPadding, variant, border: opts.border })
+  svg += renderSVGBody(result, options)
 
   svg += '</svg>'
   return svg
@@ -55,7 +55,7 @@ export function renderSVG(
 
 export function renderSVGBody(
   result: ReturnType<typeof encode>,
-  options: Pick<RenderSVGOptions, 'radius' | 'pixelSize' | 'pixelPadding' | 'variant' | 'border'> = {},
+  options: RenderSVGOptions = {},
 ): string {
   const {
     radius,
