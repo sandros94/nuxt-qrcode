@@ -87,4 +87,4 @@ export function renderUtils(qrSize: number, qrBorder: number) {
 
 export const DEFAULT_RADIUS = 0.5
 export const DEFAULT_PADDING = 0.1
-export const DEFAULT_PIXEL_SIZE = 10
+export const DEFAULT_PIXEL_SIZE = 20
