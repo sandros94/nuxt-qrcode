@@ -99,6 +99,9 @@ importers:
       nuxt-qrcode:
         specifier: workspace:*
         version: link:..
+      ofetch:
+        specifier: ^1.4.1
+        version: 1.4.1
 
   playground:
     dependencies:

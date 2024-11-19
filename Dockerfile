@@ -19,7 +19,8 @@ ARG NUXT_UI_PRO_LICENSE
 
 # Build production
 COPY . ./
-RUN pnpm install --offline && pnpm run dev:prepare && pnpm run docs:build
+RUN pnpm install --offline && pnpm run dev:prepare
+RUN pnpm run docs:build
 
 # Final production container
 FROM oven/bun:alpine AS runtime
