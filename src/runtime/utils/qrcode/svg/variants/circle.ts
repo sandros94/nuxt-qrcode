@@ -1,6 +1,6 @@
 import {
   limitInput,
-} from '../render'
+} from '../utils'
 import {
   createDotPixel,
 } from './dots'

@@ -2,7 +2,7 @@ import type { encode } from 'uqr'
 import {
   limitInput,
   renderUtils,
-} from '../render'
+} from '../utils'
 
 export function renderRoundedPixel(
   result: ReturnType<typeof encode>,

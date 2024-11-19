@@ -1,5 +1,5 @@
 import type { encode } from 'uqr'
-import { renderUtils } from '../render'
+import { renderUtils } from '../utils'
 
 export function renderPixelatedPixel(
   result: ReturnType<typeof encode>,

@@ -1,10 +1,12 @@
 // src/runtime/utils/qrcode/svg/markers.ts
 
 import type { encode } from 'uqr'
-import {
-  type SVGVariant,
-  renderUtils,
+import type {
+  SVGVariant,
 } from './render'
+import {
+  renderUtils,
+} from './utils'
 import {
   renderCircleMarkerOuter,
   renderCircleMarkerInner,
