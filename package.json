@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "A Nuxt module to provide support for QR Code generation and read.",
   "repository": "https://github.com/sandros94/nuxt-qrcode",
+  "homepage": "https://qrcode.s94.dev",
   "license": "MIT",
   "type": "module",
   "author": {
@@ -34,6 +35,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
     "docs": "nuxi dev docs",
     "docs:build": "nuxi build docs",
+    "docs:preview": "nuxi preview docs",
     "release": "nr lint && nr test && nr prepack && changelogen --release --push --publish",
     "lint": "eslint .",
     "test": "vitest run",
