@@ -1,5 +1,3 @@
-![QRCode for `qrcode.s94.dev`](/docs/public/qrcode.s94.dev.svg)
-
 # Nuxt QRCode
 
 [![npm version][npm-version-src]][npm-version-href]
