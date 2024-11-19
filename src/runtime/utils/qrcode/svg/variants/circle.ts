@@ -1,10 +1,10 @@
 import {
-  createDotPixel,
-} from './dots'
-import {
   limitInput,
   DEFAULT_RADIUS,
 } from '../utils'
+import {
+  createDotPixel,
+} from './dots'
 
 export function renderCircleMarkerOuter(
   x: number,

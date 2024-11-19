@@ -24,12 +24,12 @@ export function renderMarkers(
   size: number,
   color: string,
   variant: {
-    outer: SVGVariant,
-    inner: SVGVariant,
+    outer: SVGVariant
+    inner: SVGVariant
   },
   radius?: {
-    outer: number,
-    inner: number,
+    outer: number
+    inner: number
   },
   padding?: number,
 ) {

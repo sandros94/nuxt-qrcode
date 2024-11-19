@@ -5,7 +5,7 @@ import { defineNuxtModule, addTemplate, addServerHandler, createResolver } from 
 
 export default defineNuxtModule({
   meta: {
-    name: 'component-example'
+    name: 'component-example',
   },
   async setup(_options, nuxt) {
     const resolver = createResolver(import.meta.url)
@@ -24,9 +24,10 @@ export default defineNuxtModule({
       if (typeof component === 'string') {
         if (components[component]) {
           component = components[component]
-        } else {
+        }
+        else {
           component = Object.entries(components).find(
-            ([, comp]: any) => comp.filePath === component
+            ([, comp]: any) => comp.filePath === component,
           )
           if (!component) {
             return
@@ -43,7 +44,7 @@ export default defineNuxtModule({
       components[component.pascalName] = {
         code,
         filePath: component.filePath,
-        pascalName: component.pascalName
+        pascalName: component.pascalName,
       }
     }
     const getStringifiedComponents = () => JSON.stringify(components, null, 2)
@@ -79,7 +80,7 @@ export default defineNuxtModule({
     addTemplate({
       filename: 'component-example.mjs',
       getContents: () => 'export default {}',
-      write: true
+      write: true,
     })
 
     nuxt.hook('vite:extend', (vite: any) => {
@@ -100,13 +101,13 @@ export default defineNuxtModule({
         async handleHotUpdate({ file }: { file: any }) {
           if (
             Object.entries(components).some(
-              ([, comp]: any) => comp.filePath === file
+              ([, comp]: any) => comp.filePath === file,
             )
           ) {
             await fetchComponent(file)
             await updateOutput()
           }
-        }
+        },
       })
     })
 
@@ -115,14 +116,14 @@ export default defineNuxtModule({
       nitroConfig.virtual['#component-example/nitro'] = () =>
         readFileSync(
           join(nuxt.options.buildDir, '/component-example.mjs'),
-          'utf-8'
+          'utf-8',
         )
     })
 
     addServerHandler({
       method: 'get',
       route: '/api/component-example/:component?',
-      handler: resolver.resolve('../server/api/component-example.get')
+      handler: resolver.resolve('../server/api/component-example.get'),
     })
-  }
+  },
 })

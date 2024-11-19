@@ -34,7 +34,7 @@ const navigation = computed(() => [
         title: 'Configuration',
         to: '/guide/configuration',
       },
-    ]
+    ],
   },
   {
     title: 'Generate',
@@ -45,7 +45,7 @@ const navigation = computed(() => [
         title: 'Qrcode',
         to: '/generate/qrcode',
       },
-    ]
+    ],
   },
   {
     title: 'Read',
@@ -56,7 +56,7 @@ const navigation = computed(() => [
         title: 'QrcodeStream',
         to: '/read/qrcode-stream',
       },
-    ]
+    ],
   },
 ])
 

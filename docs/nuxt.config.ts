@@ -19,11 +19,13 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: 'https://qrcode.s94.dev'
+    url: 'https://qrcode.s94.dev',
   },
 
-  future: {
-    compatibilityVersion: 4,
+  content: {
+    highlight: {
+      langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
+    },
   },
 
   // uiPro: { license: 'oss' },
@@ -34,25 +36,16 @@ export default defineNuxtConfig({
     },
   },
 
-  icon: {
-    clientBundle: {
-      scan: true,
-    },
-    provider: 'iconify',
+  // TODO: remove once propper landing page is available
+  routeRules: {
+    '/': { redirect: '/guide/installation', prerender: false },
   },
 
-  content: {
-    highlight: {
-      langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
-    },
+  future: {
+    compatibilityVersion: 4,
   },
 
-  qrcode: {
-    options: {
-      whiteColor: 'var(--ui-bg)',
-      blackColor: 'var(--ui-text-highlighted)',
-    },
-  },
+  compatibilityDate: '2024-07-09',
 
   componentMeta: {
     exclude: [
@@ -65,25 +58,32 @@ export default defineNuxtConfig({
       '@nuxtjs/plausible',
       'nuxt/dist',
       'nuxt-og-image',
-      resolve('./app/components')
+      resolve('./app/components'),
     ],
     metaFields: {
       type: false,
       props: true,
       slots: true,
       events: true,
-      exposed: false
-    }
+      exposed: false,
+    },
+  },
+
+  icon: {
+    clientBundle: {
+      scan: true,
+    },
+    provider: 'iconify',
   },
 
   image: {
     provider: 'ipx',
   },
 
-  // TODO: remove once propper landing page is available
-  routeRules: {
-    '/': { redirect: '/guide/installation', prerender: false },
+  qrcode: {
+    options: {
+      whiteColor: 'var(--ui-bg)',
+      blackColor: 'var(--ui-text-highlighted)',
+    },
   },
-
-  compatibilityDate: '2024-07-09',
 })

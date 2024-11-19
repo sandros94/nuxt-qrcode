@@ -87,7 +87,7 @@ export default defineComponent<QrcodeProps>({
         // encode options
         ...opts
       } = options.value
-    
+
       const result = encode(props.value, opts)
       const s = getSize(result.size, pixelSize)
 
@@ -109,8 +109,8 @@ export default defineComponent<QrcodeProps>({
             whiteColor,
             blackColor,
             invert,
-          }
-        )
+          },
+        ),
       })
     })
 

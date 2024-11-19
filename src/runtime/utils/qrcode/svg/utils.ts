@@ -12,7 +12,7 @@ export function getColors(options: QrCodeGenerateSvgOptions) {
 export function getSize(size: QrCodeGenerateResult['size'], pixelSize: number = DEFAULT_PIXEL_SIZE) {
   return {
     height: size * pixelSize,
-    width: size * pixelSize
+    width: size * pixelSize,
   }
 }
 

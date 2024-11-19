@@ -41,7 +41,7 @@ const component = defineAsyncComponent(() => import(`#qrcode/components/${camelN
 const componentProps = reactive({ ...(props.props || {}) })
 const componentEvents = reactive({
   ...Object.fromEntries((props.model || []).map(key => [`onUpdate:${key}`, (e: any) => setComponentProp(key, e)])),
-  ...(componentProps.modelValue ? { [`onUpdate:modelValue`]: (e: any) => setComponentProp('modelValue', e) } : {})
+  ...(componentProps.modelValue ? { [`onUpdate:modelValue`]: (e: any) => setComponentProp('modelValue', e) } : {}),
 })
 
 function getComponentProp(name: string) {
@@ -75,7 +75,7 @@ const options = computed(() => {
     const items = propItems.length
       ? propItems.map((item: any) => ({
         value: item,
-        label: item
+        label: item,
       }))
       : []
 
@@ -83,7 +83,7 @@ const options = computed(() => {
       name: key,
       label: key,
       type: prop?.type,
-      items
+      items,
     }
   })
 })
@@ -140,11 +140,13 @@ const code = computed(() => {
       }
 
       code += value ? ` ${name}` : ` :${key}="false"`
-    } else if (typeof value === 'object') {
+    }
+    else if (typeof value === 'object') {
       const parsedValue = !props.external?.includes(key) ? json5.stringify(value, null, 2).replace(/,([ |\t\n]+[}|\])])/g, '$1') : key
 
       code += ` :${name}="${parsedValue}"`
-    } else {
+    }
+    else {
       const propDefault = prop && (prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text)
       if (propDefault === value) {
         continue
@@ -159,7 +161,8 @@ const code = computed(() => {
     for (const [key, value] of Object.entries(props.slots)) {
       if (key === 'default') {
         code += props.slots.default
-      } else {
+      }
+      else {
         code += `
   <template #${key}>
     ${value}
@@ -167,7 +170,8 @@ const code = computed(() => {
       }
     }
     code += (Object.keys(props.slots).length > 1 ? '\n' : '') + `</${name}>`
-  } else {
+  }
+  else {
     code += ` />`
   }
   code += `\n</template>
@@ -201,7 +205,7 @@ const { data: ast } = await useAsyncData(
             :ui="{
               wrapper: 'bg-[var(--ui-bg-elevated)]/50 rounded-l-[var(--ui-radius)] flex border-r border-[var(--ui-border-accented)]',
               label: 'text-[var(--ui-text-muted)] px-2 py-1.5',
-              container: 'mt-0'
+              container: 'mt-0',
             }"
           >
             <USelectMenu
@@ -252,6 +256,11 @@ const { data: ast } = await useAsyncData(
       </div>
     </div>
 
-    <MDCRenderer v-if="ast" :body="ast.body" :data="ast.data" class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0" />
+    <MDCRenderer
+      v-if="ast"
+      :body="ast.body"
+      :data="ast.data"
+      class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0"
+    />
   </div>
 </template>

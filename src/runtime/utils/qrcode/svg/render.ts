@@ -11,7 +11,7 @@ import {
   getSize,
   getRadius,
   getVariant,
-  DEFAULT_PIXEL_SIZE
+  DEFAULT_PIXEL_SIZE,
 } from './utils'
 
 export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated' | 'circle'
@@ -62,7 +62,7 @@ export function renderSVGBody(
     pixelSize = DEFAULT_PIXEL_SIZE,
     pixelPadding,
     variant,
-    border
+    border,
   } = options
 
   const { backgroundColor, foregroundColor } = getColors(options)

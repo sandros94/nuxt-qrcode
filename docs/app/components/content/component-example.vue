@@ -1,3 +1,4 @@
+<!-- eslint-disable @typescript-eslint/no-empty-object-type -->
 <script setup lang="ts">
 import { camelCase } from 'scule'
 import { get, set } from '#ui/utils'
@@ -39,7 +40,7 @@ const props = withDefaults(defineProps<{
   highlights?: number[]
 }>(), {
   preview: true,
-  source: true
+  source: true,
 })
 
 const slots = defineSlots<{
@@ -82,7 +83,7 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
     option.items = option.items.map((item: any) => ({
       label: item,
       value: item,
-      chip: { color: item }
+      chip: { color: item },
     }))
   }
   return acc
@@ -106,7 +107,7 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
             :ui="{
               wrapper: 'bg-[var(--ui-bg-elevated)]/50 rounded-l-[var(--ui-radius)] flex border-r border-[var(--ui-border-accented)]',
               label: 'text-[var(--ui-text-muted)] px-2 py-1.5',
-              container: 'mt-0'
+              container: 'mt-0',
             }"
           >
             <USelectMenu
@@ -150,6 +151,11 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
       </div>
     </template>
 
-    <MDCRenderer v-if="ast && props.source" :body="ast.body" :data="ast.data" class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0" />
+    <MDCRenderer
+      v-if="ast && props.source"
+      :body="ast.body"
+      :data="ast.data"
+      class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0"
+    />
   </div>
 </template>

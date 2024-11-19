@@ -12,6 +12,6 @@ export default defineAppConfig({
       primary: 'orange',
       neutral: 'neutral',
       info: 'sky',
-    }
-  }
+    },
+  },
 })
