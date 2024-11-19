@@ -17,7 +17,7 @@ RUN pnpm fetch --shamefully-hoist
 
 # Build production
 COPY . ./
-RUN pnpm install --offline && pnpm run docs:build
+RUN pnpm install --offline && pnpm run dev:prepare && pnpm run docs:build
 
 # Final production container
 FROM oven/bun:alpine AS runtime
