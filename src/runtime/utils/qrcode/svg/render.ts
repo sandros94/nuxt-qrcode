@@ -51,7 +51,7 @@ export function renderSVG(
   const markerVariant = typeof variant === 'string' ? variant : variant?.marker || 'default'
   const innerVariant = typeof variant === 'string' ? variant : variant?.inner || markerVariant
 
-  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">`
+  let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" width="100%" height="100%">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
   svg += pixelVariants(pixelVariant, result, opts.border, pixelSize, foregroundColor, pixelRadius, pixelPadding)
