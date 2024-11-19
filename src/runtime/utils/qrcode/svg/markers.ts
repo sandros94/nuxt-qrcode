@@ -1,5 +1,3 @@
-// src/runtime/utils/qrcode/svg/markers.ts
-
 import type { encode } from 'uqr'
 import type {
   SVGVariant,
