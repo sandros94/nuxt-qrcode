@@ -7,10 +7,6 @@
 
 Nuxt QRCode is a module to provide easy support in reading and creating [QR Codes](https://en.wikipedia.org/wiki/QR_code).
 
-> [!Important]
-> This module is still a work in progress.
-> Expect breaking changes to adjust the aim. Feel free to open issue to discuss use cases.
-
 ### Current Roadmap
 
 The following are the features that I'm currently working on and plan to release in the upcoming days/weeks
@@ -29,7 +25,7 @@ The following are the features that I'm currently working on and plan to release
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
 <!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/nuxt-qrcode?file=playground%2Fapp.vue) -->
-<!-- - [📖 &nbsp;Documentation](https://example.com) -->
+- [📖 &nbsp;Documentation](https://qrcode.s94.dev)
 
 ## Features
 
