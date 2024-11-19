@@ -17,7 +17,7 @@ RUN pnpm fetch --shamefully-hoist
 
 # Build production
 COPY . ./
-RUN pnpm install --offline && pnpm run build
+RUN pnpm install --offline && pnpm run docs:build
 
 # Final production container
 FROM oven/bun:alpine AS runtime
@@ -26,8 +26,8 @@ USER bun
 
 WORKDIR /app
 
-COPY --link --from=builder /usr/src/app/.output/  ./.output
-COPY --link --from=builder /usr/src/app/content/  ./content
+COPY --link --from=builder /usr/src/app/docs/.output/  ./.output
+COPY --link --from=builder /usr/src/app/docs/content/  ./content
 
 EXPOSE 3000
 
