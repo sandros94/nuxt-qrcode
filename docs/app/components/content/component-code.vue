@@ -114,7 +114,6 @@ const code = computed(() => {
 <template>
   <${name}`
   for (const [key, value] of Object.entries(componentProps)) {
-    code += `\n   `
     if (key === 'modelValue') {
       code += ` v-model="value"`
       continue
@@ -169,8 +168,7 @@ const code = computed(() => {
     }
     code += (Object.keys(props.slots).length > 1 ? '\n' : '') + `</${name}>`
   } else {
-    code += `
-  />`
+    code += ` />`
   }
   code += `\n</template>
 \`\`\`
