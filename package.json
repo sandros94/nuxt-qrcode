@@ -38,7 +38,7 @@
     "docs:preview": "nuxi preview docs",
     "release": "nr lint && nr test && nr prepack && changelogen --release --push --publish",
     "lint": "eslint .",
-    "test": "vitest run",
+    "test": "vitest",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
