@@ -23,9 +23,9 @@ RUN pnpm install --offline && pnpm run dev:prepare
 RUN pnpm run docs:build
 
 # Final production container
-FROM oven/bun:alpine AS runtime
+FROM node:20-alpine AS runtime
 
-USER bun
+USER node
 
 WORKDIR /app
 
@@ -34,7 +34,7 @@ COPY --link --from=builder /usr/src/app/docs/content/  ./content
 
 EXPOSE 3000
 
-HEALTHCHECK  --retries=10 --start-period=5s \
+HEALTHCHECK  --retries=10 --start-period=25s \
   CMD wget --no-verbose --spider http://0.0.0.0:3000/ || exit 1
 
-ENTRYPOINT [ "bun", "run", ".output/server/index.mjs" ]
+ENTRYPOINT [ "node", ".output/server/index.mjs" ]
