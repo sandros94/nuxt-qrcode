@@ -9,7 +9,6 @@ export function renderPixelatedPixel(
 ): string {
   const notchSize = size / 4
   const paths: string[] = []
-  const notches: string[] = []
 
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
@@ -24,10 +23,8 @@ export function renderPixelatedPixel(
     }
   }
 
-  // TODO: fix with mask
   return `<g shape-rendering="crispEdges">
   <path fill="${foregroundColor}" d="${paths.join('')}"/>
-  <path fill="white" d="${notches.join('')}"/>
 </g>`
 }
 
