@@ -1,16 +1,16 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
 import {
-  renderDefaultPixel,
-  renderDotPixel,
-  renderRoundedPixel,
-  renderPixelatedPixel,
-} from './variants'
-import {
   renderMarkers,
 } from './markers'
 import {
-  getColors
+  renderPixels,
+} from './pixels'
+import {
+  getColors,
+  getSize,
+  getRadius,
+  getVariant,
 } from './utils'
 
 export type SVGVariant = 'default' | 'dots' | 'rounded' | 'pixelated' | 'circle'
@@ -44,45 +44,17 @@ export function renderSVG(
 
   const result = encode(data, opts)
   const { backgroundColor, foregroundColor } = getColors(options)
-  const height = result.size * pixelSize
-  const width = result.size * pixelSize
+  const { width, height } = getSize(result.size, pixelSize)
 
-  const pixelRadius = typeof radius === 'number' ? radius : radius?.pixel ?? 0.5
-  const markerRadius = typeof radius === 'number' ? radius : radius?.marker ?? 0.5
-  const innerRadius = typeof radius === 'number' ? radius : radius?.inner ?? markerRadius
-  const pixelVariant = typeof variant === 'string' ? variant : variant?.pixel || 'default'
-  const markerVariant = typeof variant === 'string' ? variant : variant?.marker || 'default'
-  const innerVariant = typeof variant === 'string' ? variant : variant?.inner || markerVariant
+  const { pixelRadius, markerRadius } = getRadius(radius)
+  const { pixelVariant, markerVariant } = getVariant(variant)
 
   let svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" width="100%" height="100%">`
   svg += `<rect fill="${backgroundColor}" width="${width}" height="${height}"/>`
 
-  svg += pixelVariants(pixelVariant, result, opts.border, pixelSize, foregroundColor, pixelRadius, pixelPadding)
-  svg += renderMarkers(result, opts.border, pixelSize, foregroundColor, pixelPadding, markerVariant, innerVariant, markerRadius, innerRadius)
+  svg += renderPixels(result, opts.border, pixelSize, foregroundColor, pixelPadding, pixelVariant, pixelRadius)
+  svg += renderMarkers(result, opts.border, pixelSize, foregroundColor, pixelPadding, markerVariant, markerRadius)
 
   svg += '</svg>'
   return svg
-}
-
-export function pixelVariants(
-  variant: SVGVariant = 'default',
-  result: ReturnType<typeof encode>,
-  border: number = 1,
-  size: number,
-  color: string,
-  radius: number,
-  padding: number,
-): string {
-  switch (variant) {
-    case 'circle':
-    case 'dots':
-      return renderDotPixel(result, border, size, color, radius, padding)
-    case 'rounded':
-      return renderRoundedPixel(result, border, size, color, radius)
-    case 'pixelated':
-      return renderPixelatedPixel(result, border, size, color)
-    case 'default':
-    default:
-      return renderDefaultPixel(result, border, size, color)
-  }
 }
