@@ -1,6 +1,47 @@
 # Changelog
 
 
+## v0.4.0
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.3.0...v0.4.0)
+
+### 🚀 Enhancements
+
+- Server-side qrcode util ([fc9f435](https://github.com/sandros94/nuxt-qrcode/commit/fc9f435))
+
+### 🩹 Fixes
+
+- **Pixelated:** Remove leftover ([a855e6b](https://github.com/sandros94/nuxt-qrcode/commit/a855e6b))
+- **Pixelated:** Marker path indentation ([d2d5cda](https://github.com/sandros94/nuxt-qrcode/commit/d2d5cda))
+- **renderSVG:** Define preserveAspectRatio and size ([1391b5d](https://github.com/sandros94/nuxt-qrcode/commit/1391b5d))
+- ⚠️  Match upstream `pixelSize`'s default ([10ea3af](https://github.com/sandros94/nuxt-qrcode/commit/10ea3af))
+- Stop wrapping `Qrcode` component ([9c524e6](https://github.com/sandros94/nuxt-qrcode/commit/9c524e6))
+- **Qrcode:** Styling not working ([9601155](https://github.com/sandros94/nuxt-qrcode/commit/9601155))
+- Type import ([38ab6ab](https://github.com/sandros94/nuxt-qrcode/commit/38ab6ab))
+
+### 💅 Refactors
+
+- Put render utils into a different file ([9a70de5](https://github.com/sandros94/nuxt-qrcode/commit/9a70de5))
+- Internal function structure ([2618985](https://github.com/sandros94/nuxt-qrcode/commit/2618985))
+- **internal:** Separate svg body render function ([f8305de](https://github.com/sandros94/nuxt-qrcode/commit/f8305de))
+
+### 📖 Documentation
+
+- Init ([229d2af](https://github.com/sandros94/nuxt-qrcode/commit/229d2af))
+- Integration with Nuxt UI and variants ([06253e8](https://github.com/sandros94/nuxt-qrcode/commit/06253e8))
+
+### 🏡 Chore
+
+- Update deps ([9e5eaf3](https://github.com/sandros94/nuxt-qrcode/commit/9e5eaf3))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Match upstream `pixelSize`'s default ([10ea3af](https://github.com/sandros94/nuxt-qrcode/commit/10ea3af))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.3.0
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.2.3...v0.3.0)
