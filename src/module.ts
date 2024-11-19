@@ -1,4 +1,4 @@
-import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, addServerImportsDir, createResolver } from '@nuxt/kit'
 import defu from 'defu'
 
 import type { RenderSVGOptions } from './runtime/utils/qrcode/svg/render'
@@ -78,6 +78,8 @@ export default defineNuxtModule<ModuleOptions>({
         filePath: 'vue-qrcode-reader',
       })
     }
+
+    addServerImportsDir(resolve(runtimeDir, 'server', 'utils'))
   },
 })
 
