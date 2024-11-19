@@ -1,6 +1,6 @@
 import type { SVGAttributes } from 'vue'
 import type { QrCodeGenerateData } from 'uqr'
-import type { RenderSVGOptions } from 'nuxt-qrcode'
+import type { RenderSVGOptions } from '../utils/qrcode/svg/render'
 
 export type * from 'barcode-detector'
 export type * from '../utils/qrcode/svg/render'
