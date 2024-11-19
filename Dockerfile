@@ -15,6 +15,8 @@ WORKDIR /usr/src/app
 COPY pnpm-lock.yaml ./
 RUN pnpm fetch --shamefully-hoist
 
+ENV NUXT_UI_PRO_LICENSE=""
+
 # Build production
 COPY . ./
 RUN pnpm install --offline && pnpm run dev:prepare && pnpm run docs:build
