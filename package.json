@@ -36,9 +36,10 @@
     "docs": "nuxi dev docs",
     "docs:build": "nuxi build docs",
     "docs:preview": "nuxi preview docs",
-    "release": "nr lint && nr test && nr prepack && changelogen --release --push --publish",
+    "release": "nr lint && nr test:run && nr prepack && changelogen --release --push --publish",
     "lint": "eslint .",
     "test": "vitest",
+    "test:run": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
