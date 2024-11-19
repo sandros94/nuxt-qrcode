@@ -1,9 +1,10 @@
 import { defu } from 'defu'
 import { reactivePick } from '@vueuse/core'
-import type { QrCodeGenerateData } from 'uqr'
+import { type QrCodeGenerateData, encode } from 'uqr'
 import type { RenderSVGOptions } from 'nuxt-qrcode'
-import { type PropType, ref, defineComponent, h, watchEffect, useRuntimeConfig } from '#imports'
-import { renderSVG } from '#qrcode/utils/qrcode/svg/render'
+import { type PropType, type VNode, ref, computed, toRefs, defineComponent, h, watchEffect, useRuntimeConfig } from '#imports'
+import { renderSVGBody } from '#qrcode/utils/qrcode/svg/render'
+import { getSize } from '#qrcode/utils/qrcode/svg/utils'
 
 export default defineComponent({
   name: 'Qrcode',
@@ -56,18 +57,37 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const qr = ref<string>()
-    const options = reactivePick(props, (_, key) => key !== 'value')
-
-    watchEffect(() => {
-      qr.value = renderSVG(props.value,
-        defu(
-          options,
-          useRuntimeConfig().public.qrcode.options,
-        ) as RenderSVGOptions,
-      )
+    const qr = ref<VNode>()
+    const _options = reactivePick(props, (_, key) => key !== 'value')
+    const options = computed(() => {
+      return defu(
+        _options,
+        useRuntimeConfig().public.qrcode.options,
+      ) as RenderSVGOptions
     })
 
-    return () => h('div', { innerHTML: qr.value })
+    watchEffect(() => {
+      const {
+        radius,
+        pixelSize,
+        pixelPadding,
+        variant,
+        ...opts
+      } = options.value
+    
+      const result = encode(props.value, opts)
+      const { width, height } = getSize(result.size, pixelSize)
+
+      qr.value = h('svg', {
+        xmlns: 'http://www.w3.org/2000/svg',
+        viewBox: `0 0 ${width} ${height}`,
+        preserveAspectRatio: 'xMidYMid meet',
+        width:'100%',
+        height: '100%',
+        innerHTML: renderSVGBody(result, { radius, pixelSize, pixelPadding, variant, border: opts.border })
+      })
+    })
+
+    return () => qr.value
   },
 })
