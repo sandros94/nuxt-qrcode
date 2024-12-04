@@ -1,4 +1,13 @@
-import { defineNuxtModule, addComponent, addComponentsDir, addImportsDir, addServerImportsDir, createResolver } from '@nuxt/kit'
+import {
+  defineNuxtModule,
+  addComponent,
+  addComponentsDir,
+  addImportsDir,
+  addServerImportsDir,
+  createResolver,
+  hasNuxtModule,
+  hasNuxtModuleCompatibility,
+} from '@nuxt/kit'
 import defu from 'defu'
 
 import type { RenderSVGOptions } from './runtime/utils/qrcode/svg/render'
@@ -17,7 +26,9 @@ export interface ModuleOptions {
     formats?: BarcodeFormat[]
     global?: boolean
   }
-  options: Omit<RenderSVGOptions, 'onEncoded'>
+  options: Omit<RenderSVGOptions, 'onEncoded'> & {
+    disableNuxtUiIntegration?: boolean
+  }
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -52,6 +63,14 @@ export default defineNuxtModule<ModuleOptions>({
       options,
     )
     if (qrcode.reader.formats?.length === 0) qrcode.reader.formats = ['qr_code']
+
+    const useNuxtUi
+      = (hasNuxtModule('@nuxt/ui-pro') && await hasNuxtModuleCompatibility('@nuxt/ui-pro', '^3'))
+      || (hasNuxtModule('@nuxt/ui') && await hasNuxtModuleCompatibility('@nuxt/ui', '^3'))
+    if (useNuxtUi && !qrcode.options.disableNuxtUiIntegration) {
+      qrcode.options.blackColor = 'var(--ui-text-highlighted)'
+      qrcode.options.whiteColor = 'var(--ui-bg)'
+    }
 
     addImportsDir(resolve(runtimeDir, 'composables'))
 
