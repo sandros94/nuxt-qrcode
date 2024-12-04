@@ -5,8 +5,8 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
-    '../src/module',
     '@nuxt/ui-pro',
+    '../src/module',
     '@nuxt/content',
     '@nuxt/image',
     'nuxt-og-image',
@@ -78,12 +78,5 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
-  },
-
-  qrcode: {
-    options: {
-      whiteColor: 'var(--ui-bg)',
-      blackColor: 'var(--ui-text-highlighted)',
-    },
   },
 })
