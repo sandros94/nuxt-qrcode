@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.1
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.0...v0.4.1)
+
+### 🚀 Enhancements
+
+- Native `@nuxt/ui` integration ([acfdb75](https://github.com/sandros94/nuxt-qrcode/commit/acfdb75))
+
+### 📖 Documentation
+
+- Native `@nuxt/ui` integration ([ecd1606](https://github.com/sandros94/nuxt-qrcode/commit/ecd1606))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](http://github.com/sandros94))
+
 ## v0.4.0
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.3.0...v0.4.0)
