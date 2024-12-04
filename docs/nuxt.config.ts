@@ -14,6 +14,18 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
   ],
 
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'icon',
+          href: '/favicon.svg',
+          type: 'image/svg+xml',
+        },
+      ],
+    },
+  },
+
   css: [
     '~/assets/css/main.css',
   ],
