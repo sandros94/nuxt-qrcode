@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.4.3
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.2...v0.4.3)
+
+### 🩹 Fixes
+
+- Components build ([bd22d6f](https://github.com/sandros94/nuxt-qrcode/commit/bd22d6f))
+
+### 📖 Documentation
+
+- Swap navigation icons ([4723cc0](https://github.com/sandros94/nuxt-qrcode/commit/4723cc0))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.2
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.1...v0.4.2)
