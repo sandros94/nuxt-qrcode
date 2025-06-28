@@ -1,0 +1,46 @@
+# .dockerignore - v1.4.2
+# https://gist.github.com/sandros94/03675514546f17af1fd6db3863c043b4
+
+
+# Nuxt dev/build outputs
+.output
+.nuxt
+.nitro
+.cache
+.data
+dist
+
+# Node dependencies
+node_modules
+
+# Local env files
+.env
+.env.*
+
+# Logs
+logs
+*.log
+
+# VSCode
+.vscode
+.devcontainer
+.editorconfig
+
+# Misc
+.git
+.github
+.gitignore
+.dockerignore
+.DS_Store
+.AppleDouble
+.LSOverride
+.fleet
+.idea
+Dockerfile*
+docker-compose*
+README.md
+Makefile
+helm-charts
+coverage*
+
+# Project specific
