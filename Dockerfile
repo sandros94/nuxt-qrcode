@@ -22,9 +22,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 ARG NUXT_UI_PRO_LICENSE
 
 COPY . .
-RUN pnpm run dev:prepare
 RUN --mount=type=cache,id=nuxt,target=/app/node_modules/.cache/nuxt/.nuxt \
-    pnpm run docs:build
+    pnpm run dev:prepare && pnpm run docs:build
 
 # Final production container
 FROM base AS runtime
