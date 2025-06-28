@@ -11,7 +11,9 @@
         </h5>
         <ul>
           <li v-for="(r, i) in result" :key="i">
-            {{ r }}
+            <code style="text-wrap: wrap; overflow-wrap: anywhere;">
+              {{ r }}
+            </code>
           </li>
         </ul>
       </div>
