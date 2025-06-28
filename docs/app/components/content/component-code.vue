@@ -74,9 +74,9 @@ const options = computed(() => {
     const propItems = get(props.items, key, [])
     const items = propItems.length
       ? propItems.map((item: any) => ({
-        value: item,
-        label: item,
-      }))
+          value: item,
+          label: item,
+        }))
       : []
 
     return {
@@ -227,7 +227,7 @@ const { data: ast } = await useAsyncData(
                   inset
                   standalone
                   :color="(modelValue as any)"
-                  :size="ui.itemLeadingChipSize()"
+                  :size="ui.itemLeadingChipSize() as any"
                   class="size-2"
                 />
               </template>

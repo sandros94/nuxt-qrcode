@@ -5,14 +5,27 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/ui-pro',
     '../src/module',
-    '@nuxt/content',
     '@nuxt/image',
+    '@nuxt/ui-pro',
+    '@nuxt/content',
+    'nuxt-llms',
     'nuxt-og-image',
+    '@nuxtjs/plausible',
     'nuxt-component-meta',
     '@nuxtjs/plausible',
   ],
+
+  $development: {
+    site: {
+      url: 'http://localhost:3000',
+    },
+  },
+  $production: {
+    site: {
+      url: 'https://qrcode.s94.dev',
+    },
+  },
 
   app: {
     head: {
@@ -30,13 +43,22 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
 
-  site: {
-    url: 'https://qrcode.s94.dev',
+  content: {
+    build: {
+      markdown: {
+        highlight: {
+          langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
+        },
+        toc: {
+          searchDepth: 1,
+        },
+      },
+    },
   },
 
-  content: {
+  mdc: {
     highlight: {
-      langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
+      noApiRoute: false,
     },
   },
 
@@ -48,16 +70,21 @@ export default defineNuxtConfig({
     },
   },
 
-  // TODO: remove once propper landing page is available
-  routeRules: {
-    '/': { redirect: '/guide/installation', prerender: false },
-  },
-
   future: {
     compatibilityVersion: 4,
   },
 
-  compatibilityDate: '2024-07-09',
+  experimental: {
+    buildCache: true,
+  },
+
+  compatibilityDate: '2025-06-09',
+
+  vite: {
+    optimizeDeps: {
+      include: ['debug'],
+    },
+  },
 
   componentMeta: {
     exclude: [
@@ -90,5 +117,15 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
+  },
+
+  llms: {
+    domain: 'https://qrcode.s94.dev',
+    title: 'Nuxt QRCode - Docs',
+    description: 'A Nuxt module that provides support for generating and reading QRCodes.',
+  },
+
+  plausible: {
+    apiHost: 'https://plausible.digitoolmedia.com',
   },
 })

@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '#ui/types'
-
-defineProps<{
-  links: NavigationMenuItem[]
-}>()
+import type { ContentNavigationItem } from '@nuxt/content'
 
 const { version } = useRuntimeConfig().public
 
-defineShortcuts({
-  meta_g: () => {
-    window.open('https://github.com/sandros94/nuxt-qrcode', '_blank')
-  },
-})
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+const links = useLinks()
+
+const { header } = useAppConfig()
 </script>
 
 <template>
-  <UHeader :ui="{ left: 'min-w-0' }">
+  <UHeader
+    :ui="{ center: 'flex-1' }"
+    :to="header.to"
+    :title="header.title"
+  >
+    <UNavigationMenu :items="links" variant="link" class="w-full justify-center" />
+
     <template #left>
       <NuxtLink
-        to="/"
+        :to="header.to"
         class="flex items-end gap-2 font-bold text-xl text-[var(--ui-text-highlighted)] min-w-0 focus-visible:outline-[var(--ui-primary)]"
-        aria-label="Nuxt UI"
       >
-        Nuxt QRCode
+        {{ header.title }}
 
         <UBadge
           :label="`v${version}`"
@@ -33,40 +33,25 @@ defineShortcuts({
       </NuxtLink>
     </template>
 
-    <UNavigationMenu
-      :items="links"
-      variant="link"
-    />
-
-    <template #right>
-      <UTooltip
-        text="Search"
-        :kbds="['meta', 'K']"
-      >
-        <UContentSearchButton />
-      </UTooltip>
-
-      <UTooltip
-        text="Open on GitHub"
-        :kbds="['meta', 'G']"
-      >
-        <UButton
-          color="neutral"
-          variant="ghost"
-          to="https://github.com/sandros94/nuxt-qrcode"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
-        />
-      </UTooltip>
+    <template #body>
+      <UContentNavigation
+        highlight
+        :navigation="navigation"
+      />
     </template>
 
-    <template #content>
-      <UNavigationMenu
-        orientation="vertical"
-        class="-ml-2.5"
-        :items="links"
-      />
+    <template #right>
+      <UContentSearchButton v-if="header.search" />
+
+      <UColorModeButton v-if="header.colorMode" />
+
+      <template v-if="header.links">
+        <UButton
+          v-for="(link, index) of header.links"
+          :key="index"
+          v-bind="{ color: 'neutral', variant: 'ghost', ...link }"
+        />
+      </template>
     </template>
   </UHeader>
 </template>
