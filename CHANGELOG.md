@@ -1,6 +1,54 @@
 # Changelog
 
 
+## v0.4.2
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.1...v0.4.2)
+
+### 🩹 Fixes
+
+- **docs:** Navigation links ([9242817](https://github.com/sandros94/nuxt-qrcode/commit/9242817))
+- Types and exports ([33cc25e](https://github.com/sandros94/nuxt-qrcode/commit/33cc25e))
+- Upstream component types ([4633af1](https://github.com/sandros94/nuxt-qrcode/commit/4633af1))
+
+### 📖 Documentation
+
+- Update to latest content and ui ([94b654b](https://github.com/sandros94/nuxt-qrcode/commit/94b654b))
+- Fix seo ([d7a5e21](https://github.com/sandros94/nuxt-qrcode/commit/d7a5e21))
+- Fix highlighting ([f26a838](https://github.com/sandros94/nuxt-qrcode/commit/f26a838))
+- Fix `debug` vite optimization ([292a547](https://github.com/sandros94/nuxt-qrcode/commit/292a547))
+- Feat `llms.txt` ([7b19d6f](https://github.com/sandros94/nuxt-qrcode/commit/7b19d6f))
+- Add icons to pages ([791352d](https://github.com/sandros94/nuxt-qrcode/commit/791352d))
+- Lint ([f83a8f0](https://github.com/sandros94/nuxt-qrcode/commit/f83a8f0))
+
+### 🏡 Chore
+
+- Missing license ([b893868](https://github.com/sandros94/nuxt-qrcode/commit/b893868))
+- Update deps ([3099e21](https://github.com/sandros94/nuxt-qrcode/commit/3099e21))
+- Update vscode settings ([c81d17a](https://github.com/sandros94/nuxt-qrcode/commit/c81d17a))
+- **docs:** Fix ipx deps ([b5d96db](https://github.com/sandros94/nuxt-qrcode/commit/b5d96db))
+- Fix test deps and config ([246ebcc](https://github.com/sandros94/nuxt-qrcode/commit/246ebcc))
+- Update package scripts ([eaafcc8](https://github.com/sandros94/nuxt-qrcode/commit/eaafcc8))
+- **docs:** Use native sqlite ([d6ce197](https://github.com/sandros94/nuxt-qrcode/commit/d6ce197))
+- Deploy docs with full codebase ([3449bab](https://github.com/sandros94/nuxt-qrcode/commit/3449bab))
+
+### 🤖 CI
+
+- Fix docker deployment ([4b64867](https://github.com/sandros94/nuxt-qrcode/commit/4b64867))
+- Fix comment ([af9f800](https://github.com/sandros94/nuxt-qrcode/commit/af9f800))
+- Fix scripts ([2a74d99](https://github.com/sandros94/nuxt-qrcode/commit/2a74d99))
+- Fix scripts ([ccee665](https://github.com/sandros94/nuxt-qrcode/commit/ccee665))
+- Fix scripts ([3c26d26](https://github.com/sandros94/nuxt-qrcode/commit/3c26d26))
+- Fix scripts ([740d6dd](https://github.com/sandros94/nuxt-qrcode/commit/740d6dd))
+- Update glibc ([a0b4f76](https://github.com/sandros94/nuxt-qrcode/commit/a0b4f76))
+- Drop alpine image ([1520b1c](https://github.com/sandros94/nuxt-qrcode/commit/1520b1c))
+- Drop alpine image" ([9aa7109](https://github.com/sandros94/nuxt-qrcode/commit/9aa7109))
+
+### ❤️ Contributors
+
+- Sandros94 ([@sandros94](https://github.com/sandros94))
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.1
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.0...v0.4.1)
