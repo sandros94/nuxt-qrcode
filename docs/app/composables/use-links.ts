@@ -26,12 +26,12 @@ export function useLinks() {
     },
     {
       label: 'Generate',
-      icon: 'i-lucide-square-code',
+      icon: 'i-lucide-qr-code',
       to: '/generate',
       active: route.path.startsWith('/generate'),
       children: [
         {
-          icon: 'i-lucide-qr-code',
+          icon: 'i-lucide-square-code',
           label: 'QRCode Component',
           to: '/generate/qrcode',
           description: 'Learn how to generate QRCodes using the related component.',
