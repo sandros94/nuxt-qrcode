@@ -1,8 +1,10 @@
 import { type BarcodeFormat, QrcodeDropZone } from 'vue-qrcode-reader'
-import type { ExtractPropTypes, PropType } from '#imports'
+import type { PropType } from '#imports'
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 
-export default defineComponent<ExtractPropTypes<typeof QrcodeDropZone.props>>({
+export type QrcodeDropZoneProps = Parameters<Exclude<typeof QrcodeDropZone.setup, undefined>>['0']
+
+export default defineComponent<QrcodeDropZoneProps>({
   name: 'QrcodeDropZone',
   inheritAttrs: false,
   props: {

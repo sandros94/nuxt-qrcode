@@ -1,8 +1,10 @@
 import { type BarcodeFormat, QrcodeStream } from 'vue-qrcode-reader'
-import type { ExtractPropTypes, PropType } from '#imports'
+import type { PropType } from '#imports'
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 
-export default defineComponent<ExtractPropTypes<typeof QrcodeStream.props>>({
+export type QrcodeStreamProps = Parameters<Exclude<typeof QrcodeStream.setup, undefined>>['0']
+
+export default defineComponent<QrcodeStreamProps>({
   name: 'QrcodeStream',
   inheritAttrs: false,
   props: {

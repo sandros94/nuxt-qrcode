@@ -1,8 +1,10 @@
 import { type BarcodeFormat, QrcodeCapture } from 'vue-qrcode-reader'
-import type { ExtractPropTypes, PropType } from '#imports'
+import type { PropType } from '#imports'
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 
-export default defineComponent<ExtractPropTypes<typeof QrcodeCapture.props>>({
+export type QrcodeCaptureProps = Parameters<Exclude<typeof QrcodeCapture.setup, undefined>>['0']
+
+export default defineComponent<QrcodeCaptureProps>({
   name: 'QrcodeCapture',
   inheritAttrs: false,
   props: {

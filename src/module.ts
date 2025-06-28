@@ -35,6 +35,9 @@ export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-qrcode',
     configKey: 'qrcode',
+    compatibility: {
+      nuxt: '>=3.0.0 || >=4.0.0',
+    },
   },
   // Default configuration options of the Nuxt module
   defaults: {
@@ -66,7 +69,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     const useNuxtUi
       = (hasNuxtModule('@nuxt/ui-pro') && await hasNuxtModuleCompatibility('@nuxt/ui-pro', '^3'))
-      || (hasNuxtModule('@nuxt/ui') && await hasNuxtModuleCompatibility('@nuxt/ui', '^3'))
+        || (hasNuxtModule('@nuxt/ui') && await hasNuxtModuleCompatibility('@nuxt/ui', '^3'))
     if (useNuxtUi && !qrcode.options.disableNuxtUiIntegration) {
       qrcode.options.blackColor = 'var(--ui-text-highlighted)'
       qrcode.options.whiteColor = 'var(--ui-bg)'

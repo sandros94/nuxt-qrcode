@@ -20,7 +20,13 @@ export function useQrcodeRead(
 ) {
   const defFormats = useRuntimeConfig().public.qrcode.reader.formats as BarcodeFormat[]
   const defaultFormats = defFormats.reduce((result, option) => {
-    result[option] = true
+    if (option in result) {
+      result[option] = true
+    }
+    else {
+      console.warn(`Unknown barcode format: ${option}`)
+      result.unknown = true
+    }
     return result
   }, {
     aztec: false,
@@ -29,6 +35,7 @@ export function useQrcodeRead(
     code_93: false,
     codabar: false,
     databar: false,
+    databar_limited: false,
     databar_expanded: false,
     data_matrix: false,
     dx_film_edge: false,
@@ -45,7 +52,7 @@ export function useQrcodeRead(
     linear_codes: false,
     matrix_codes: false,
     unknown: false,
-  })
+  } as Record<BarcodeFormat, boolean>)
 
   const constraints = ref({ facingMode: 'environment' })
   const constraintOptions = [
