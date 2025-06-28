@@ -79,6 +79,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-06-09',
 
+  vite: {
+    optimizeDeps: {
+      include: ['debug'],
+    },
+  },
+
   componentMeta: {
     exclude: [
       '@nuxt/content',
