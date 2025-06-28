@@ -15,13 +15,13 @@ COPY package.json pnpm-lock.yaml .npmrc /app/
 RUN npm i -g --force corepack && corepack enable
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --shamefully-hoist
+    pnpm install --frozen-lockfile --shamefully-hoist && pnpm run dev:prepare
 
 #ARG NUXT_UI_PRO_LICENSE
 
 COPY . .
 RUN --mount=type=cache,id=nuxt,target=/app/node_modules/.cache/nuxt/.nuxt \
-    pnpm run build
+    pnpm run docs:build
 
 # Final production container
 FROM base AS runtime
