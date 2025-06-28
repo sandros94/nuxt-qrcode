@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui-pro',
     '@nuxt/content',
+    'nuxt-llms',
     'nuxt-og-image',
     '@nuxtjs/plausible',
     'nuxt-component-meta',
@@ -116,6 +117,12 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
+  },
+
+  llms: {
+    domain: 'https://qrcode.s94.dev',
+    title: 'Nuxt QRCode - Docs',
+    description: 'A Nuxt module that provides support for generating and reading QRCodes.',
   },
 
   plausible: {
