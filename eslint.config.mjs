@@ -29,5 +29,6 @@ export default createConfigForNuxt({
       // Project Specific
       'vue/multi-word-component-names': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   })
