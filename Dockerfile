@@ -38,4 +38,4 @@ HEALTHCHECK  --retries=10 --start-period=5s \
 
 COPY --link --from=builder /app/docs/.output/  ./
 
-ENTRYPOINT [ "node", "server/index.mjs" ]
+ENTRYPOINT [ "node", "./server/index.mjs" ]
