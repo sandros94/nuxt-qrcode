@@ -1,4 +1,4 @@
-Dockerfile with PNPM for Nuxt - v1.2.2
+# Dockerfile with PNPM for Nuxt - v1.2.2
 # https://gist.github.com/sandros94/03675514546f17af1fd6db3863c043b4
 
 # Base configuration
