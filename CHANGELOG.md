@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.4.4
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.3...v0.4.4)
+
+### 🩹 Fixes
+
+- Qrcode prop types ([9f02ce2](https://github.com/sandros94/nuxt-qrcode/commit/9f02ce2))
+- Qrcode prop type ([e51f1db](https://github.com/sandros94/nuxt-qrcode/commit/e51f1db))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.3
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.2...v0.4.3)
