@@ -29,10 +29,9 @@
     "docs": "nuxt dev docs",
     "docs:build": "nuxt build docs",
     "docs:preview": "nuxt preview docs",
-    "release": "nr lint && nr test:run && nr prepack && changelogen --release --push --publish",
+    "release": "pnpm lint && pnpm test && pnpm prepack && changelogen --release --push --publish",
     "lint": "eslint .",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest run",
     "test:watch": "vitest watch",
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
