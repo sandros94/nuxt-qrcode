@@ -10,7 +10,6 @@
     "@nuxt/image": "^1.10.0",
     "@nuxt/ui-pro": "^3.2.0",
     "@nuxtjs/plausible": "^1.2.0",
-    "better-sqlite3": "^11.10.0",
     "nuxt": "^3.17.5",
     "nuxt-component-meta": "^0.12.0",
     "nuxt-llms": "0.1.3",
