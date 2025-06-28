@@ -20,13 +20,11 @@ useHead({
   },
 })
 
-useServerSeoMeta({
+useSeoMeta({
   titleTemplate: `%s - ${seo?.siteName}`,
   ogSiteName: seo?.siteName,
   twitterCard: 'summary_large_image',
 })
-
-provide('navigation', navigation)
 </script>
 
 <template>
