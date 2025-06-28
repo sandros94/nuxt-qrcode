@@ -1,111 +1,103 @@
 <script setup lang="ts">
-import { withoutTrailingSlash } from 'ufo'
+import type { ContentNavigationItem } from '@nuxt/content'
 import { findPageHeadline } from '#ui-pro/utils/content'
-
-const route = useRoute()
 
 definePageMeta({
   layout: 'docs',
 })
 
-const { data: page } = await useAsyncData(route.path, () => queryContent(route.path).findOne())
+const route = useRoute()
+const { toc, seo } = useAppConfig()
+const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
+
+const { data: page } = await useAsyncData(route.path, () => queryCollection('docs').path(route.path).first())
 if (!page.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true })
 }
 
 const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
-  return queryContent()
-    .where({
-      _extension: 'md',
-      navigation: {
-        $ne: false,
-      },
-    })
-    .only(['title', 'description', '_path'])
-    .findSurround(withoutTrailingSlash(route.path))
-}, { default: () => [] })
-
-const headline = computed(() => findPageHeadline(page.value))
+  return queryCollectionItemSurroundings('docs', route.path, {
+    fields: ['description'],
+  })
+})
 
 useSeoMeta({
-  titleTemplate: '%s - Nuxt QRCode',
-  title: page.value.navigation?.title || page.value.title,
-  ogTitle: `${page.value.navigation?.title || page.value.title} - Nuxt QRCode`,
-  description: page.value.seo?.description || page.value.description,
-  ogDescription: page.value.seo?.description || page.value.description,
+  title: page.value.seo.title,
+  ogTitle: `${page.value.seo.title} - ${seo?.siteName}`,
+  description: page.value.seo.description,
+  ogDescription: page.value.seo.description,
 })
+
+const headline = computed(() => findPageHeadline(navigation!.value, page.value))
 
 defineOgImageComponent('Docs', {
-  headline: headline.value,
   title: page.value.title,
-  description: page.value.seo?.description || page.value.description,
+  description: page.value.description,
+  headline: headline.value,
 })
 
-const communityLinks = computed(() => [{
-  icon: 'i-heroicons-pencil-square',
-  label: 'Edit this page',
-  to: `https://github.com/sandros94/nuxt-qrcode/edit/docs/content/${page?.value?._file}`,
-  target: '_blank',
-}, {
-  icon: 'i-heroicons-star',
-  label: 'Star on GitHub',
-  to: 'https://github.com/sandros94/nuxt-qrcode',
-  target: '_blank',
-}])
-// , {
-//   label: 'Roadmap',
-//   icon: 'i-heroicons-map',
-//   to: '/roadmap',
-// }])
+const links = computed(() => {
+  const links = []
+  if (toc?.bottom?.edit) {
+    links.push({
+      icon: 'i-lucide-external-link',
+      label: 'Edit this page',
+      to: `${toc.bottom.edit}/${page?.value?.stem}.${page?.value?.extension}`,
+      target: '_blank',
+    })
+  }
+
+  return [...links, ...(toc?.bottom?.links || [])].filter(Boolean)
+})
 </script>
 
 <template>
   <UPage v-if="page">
     <UPageHeader
       :title="page.title"
+      :description="page.description"
       :links="page.links"
       :headline="headline"
-    >
-      <template #description>
-        <MDC
-          v-if="page.description"
-          :value="page.description"
-          unwrap="p"
-        />
-      </template>
-    </UPageHeader>
+    />
 
     <UPageBody>
       <ContentRenderer
-        v-if="page.body"
+        v-if="page"
         :value="page"
       />
 
-      <USeparator />
+      <USeparator v-if="surround?.length" />
 
-      <UContentSurround :surround="(surround as any)" />
+      <UContentSurround :surround="surround" />
     </UPageBody>
 
-    <template
-      v-if="page?.body?.toc?.links?.length"
-      #right
-    >
-      <UContentToc
-        :links="page.body.toc.links"
-        class="z-[2]"
-      >
-        <template #bottom>
-          <USeparator
-            v-if="page.body?.toc?.links?.length"
-            type="dashed"
-          />
+    <ClientOnly>
+      <Teleport v-if="page?.body?.toc?.links?.length" to="#aside-toc">
+        <UContentToc
+          :title="toc?.title"
+          :links="page.body?.toc?.links"
+        >
+          <template
+            v-if="toc?.bottom"
+            #bottom
+          >
+            <div
+              class="hidden lg:block space-y-6"
+              :class="{ '!mt-6': page.body?.toc?.links?.length }"
+            >
+              <USeparator
+                v-if="page.body?.toc?.links?.length"
+                type="dashed"
+              />
 
-          <UPageLinks
-            title="Community"
-            :links="communityLinks"
-          />
-        </template>
-      </UContentToc>
-    </template>
+              <UPageLinks
+                :title="toc.bottom.title"
+                :links="links"
+              />
+            </div>
+          </template>
+        </UContentToc>
+      </Teleport>
+    </ClientOnly>
   </UPage>
 </template>

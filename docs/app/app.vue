@@ -1,68 +1,19 @@
 <script setup lang="ts">
-import type { NavigationMenuItem } from '#ui/types'
+const { seo, toaster } = useAppConfig()
 
-const appConfig = useAppConfig()
+const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'))
+const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
+  server: false,
+})
 
-const links = [
-  {
-    label: 'Guide',
-    to: '/guide/installation',
-  },
-  {
-    label: 'Generate',
-    icon: 'i-lucide-qr-code',
-    to: '/generate/qrcode',
-  },
-  {
-    label: 'Read',
-    icon: 'i-lucide-camera',
-    to: '/read/qrcode-stream',
-  },
-] satisfies NavigationMenuItem[]
-
-const navigation = computed(() => [
-  {
-    title: 'Guide',
-    icon: 'i-lucide-square-play',
-    to: '/guide/installation',
-    children: [
-      {
-        title: 'Installation',
-        to: '/guide/installation',
-      },
-      {
-        title: 'Configuration',
-        to: '/guide/configuration',
-      },
-    ],
-  },
-  {
-    title: 'Generate',
-    icon: 'i-lucide-qr-code',
-    to: '/generate/qrcode',
-    children: [
-      {
-        title: 'Qrcode',
-        to: '/generate/qrcode',
-      },
-    ],
-  },
-  {
-    title: 'Read',
-    icon: 'i-lucide-camera',
-    to: '/read/qrcode-stream',
-    children: [
-      {
-        title: 'QrcodeStream',
-        to: '/read/qrcode-stream',
-      },
-    ],
-  },
-])
+provide('navigation', navigation)
 
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+  ],
+  link: [
+    { rel: 'icon', href: '/favicon.svg' },
   ],
   htmlAttrs: {
     lang: 'en',
@@ -70,7 +21,8 @@ useHead({
 })
 
 useServerSeoMeta({
-  ogSiteName: 'Nuxt QRCode',
+  titleTemplate: `%s - ${seo?.siteName}`,
+  ogSiteName: seo?.siteName,
   twitterCard: 'summary_large_image',
 })
 
@@ -78,15 +30,24 @@ provide('navigation', navigation)
 </script>
 
 <template>
-  <UApp :toaster="appConfig.toaster">
+  <UApp :toaster>
     <NuxtLoadingIndicator color="#FFF" />
 
-    <AppHeader :links="links" />
+    <AppHeader />
 
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
+    <UMain>
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </UMain>
 
-    <AppFooter :links="links" />
+    <AppFooter />
+
+    <ClientOnly>
+      <LazyUContentSearch
+        :files="files"
+        :navigation="navigation"
+      />
+    </ClientOnly>
   </UApp>
 </template>

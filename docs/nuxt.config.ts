@@ -5,14 +5,26 @@ const { resolve } = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
   modules: [
-    '@nuxt/ui-pro',
     '../src/module',
-    '@nuxt/content',
     '@nuxt/image',
+    '@nuxt/ui-pro',
+    '@nuxt/content',
     'nuxt-og-image',
+    '@nuxtjs/plausible',
     'nuxt-component-meta',
     '@nuxtjs/plausible',
   ],
+
+  $development: {
+    site: {
+      url: 'http://localhost:3000',
+    },
+  },
+  $production: {
+    site: {
+      url: 'https://qrcode.s94.dev',
+    },
+  },
 
   app: {
     head: {
@@ -30,13 +42,16 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
 
-  site: {
-    url: 'https://qrcode.s94.dev',
-  },
-
   content: {
     highlight: {
       langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
+    },
+    build: {
+      markdown: {
+        toc: {
+          searchDepth: 1,
+        },
+      },
     },
   },
 
@@ -48,16 +63,15 @@ export default defineNuxtConfig({
     },
   },
 
-  // TODO: remove once propper landing page is available
-  routeRules: {
-    '/': { redirect: '/guide/installation', prerender: false },
-  },
-
   future: {
     compatibilityVersion: 4,
   },
 
-  compatibilityDate: '2024-07-09',
+  experimental: {
+    buildCache: true,
+  },
+
+  compatibilityDate: '2025-06-09',
 
   componentMeta: {
     exclude: [
@@ -90,5 +104,9 @@ export default defineNuxtConfig({
 
   image: {
     provider: 'ipx',
+  },
+
+  plausible: {
+    apiHost: 'https://plausible.digitoolmedia.com',
   },
 })

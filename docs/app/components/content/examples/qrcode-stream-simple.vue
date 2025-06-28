@@ -11,7 +11,9 @@
         </h5>
         <ul>
           <li v-for="(r, i) in result" :key="i">
-            {{ r }}
+            <span class="text-wrap wrap-anywhere">
+              {{ r }}
+            </span>
           </li>
         </ul>
       </div>
@@ -30,6 +32,8 @@
 <script setup lang="ts">
 import type { DetectedBarcode } from 'nuxt-qrcode'
 
+const toast = useToast()
+
 const result = ref<string[]>()
 const state = reactive({
   errorMsg: '',
@@ -37,7 +41,21 @@ const state = reactive({
 })
 
 function onDetect(detectedCodes: DetectedBarcode[]) {
-  result.value = detectedCodes.map(code => code.rawValue)
+  result.value = detectedCodes.map((code) => {
+    toast.add({
+      title: 'Detected',
+      description: `Type: ${code.type}, Value: ${code.rawValue}`,
+      actions: [
+        {
+          label: 'Copy',
+          onClick: () => {
+            navigator.clipboard.writeText(code.rawValue)
+          },
+        },
+      ],
+    })
+    return code.rawValue
+  })
 }
 
 function onError(err: Error) {
