@@ -5,7 +5,13 @@ const { footer } = useAppConfig()
 <template>
   <UFooter>
     <template #left>
-      {{ footer.credits }}
+      <NuxtLink
+        to="https://github.com/sandros94/nuxt-qrcode/blob/main/LICENSE"
+        target="_blank"
+        class="text-sm text-[var(--ui-text-muted)]"
+      >
+        Published under <span class="text-[var(--ui-text-highlighted)]">MIT License</span>
+      </NuxtLink>
     </template>
 
     <template #right>

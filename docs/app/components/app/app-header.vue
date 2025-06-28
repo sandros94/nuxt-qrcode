@@ -1,51 +1,12 @@
 <script setup lang="ts">
 import type { ContentNavigationItem } from '@nuxt/content'
-import type { NavigationMenuItem } from '@nuxt/ui'
 
 const { version } = useRuntimeConfig().public
 
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
-const links = parseNavigation(navigation)
+const links = useLinks()
 
 const { header } = useAppConfig()
-
-function parseNavigation(contentNavigation?: Ref<ContentNavigationItem[]>): Ref<NavigationMenuItem[]> {
-  return computed(() => {
-    if (!contentNavigation?.value) return []
-
-    const navigation = contentNavigation.value
-    const items: NavigationMenuItem[] = []
-
-    navigation.forEach((item) => {
-      const children = item.children?.map(child => ({
-        label: child.title,
-        to: child.page !== false
-          ? child.path
-          : undefined,
-        icon: child.icon as string | undefined,
-        children: child.children
-          ? child.children.map(subChild => ({
-              label: subChild.title,
-              to: subChild.page !== false
-                ? subChild.path
-                : undefined,
-            }))
-          : undefined,
-      }))
-
-      items.push({
-        label: item.title,
-        to: item.page !== false
-          ? item.path
-          : undefined,
-        icon: item.icon as string | undefined,
-        children,
-      })
-    })
-
-    return items
-  })
-}
 </script>
 
 <template>
