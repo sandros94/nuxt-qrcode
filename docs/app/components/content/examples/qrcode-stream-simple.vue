@@ -44,7 +44,7 @@ function onDetect(detectedCodes: DetectedBarcode[]) {
   result.value = detectedCodes.map((code) => {
     toast.add({
       title: 'Detected',
-      description: `Type: ${code.type}, Value: ${code.rawValue}`,
+      description: `Value: ${code.rawValue}`,
       actions: [
         {
           label: 'Copy',
