@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "nuxt-qrcode": "latest",
-    "nuxt": "latest"
+    "nuxt": "^3.17.5"
   }
 }

@@ -10,32 +10,25 @@
     "name": "Sandro Circi",
     "email": "sandro.circi@digitoolmedia.com"
   },
-  "build": {
-    "externals": [
-      "defu",
-      "uqr"
-    ]
-  },
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "import": "./dist/module.mjs",
-      "require": "./dist/module.cjs"
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
   "files": [
     "dist"
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground --tunnel",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
-    "docs": "nuxi dev docs",
-    "docs:build": "nuxi build docs",
-    "docs:preview": "nuxi preview docs",
+    "dev": "nuxt dev playground --tunnel",
+    "dev:build": "nuxt build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground && nuxt prepare docs",
+    "docs": "nuxt dev docs",
+    "docs:build": "nuxt build docs",
+    "docs:preview": "nuxt preview docs",
     "release": "nr lint && nr test:run && nr prepack && changelogen --release --push --publish",
     "lint": "eslint .",
     "test": "vitest",
@@ -44,28 +37,28 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.14.159",
-    "@vueuse/core": "^11.2.0",
-    "barcode-detector": "^2.3.1",
+    "@nuxt/kit": "^3.17.5",
+    "@vueuse/core": "^13.4.0",
+    "barcode-detector": "^3.0.5",
+    "defu": "^6.1.4",
     "uqr": "^0.1.2",
-    "vue-qrcode-reader": "^5.5.11"
+    "vue-qrcode-reader": "^5.7.2"
   },
   "devDependencies": {
-    "@nuxt/devtools": "^1.6.0",
-    "@nuxt/eslint-config": "^0.7.0",
-    "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.14.159",
-    "@nuxt/test-utils": "^3.14.4",
-    "changelogen": "^0.5.7",
-    "eslint": "^9.15.0",
-    "happy-dom": "^15.11.6",
-    "nuxt": "^3.14.159",
-    "vite": "^5.4.11",
-    "vitest": "^2.1.5",
-    "vitest-environment-nuxt": "^1.0.1",
-    "vue-tsc": "^2.1.10"
+    "@nuxt/devtools": "^2.5.0",
+    "@nuxt/eslint-config": "^1.4.1",
+    "@nuxt/module-builder": "^1.0.1",
+    "@nuxt/test-utils": "^3.19.1",
+    "changelogen": "^0.6.1",
+    "eslint": "^9.30.0",
+    "nuxt": "^3.17.5",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^2.2.10"
   },
   "resolutions": {
-    "nuxt-qrcode": "workspace:*"
-  }
+    "happy-dom": "^17",
+    "nuxt-qrcode": "workspace:*",
+    "vite": "^6"
+  },
+  "packageManager": "pnpm@10.12.4"
 }
