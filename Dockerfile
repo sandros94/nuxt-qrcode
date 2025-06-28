@@ -11,17 +11,20 @@ FROM base AS builder
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-COPY package.json pnpm-lock.yaml .npmrc /app/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc /app/
+COPY /docs/package.json /app/docs/
+COPY /playground/package.json /app/playground/
 RUN npm i -g --force corepack && corepack enable
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
     pnpm install --frozen-lockfile --shamefully-hoist
 
-#ARG NUXT_UI_PRO_LICENSE
+ARG NUXT_UI_PRO_LICENSE
 
 COPY . .
+RUN pnpm run dev:prepare
 RUN --mount=type=cache,id=nuxt,target=/app/node_modules/.cache/nuxt/.nuxt \
-    pnpm run dev:prepare && pnpm run docs:build
+    pnpm run docs:build
 
 # Final production container
 FROM base AS runtime
@@ -33,6 +36,6 @@ EXPOSE 3000
 HEALTHCHECK  --retries=10 --start-period=5s \
   CMD wget --no-verbose --spider http://0.0.0.0:3000/ || exit 1
 
-COPY --link --from=builder /app/.output/  ./
+COPY --link --from=builder /app/docs/.output/  ./
 
 ENTRYPOINT [ "node", "server/index.mjs" ]
