@@ -43,15 +43,21 @@ export default defineNuxtConfig({
   ],
 
   content: {
-    highlight: {
-      langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
-    },
     build: {
       markdown: {
+        highlight: {
+          langs: ['bash', 'ts', 'diff', 'vue', 'json', 'yml'],
+        },
         toc: {
           searchDepth: 1,
         },
       },
+    },
+  },
+
+  mdc: {
+    highlight: {
+      noApiRoute: false,
     },
   },
 
