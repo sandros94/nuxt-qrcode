@@ -5,8 +5,11 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  css-select: 5.1.0
+  css-what: 6.1.0
   happy-dom: ^17
   nuxt-qrcode: workspace:*
+  svgo: 3.2.0
   vite: ^6
 
 importers:
@@ -2495,8 +2498,8 @@ packages:
     resolution: {integrity: sha512-3O5QdqgFRUbXvK1x5INf1YkBz1UKSWqrd63vWsum8MNHDBYD5urm3QtxZbKU259OrEXNM26lP/MPY3d1IGkBgA==}
     engines: {node: '>=16'}
 
-  css-select@5.2.1:
-    resolution: {integrity: sha512-O5tBe98mNUxm2ovZAqJ6uZqo1qVWrKAMQMf9uTK+M321MKKYX+cOORH3xvu17tYRuRM3mjJclcp/y4PNoI3U/A==}
+  css-select@5.1.0:
+    resolution: {integrity: sha512-nwoRF1rvRRnnCqqY7updORDsuqKzqYJ28+oSMaJMMgOauh3fvwHqMS7EZpIPqK8GL+g9mKxF1vP/ZjSeNjEVHg==}
 
   css-to-react-native@3.2.0:
     resolution: {integrity: sha512-e8RKaLXMOFii+02mOlqwjbD00KSEKqblnpO9e++1aXS1fPQOpS1YoqdVHBqPjHNoxeF2mimzVqawm2KCbEdtHQ==}
@@ -2513,8 +2516,8 @@ packages:
     resolution: {integrity: sha512-0eW44TGN5SQXU1mWSkKwFstI/22X2bG1nYzZTYMAWjylYURhse752YgbE4Cx46AC+bAvI+/dYTPRk1LqSUnu6w==}
     engines: {node: ^10 || ^12.20.0 || ^14.13.0 || >=15.0.0}
 
-  css-what@6.2.1:
-    resolution: {integrity: sha512-efV3anJ1n8GGohPAXF3IVg0wu0AUyBN9px4Giwy7DeQVzzMmNTdo9TtOCJlyoprjNb6Szb/M1kxP86DNFimPIQ==}
+  css-what@6.1.0:
+    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
     engines: {node: '>= 6'}
 
   cssesc@3.0.0:
@@ -5303,8 +5306,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  svgo@3.3.2:
-    resolution: {integrity: sha512-OoohrmuUlBs8B8o6MB2Aevn+pRIH9zDALSR+6hhqVfa6fRwG/Qw9VUMSMW9VNg2CFc/MTIfabtdOVl9ODIJjpw==}
+  svgo@3.2.0:
+    resolution: {integrity: sha512-4PP6CMW/V7l/GmKRKzsLR8xxjdHTV4IMvhTnpuHwwBazSIlw5W/5SmPjN8Dwyt7lKbSJrRDgp4t9ph0HgChFBQ==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -9005,10 +9008,10 @@ snapshots:
 
   css-gradient-parser@0.0.16: {}
 
-  css-select@5.2.1:
+  css-select@5.1.0:
     dependencies:
       boolbase: 1.0.0
-      css-what: 6.2.1
+      css-what: 6.1.0
       domhandler: 5.0.3
       domutils: 3.2.2
       nth-check: 2.1.1
@@ -9034,7 +9037,7 @@ snapshots:
       mdn-data: 2.12.2
       source-map-js: 1.2.1
 
-  css-what@6.2.1: {}
+  css-what@6.1.0: {}
 
   cssesc@3.0.0: {}
 
@@ -10164,7 +10167,7 @@ snapshots:
       ofetch: 1.4.1
       pathe: 1.1.2
       sharp: 0.32.6
-      svgo: 3.3.2
+      svgo: 3.2.0
       ufo: 1.6.1
       unstorage: 1.16.0(db0@0.3.2(better-sqlite3@11.10.0))(ioredis@5.6.1)
       xss: 1.0.15
@@ -11775,7 +11778,7 @@ snapshots:
     dependencies:
       postcss: 8.5.6
       postcss-value-parser: 4.2.0
-      svgo: 3.3.2
+      svgo: 3.2.0
 
   postcss-unique-selectors@7.0.4(postcss@8.5.6):
     dependencies:
@@ -12508,13 +12511,13 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  svgo@3.3.2:
+  svgo@3.2.0:
     dependencies:
       '@trysound/sax': 0.2.0
       commander: 7.2.0
-      css-select: 5.2.1
+      css-select: 5.1.0
       css-tree: 2.3.1
-      css-what: 6.2.1
+      css-what: 6.1.0
       csso: 5.0.5
       picocolors: 1.1.1
 

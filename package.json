@@ -56,8 +56,11 @@
     "vue-tsc": "^2.2.10"
   },
   "resolutions": {
+    "css-select": "5.1.0",
+    "css-what": "6.1.0",
     "happy-dom": "^17",
     "nuxt-qrcode": "workspace:*",
+    "svgo": "3.2.0",
     "vite": "^6"
   },
   "packageManager": "pnpm@10.12.4"
