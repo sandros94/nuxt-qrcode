@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defu } from 'defu'
 import { encode } from 'uqr'
-import type { SVGAttributes } from 'vue'
 import { reactivePick } from '@vueuse/core'
 import type { QrCodeGenerateData } from 'uqr'
 import type { RenderSVGOptions } from '../types'
@@ -11,9 +10,9 @@ import { getSize } from '#qrcode/utils/qrcode/svg/utils'
 
 export interface QrcodeProps extends RenderSVGOptions {
   value: QrCodeGenerateData
-  width?: SVGAttributes['width']
-  height?: SVGAttributes['height']
-  preserveAspectRatio?: SVGAttributes['preserveAspectRatio']
+  width?: number | string
+  height?: number | string
+  preserveAspectRatio?: string
 }
 </script>
 
