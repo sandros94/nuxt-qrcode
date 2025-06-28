@@ -2,14 +2,13 @@
 import { defu } from 'defu'
 import { encode } from 'uqr'
 import { reactivePick } from '@vueuse/core'
-import type { QrCodeGenerateData } from 'uqr'
 import type { RenderSVGOptions } from '../types'
 import { type VNode, ref, computed, h, watchEffect, useAttrs, useRuntimeConfig } from '#imports'
 import { renderSVGBody } from '#qrcode/utils/qrcode/svg/render'
 import { getSize } from '#qrcode/utils/qrcode/svg/utils'
 
 export interface QrcodeProps extends RenderSVGOptions {
-  value: QrCodeGenerateData
+  value: string | number[]
   width?: number | string
   height?: number | string
   preserveAspectRatio?: string
