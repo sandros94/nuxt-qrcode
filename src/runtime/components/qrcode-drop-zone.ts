@@ -18,13 +18,26 @@ export interface QrcodeDropZoneSlots extends SlotsType {
 export default defineComponent<QrcodeDropZoneProps, ComponentObjectPropsOptions, string, QrcodeDropZoneEmits, {}, string, {}, {}, {}, {}, ComponentOptionsMixin, ComponentOptionsMixin, {}, string, QrcodeDropZoneSlots>({
   name: 'QrcodeDropZone',
   emits: ['detect', 'dragover', 'error'],
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, slots, emit }) {
     const formats = (props.formats || useRuntimeConfig().public.qrcode.reader.formats)
       .filter(f => f !== 'databar_limited' && f !== 'any') as Exclude<BarcodeFormat, 'databar_limited' | 'any'>[]
     // TODO: check upstream if above filter is still needed
 
     return () => h(QrcodeDropZone, {
+      ...props,
       ...attrs,
+      onDetect: (detectedCodes: DetectedBarcode[]) => {
+        props.onDetect?.(detectedCodes)
+        emit('detect', detectedCodes)
+      },
+      onDragover: (isDraggingOver: boolean) => {
+        props.onDragover?.(isDraggingOver)
+        emit('dragover', isDraggingOver)
+      },
+      onError: (error: EmittedError) => {
+        props.onError?.(error)
+        emit('error', error)
+      },
       formats,
     }, slots)
   },

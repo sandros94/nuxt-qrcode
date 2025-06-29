@@ -12,14 +12,21 @@ export interface QrcodeCaptureEmits {
 export default defineComponent<QrcodeCaptureProps, ComponentObjectPropsOptions, string, QrcodeCaptureEmits>({
   name: 'QrcodeCapture',
   emits: ['detect'],
-  setup(props, { attrs }) {
+  setup(props, { attrs, emit }) {
     const formats = (props.formats || useRuntimeConfig().public.qrcode.reader.formats)
       .filter(f => f !== 'databar_limited' && f !== 'any') as Exclude<BarcodeFormat, 'databar_limited' | 'any'>[]
     // TODO: check upstream if above filter is still needed
 
+    console.log('props', props)
+    console.log('attrs', attrs)
+
     return () => h(QrcodeCapture, {
       ...props,
       ...attrs,
+      onDetect: (detectedCodes: DetectedBarcode[]) => {
+        props.onDetect?.(detectedCodes)
+        emit('detect', detectedCodes)
+      },
       formats,
     })
   },
