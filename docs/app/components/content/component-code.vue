@@ -1,7 +1,7 @@
 <!-- eslint-disable no-useless-escape -->
 <script setup lang="ts">
 import json5 from 'json5'
-import { upperFirst, camelCase, kebabCase } from 'scule'
+import { kebabCase, pascalCase } from 'scule'
 import { hash } from 'ohash'
 import { get, set } from '#ui/utils'
 
@@ -34,9 +34,8 @@ const props = defineProps<{
 
 const route = useRoute()
 
-const camelName = camelCase(props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? '')
-const name = upperFirst(camelName)
-const component = defineAsyncComponent(() => import(`#qrcode/components/${camelName}.ts`))
+const name = pascalCase(props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? '')
+const component = resolveComponent(name)
 
 const componentProps = reactive({ ...(props.props || {}) })
 const componentEvents = reactive({
@@ -129,7 +128,7 @@ const code = computed(() => {
     }
 
     const prop = meta?.meta?.props?.find((prop: any) => prop.name === key)
-    const name = kebabCase(key)
+    const keyName = kebabCase(key)
 
     if (typeof value === 'boolean') {
       if (value && prop?.default === 'true') {
@@ -139,12 +138,12 @@ const code = computed(() => {
         continue
       }
 
-      code += value ? ` ${name}` : ` :${key}="false"`
+      code += value ? ` ${keyName}` : ` :${key}="false"`
     }
     else if (typeof value === 'object') {
       const parsedValue = !props.external?.includes(key) ? json5.stringify(value, null, 2).replace(/,([ |\t\n]+[}|\])])/g, '$1') : key
 
-      code += ` :${name}="${parsedValue}"`
+      code += ` :${keyName}="${parsedValue}"`
     }
     else {
       const propDefault = prop && (prop.default ?? prop.tags?.find((tag: any) => tag.name === 'defaultValue')?.text)
@@ -152,7 +151,7 @@ const code = computed(() => {
         continue
       }
 
-      code += ` ${typeof value === 'number' ? ':' : ''}${name}="${value}"`
+      code += ` ${typeof value === 'number' ? ':' : ''}${keyName}="${value}"`
     }
   }
 
@@ -234,7 +233,7 @@ const { data: ast } = await useAsyncData(
             </USelectMenu>
             <UInput
               v-else
-              :type="option.type?.includes('number') ? 'number' : 'text'"
+              :type="option.type?.includes('number') && !option.type?.includes('number[]') ? 'number' : 'text'"
               :model-value="getComponentProp(option.name)"
               color="neutral"
               variant="soft"
@@ -248,7 +247,7 @@ const { data: ast } = await useAsyncData(
       <div v-if="component" class="flex justify-center border border-b-0 border-[var(--ui-border-muted)] relative p-4 z-[1]" :class="[!options.length && 'rounded-t-[calc(var(--ui-radius)*1.5)]', props.class]">
         <component :is="component" v-bind="{ ...componentProps, ...componentEvents }">
           <template v-for="slot in Object.keys(slots || {})" :key="slot" #[slot]>
-            <MDCSlot :name="slot" unwrap="p">
+            <MDCSlot :name="slot" unwrap="div">
               {{ slots?.[slot] }}
             </MDCSlot>
           </template>

@@ -129,7 +129,7 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
                   inset
                   standalone
                   :color="(modelValue as any)"
-                  :size="ui.itemLeadingChipSize()"
+                  :size="ui.itemLeadingChipSize() as any"
                   class="size-2"
                 />
               </template>
