@@ -14,6 +14,11 @@ export default defineNuxtConfig({
     '@nuxtjs/plausible',
     'nuxt-component-meta',
     '@nuxtjs/plausible',
+    (_, nuxt) => {
+      nuxt.hook('components:dirs', (dirs) => {
+        dirs.unshift({ path: resolve('./app/components/content/examples'), pathPrefix: false, prefix: '', global: true })
+      })
+    },
   ],
 
   $development: {

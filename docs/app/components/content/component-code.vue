@@ -34,8 +34,9 @@ const props = defineProps<{
 
 const route = useRoute()
 
-const name = pascalCase(props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? '')
-const component = resolveComponent(name)
+const name = props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? ''
+const componentName = pascalCase(name)
+const component = defineAsyncComponent(() => import(`#qrcode/components/${kebabCase(name)}.ts`))
 
 const componentProps = reactive({ ...(props.props || {}) })
 const componentEvents = reactive({
@@ -51,7 +52,7 @@ function setComponentProp(name: string, value: any) {
   set(componentProps, name, value)
 }
 
-const meta = await fetchComponentMeta(name)
+const meta = await fetchComponentMeta(componentName)
 
 function mapKeys(obj: object, parentKey = ''): any {
   return Object.entries(obj || {}).flatMap(([key, value]: [string, any]) => {
@@ -111,7 +112,7 @@ const code = computed(() => {
 
   code += `
 <template>
-  <${name}`
+  <${componentName}`
   for (const [key, value] of Object.entries(componentProps)) {
     if (key === 'modelValue') {
       code += ` v-model="value"`
@@ -168,7 +169,7 @@ const code = computed(() => {
   </template>`
       }
     }
-    code += (Object.keys(props.slots).length > 1 ? '\n' : '') + `</${name}>`
+    code += (Object.keys(props.slots).length > 1 ? '\n' : '') + `</${componentName}>`
   }
   else {
     code += ` />`
@@ -186,7 +187,7 @@ const code = computed(() => {
 })
 
 const { data: ast } = await useAsyncData(
-  `component-code-${name}-${hash({ props: componentProps, slots: props.slots })}`,
+  `component-code-${componentName}-${hash({ props: componentProps, slots: props.slots })}`,
   async () => parseMarkdown(code.value),
   { watch: [code] },
 )

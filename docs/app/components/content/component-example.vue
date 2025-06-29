@@ -1,6 +1,6 @@
 <!-- eslint-disable @typescript-eslint/no-empty-object-type -->
 <script setup lang="ts">
-import { camelCase } from 'scule'
+import { pascalCase } from 'scule'
 import { get, set } from '#ui/utils'
 
 const props = withDefaults(defineProps<{
@@ -47,9 +47,9 @@ const slots = defineSlots<{
   options(props?: {}): any
 }>()
 
-const camelName = camelCase(props.name)
+const pascalName = pascalCase(props.name)
 
-const data = await fetchComponentExample(camelName)
+const data = await fetchComponentExample(pascalName)
 
 const componentProps = reactive({ ...(props.props || {}) })
 
@@ -73,7 +73,7 @@ ${data?.code ?? ''}
   return code
 })
 
-const { data: ast } = await useAsyncData(`component-example-${camelName}`, async () => parseMarkdown(code.value), { watch: [code] })
+const { data: ast } = await useAsyncData(`component-example-${props.name}`, async () => parseMarkdown(code.value), { watch: [code] })
 
 const optionsValues = ref(props.options?.reduce((acc, option) => {
   if (option.name) {
@@ -146,7 +146,7 @@ const optionsValues = ref(props.options?.reduce((acc, option) => {
         </div>
 
         <div class="flex justify-center p-4" :class="props.class">
-          <component :is="camelName" v-bind="{ ...componentProps, ...optionsValues }" />
+          <component :is="pascalName" v-bind="{ ...componentProps, ...optionsValues }" />
         </div>
       </div>
     </template>
