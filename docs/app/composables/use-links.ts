@@ -27,7 +27,7 @@ export function useLinks() {
     {
       label: 'Generate',
       icon: 'i-lucide-qr-code',
-      to: '/generate',
+      /* to: '/generate', */
       active: route.path.startsWith('/generate'),
       children: [
         {
@@ -42,7 +42,7 @@ export function useLinks() {
     {
       label: 'Read',
       icon: 'i-lucide-camera',
-      to: '/read',
+      /* to: '/read', */
       active: route.path.startsWith('/read'),
       children: [
         {
