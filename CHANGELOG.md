@@ -1,6 +1,25 @@
 # Changelog
 
 
+## v0.4.5
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.4...v0.4.5)
+
+### 🩹 Fixes
+
+- Make `global` import as top level module option ([196bcdf](https://github.com/sandros94/nuxt-qrcode/commit/196bcdf))
+
+### 📖 Documentation
+
+- Enable tunnel during dev ([155e919](https://github.com/sandros94/nuxt-qrcode/commit/155e919))
+- Fix component-meta resolution ([00ac8e2](https://github.com/sandros94/nuxt-qrcode/commit/00ac8e2))
+- Fix examples ([d6a431d](https://github.com/sandros94/nuxt-qrcode/commit/d6a431d))
+- Fix navigation links ([b53913d](https://github.com/sandros94/nuxt-qrcode/commit/b53913d))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.4
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.3...v0.4.4)
