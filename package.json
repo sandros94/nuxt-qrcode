@@ -32,7 +32,7 @@
     "dev": "nuxt dev playground --tunnel",
     "dev:build": "nuxt build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground && nuxt prepare docs",
-    "docs": "nuxt dev docs",
+    "docs": "nuxt dev docs --tunnel",
     "docs:build": "nuxt build docs",
     "docs:preview": "nuxt preview docs",
     "release": "pnpm lint && pnpm test && pnpm prepack && changelogen --release --push --publish",
