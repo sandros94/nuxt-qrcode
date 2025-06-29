@@ -6,5 +6,7 @@ export default defineEventHandler(async (event) => {
     message: 'Missing data to encode',
   })
 
-  return useQrcode(data)
+  return useQrcode(data, {
+    toBase64: true,
+  })
 })
