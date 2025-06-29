@@ -24,8 +24,20 @@ export interface ModuleOptions {
      */
     autoImport?: boolean
     formats?: BarcodeFormat[]
+
+    /**
+     * Whether to register the reader components globally
+     *
+     * @deprecated use `qrcode.global` instead
+     */
     global?: boolean
   }
+  /**
+   * Whether to register the components globally
+   *
+   * @default false
+   */
+  global?: boolean
   options: Omit<RenderSVGOptions, 'onEncoded'> & {
     disableNuxtUiIntegration?: boolean
   }
@@ -46,6 +58,7 @@ export default defineNuxtModule<ModuleOptions>({
       formats: [],
       global: false,
     },
+    global: false,
     options: {
       ecc: 'L',
       maskPattern: -1,
@@ -79,7 +92,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addComponentsDir({
       path: resolve(runtimeDir, 'components'),
-      global: qrcode.reader.global,
+      global: qrcode.global || qrcode.reader.global,
       watch: false,
     })
 
