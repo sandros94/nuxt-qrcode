@@ -3,10 +3,10 @@ import type { QrCodeGenerateData } from 'uqr'
 import { defu } from 'defu'
 
 import type { RenderSVGOptions } from '#qrcode/utils/qrcode/svg/render'
-import { renderSVG } from '#qrcode/utils/qrcode/svg/render'
+import { renderSVG, renderSVGBase64 } from '#qrcode/utils/qrcode/svg/render'
 
 import type { MaybeRefOrGetter, Ref } from '#imports'
-import { ref, reactive, toRef, watchEffect, useRuntimeConfig } from '#imports'
+import { reactive, toRef, computed, useRuntimeConfig } from '#imports'
 
 type ComputedOptions<T extends Record<string, any>> = {
   [K in keyof T]: T[K] extends Function ? T[K] : ComputedOptions<T[K]> | Ref<T[K]> | T[K]
@@ -14,7 +14,9 @@ type ComputedOptions<T extends Record<string, any>> = {
 
 export function useQrcode(
   data: MaybeRefOrGetter<QrCodeGenerateData>,
-  options?: ComputedOptions<RenderSVGOptions>,
+  options: ComputedOptions<RenderSVGOptions> & {
+    toBase64?: boolean
+  } = {},
 ) {
   const {
     variant,
@@ -31,9 +33,9 @@ export function useQrcode(
     minVersion,
     onEncoded,
     pixelSize,
-  } = options || {}
+    toBase64 = false,
+  } = options
   const src = toRef(data)
-  const qrcode = ref<string>()
 
   const _options = reactive({
     variant,
@@ -52,14 +54,17 @@ export function useQrcode(
     pixelSize,
   })
 
-  watchEffect(() => {
-    qrcode.value = renderSVG(src.value,
-      defu(
-        _options,
-        useRuntimeConfig().public.qrcode.options,
-      ) as RenderSVGOptions,
-    )
-  })
+  return computed(() => {
+    const opts = defu(
+      _options,
+      useRuntimeConfig().public.qrcode.options,
+    ) as RenderSVGOptions
 
-  return qrcode
+    if (toBase64) {
+      return renderSVGBase64(src.value, opts)
+    }
+    else {
+      return renderSVG(src.value, opts)
+    }
+  })
 }

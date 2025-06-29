@@ -1,5 +1,6 @@
 import type { QrCodeGenerateData, QrCodeGenerateSvgOptions } from 'uqr'
 import { encode } from 'uqr'
+import { base64Encode } from '../../'
 import {
   renderMarkers,
 } from './markers'
@@ -51,6 +52,13 @@ export function renderSVG(
 
   svg += '</svg>'
   return svg
+}
+
+export function renderSVGBase64(
+  data: QrCodeGenerateData,
+  options: RenderSVGOptions = {},
+) {
+  return `data:image/svg+xml;base64,${base64Encode(renderSVG(data, options))}`
 }
 
 export function renderSVGBody(
