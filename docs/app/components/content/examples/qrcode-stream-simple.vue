@@ -5,11 +5,11 @@
         @error="onError"
         @detect="onDetect"
       />
-      <div v-if="result">
+      <div class="pt-4">
         <h5>
-          Scanned QRCodes
+          Scanned QRCodes:
         </h5>
-        <ul>
+        <ul v-if="result" class="list-disc pl-4">
           <li v-for="(r, i) in result" :key="i">
             <span class="text-wrap wrap-anywhere">
               {{ r }}
