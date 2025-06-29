@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v0.4.6
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.5...v0.4.6)
+
+### 🚀 Enhancements
+
+- Optionally render base64 svgs via utilities/composable ([3bb49d1](https://github.com/sandros94/nuxt-qrcode/commit/3bb49d1))
+
+### 🩹 Fixes
+
+- **useQrcode:** Fall back to black and white for base64 ([af24cd1](https://github.com/sandros94/nuxt-qrcode/commit/af24cd1))
+- **read:** Component emits ([e85bc2d](https://github.com/sandros94/nuxt-qrcode/commit/e85bc2d))
+
+### 📖 Documentation
+
+- Document other read components ([0d6861f](https://github.com/sandros94/nuxt-qrcode/commit/0d6861f))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.5
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.4...v0.4.5)
