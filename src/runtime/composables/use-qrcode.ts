@@ -6,7 +6,7 @@ import type { RenderSVGOptions } from '#qrcode/utils/qrcode/svg/render'
 import { renderSVG, renderSVGBase64 } from '#qrcode/utils/qrcode/svg/render'
 
 import type { MaybeRefOrGetter, Ref } from '#imports'
-import { reactive, toRef, computed, useRuntimeConfig } from '#imports'
+import { reactive, toRef, toValue, computed, useRuntimeConfig } from '#imports'
 
 type ComputedOptions<T extends Record<string, any>> = {
   [K in keyof T]: T[K] extends Function ? T[K] : ComputedOptions<T[K]> | Ref<T[K]> | T[K]
@@ -54,17 +54,21 @@ export function useQrcode(
     pixelSize,
   })
 
-  return computed(() => {
-    const opts = defu(
-      _options,
-      useRuntimeConfig().public.qrcode.options,
-    ) as RenderSVGOptions
+  const opts = computed(() => defu(
+    _options,
+    useRuntimeConfig().public.qrcode.options,
+  ) as RenderSVGOptions)
 
+  return computed(() => {
     if (toBase64) {
-      return renderSVGBase64(src.value, opts)
+      return renderSVGBase64(src.value, {
+        ...opts.value,
+        blackColor: toValue(blackColor) || '#000000',
+        whiteColor: toValue(whiteColor) || '#ffffff',
+      })
     }
     else {
-      return renderSVG(src.value, opts)
+      return renderSVG(src.value, opts.value)
     }
   })
 }
