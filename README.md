@@ -146,7 +146,7 @@ function onError(err: Error) {
 
 #### `QrcodeCaptrue` and `QrcodeDropZone`
 
-TODO: add examples, for now follow what is available from the [upstream docs](https://gruhn.github.io/vue-qrcode-reader/) or current [playground](/playground/) implementation.
+Follow the documentation on [`qrcode.s94.dev`](https://qrcode.s94.dev) to learn how to use these components.
 
 ## Development
 
