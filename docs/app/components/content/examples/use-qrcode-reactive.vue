@@ -11,7 +11,7 @@ import type { SVGVariant } from 'nuxt-qrcode'
 
 const text = ref('Hello World')
 const variant = ref<SVGVariant>('pixelated')
-const variants = ref(['pixelated', 'dots', 'rounded', 'squares', 'circles'])
+const variants = ref(['default', 'circle', 'pixelated', 'rounded', 'dots'])
 
 const qr = useQrcode(text, {
   toBase64: true,
