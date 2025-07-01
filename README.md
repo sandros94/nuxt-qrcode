@@ -13,12 +13,13 @@ The following are the features that I'm currently working on and plan to release
 
 - Read QRCodes
   - [x] provide upstream components from [vue-qrcode-reader](https://github.com/gruhn/vue-qrcode-reader)
-  - [x] composable full of utils to go along with the upstream components
+  - [x] composable full of utils to go along with the upstream components (client-only)
   - [x] provide custom Nuxt component to wrap upstream components with opinionated logic
 - Generate QRCodes
   - [x] provide upstream from [unjs/uqr](https://github.com/unjs/uqr)
   - [x] composable full of utils to generate qrcodes
-    - [ ] server utils
+    - [x] server util (with base64 image support)
+    - [x] client util (with base64 image support)
   - [x] provide custom Nuxt component to render QR Codes
     - [x] svg
     - [ ] png
@@ -183,7 +184,7 @@ Published under the [MIT](/LICENSE) license.
 [npm-version-href]: https://npmjs.com/package/nuxt-qrcode
 
 [npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-qrcode.svg?style=flat&colorA=020420&colorB=00DC82
-[npm-downloads-href]: https://npmjs.com/package/nuxt-qrcode
+[npm-downloads-href]: https://npm.chart.dev/nuxt-qrcode
 
 [license-src]: https://img.shields.io/npm/l/nuxt-qrcode.svg?style=flat&colorA=020420&colorB=00DC82
 [license-href]: https://npmjs.com/package/nuxt-qrcode
