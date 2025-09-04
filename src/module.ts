@@ -84,8 +84,8 @@ export default defineNuxtModule<ModuleOptions>({
       = (hasNuxtModule('@nuxt/ui-pro') && await hasNuxtModuleCompatibility('@nuxt/ui-pro', '^3'))
         || (hasNuxtModule('@nuxt/ui') && await hasNuxtModuleCompatibility('@nuxt/ui', '^3'))
     if (useNuxtUi && !qrcode.options.disableNuxtUiIntegration) {
-      qrcode.options.blackColor = 'var(--ui-text-highlighted)'
-      qrcode.options.whiteColor = 'var(--ui-bg)'
+      qrcode.options.blackColor = 'var(--ui-text-highlighted, #000000)'
+      qrcode.options.whiteColor = 'var(--ui-bg, #FFFFFF)'
     }
 
     addImportsDir(resolve(runtimeDir, 'composables'))

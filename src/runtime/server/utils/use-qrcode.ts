@@ -19,11 +19,7 @@ export function useQrcode(
   ) as RenderSVGOptions
 
   if (toBase64) {
-    return renderSVGBase64(data, {
-      ..._options,
-      blackColor: opts.blackColor || '#000000',
-      whiteColor: opts.whiteColor || '#ffffff',
-    })
+    return renderSVGBase64(data, _options)
   }
   else {
     return renderSVG(data, _options)
