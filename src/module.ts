@@ -80,10 +80,13 @@ export default defineNuxtModule<ModuleOptions>({
     )
     if (qrcode.reader.formats?.length === 0) qrcode.reader.formats = ['qr_code']
 
-    const useNuxtUi
-      = (hasNuxtModule('@nuxt/ui-pro') && await hasNuxtModuleCompatibility('@nuxt/ui-pro', '^3'))
-        || (hasNuxtModule('@nuxt/ui') && await hasNuxtModuleCompatibility('@nuxt/ui', '^3'))
-    if (useNuxtUi && !qrcode.options.disableNuxtUiIntegration) {
+    const [hasUiPro, hasUi3, hasUi4] = await Promise.all([
+      hasNuxtModuleCompatibility('@nuxt/ui-pro', '^3'),
+      hasNuxtModuleCompatibility('@nuxt/ui', '^3'),
+      hasNuxtModuleCompatibility('@nuxt/ui', '^4'),
+    ])
+    const useNuxtUi = ((hasNuxtModule('@nuxt/ui-pro') && hasUiPro) || (hasNuxtModule('@nuxt/ui') && (hasUi3 || hasUi4) && !qrcode.options.disableNuxtUiIntegration))
+    if (useNuxtUi) {
       qrcode.options.blackColor = 'var(--ui-text-highlighted, #000000)'
       qrcode.options.whiteColor = 'var(--ui-bg, #FFFFFF)'
     }
