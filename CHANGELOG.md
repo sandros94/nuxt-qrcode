@@ -1,6 +1,32 @@
 # Changelog
 
 
+## v0.4.7
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.6...v0.4.7)
+
+### 🚀 Enhancements
+
+- Add support for Nuxt UI v4 ([ecb03a5](https://github.com/sandros94/nuxt-qrcode/commit/ecb03a5))
+
+### 🩹 Fixes
+
+- Update default options to include css fallback values ([3246d2f](https://github.com/sandros94/nuxt-qrcode/commit/3246d2f))
+
+### 📖 Documentation
+
+- Update readme ([1529e41](https://github.com/sandros94/nuxt-qrcode/commit/1529e41))
+- Fix variants ([a0ec9a5](https://github.com/sandros94/nuxt-qrcode/commit/a0ec9a5))
+- Fix docs for other read components ([dc3385c](https://github.com/sandros94/nuxt-qrcode/commit/dc3385c))
+
+### 🏡 Chore
+
+- Add script ([6bf5ce6](https://github.com/sandros94/nuxt-qrcode/commit/6bf5ce6))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.6
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.5...v0.4.6)
