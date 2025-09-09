@@ -5,7 +5,7 @@ export function useLinks() {
     {
       label: 'Guide',
       icon: 'i-lucide-square-play',
-      to: '/guide',
+      // to: '/guide',
       active: route.path.startsWith('/guide'),
       children: [
         {
@@ -27,7 +27,7 @@ export function useLinks() {
     {
       label: 'Generate',
       icon: 'i-lucide-qr-code',
-      /* to: '/generate', */
+      // to: '/generate',
       active: route.path.startsWith('/generate'),
       children: [
         {
@@ -49,7 +49,7 @@ export function useLinks() {
     {
       label: 'Read',
       icon: 'i-lucide-scan-qr-code',
-      /* to: '/read', */
+      // to: '/read',
       active: route.path.startsWith('/read'),
       children: [
         {
