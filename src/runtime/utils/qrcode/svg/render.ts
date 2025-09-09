@@ -40,6 +40,7 @@ export function renderSVG(
     pixelSize,
     pixelPadding,
     variant,
+    invert, // done in renderSVGBody by inverting colors
     ...opts
   } = options
 
