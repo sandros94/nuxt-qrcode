@@ -139,12 +139,12 @@ export default defineNuxtConfig({
       {
         name: 'Public+Sans',
         weight: 400,
-        path: '/public/PublicSans.ttf',
+        path: '/PublicSans.ttf',
       },
       {
         name: 'Public+Sans:italic',
         weight: 400,
-        path: '/public/PublicSans-Italic.ttf',
+        path: '/PublicSans-Italic.ttf',
       },
     ],
   },
