@@ -6,11 +6,10 @@ const { resolve } = createResolver(import.meta.url)
 export default defineNuxtConfig({
   modules: [
     '../src/module',
-    '@nuxt/image',
     '@nuxt/ui',
+    '@nuxtjs/seo',
     '@nuxt/content',
     'nuxt-llms',
-    'nuxt-og-image',
     '@nuxtjs/plausible',
     'nuxt-component-meta',
     '@nuxtjs/plausible',
@@ -83,17 +82,7 @@ export default defineNuxtConfig({
     },
   },
 
-  experimental: {
-    buildCache: true,
-  },
-
   compatibilityDate: '2025-06-09',
-
-  vite: {
-    optimizeDeps: {
-      include: ['debug'],
-    },
-  },
 
   componentMeta: {
     exclude: [
@@ -124,10 +113,6 @@ export default defineNuxtConfig({
     provider: 'iconify',
   },
 
-  image: {
-    provider: 'ipx',
-  },
-
   llms: {
     domain: 'https://qrcode.s94.dev',
     title: 'Nuxt QRCode - Docs',
@@ -137,7 +122,7 @@ export default defineNuxtConfig({
   ogImage: {
     fonts: [
       {
-        name: 'Invalid-to-bypass-build-error',
+        name: 'invalidate-to-bypass-build-error',
         weight: 400,
         path: '/invalid.ttf',
       },

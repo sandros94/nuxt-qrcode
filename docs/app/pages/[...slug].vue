@@ -21,20 +21,24 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
   })
 })
 
+useHead(page.value.head || {})
 useSeoMeta({
-  title: page.value.seo.title,
+  ...page.value.seo,
   ogTitle: `${page.value.seo.title} - ${seo?.siteName}`,
-  description: page.value.seo.description,
-  ogDescription: page.value.seo.description,
 })
 
 const headline = computed(() => findPageHeadline(navigation!.value, page.value?.path))
 
-defineOgImageComponent('Docs', {
-  title: page.value.title,
-  description: page.value.description,
-  headline: headline.value,
-})
+if (page.value?.ogImage) {
+  defineOgImage(page.value?.ogImage)
+}
+else {
+  defineOgImageComponent('Docs', {
+    title: page.value.title,
+    description: page.value.description,
+    headline: headline.value,
+  })
+}
 
 const links = computed(() => {
   const links = []
