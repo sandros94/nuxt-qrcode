@@ -120,13 +120,7 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    fonts: [
-      {
-        name: 'invalidate-to-bypass-build-error',
-        weight: 400,
-        path: '/invalid.ttf',
-      },
-    ],
+    enabled: false,
   },
 
   plausible: {

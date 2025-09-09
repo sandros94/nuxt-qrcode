@@ -5,13 +5,11 @@ if (!page.value) {
 }
 
 useSeoMeta({
-  title: page.value.seo.title,
   titleTemplate: null,
-  ogTitle: page.value.seo.title,
+  title: page.value.seo.title,
   description: page.value.seo.description,
+  ogTitle: page.value.seo.title,
   ogDescription: page.value.seo.description,
-  // ogImage: 'https://nuxt-ws.s94.dev/social-card.png', // TODO: Add social card
-  // twitterImage: 'https://nuxt-ws.s94.dev/social-card.png',
 })
 </script>
 

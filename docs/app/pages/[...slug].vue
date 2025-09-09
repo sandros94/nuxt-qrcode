@@ -29,17 +29,6 @@ useSeoMeta({
 
 const headline = computed(() => findPageHeadline(navigation!.value, page.value?.path))
 
-if (page.value?.ogImage) {
-  defineOgImage(page.value?.ogImage)
-}
-else {
-  defineOgImageComponent('Docs', {
-    title: page.value.title,
-    description: page.value.description,
-    headline: headline.value,
-  })
-}
-
 const links = computed(() => {
   const links = []
   if (toc?.bottom?.edit) {
