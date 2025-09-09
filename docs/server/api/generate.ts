@@ -64,7 +64,7 @@ const schemaOptions = v.partial(v.object({
 }))
 const inputParser = v.parser(v.object({
   ...schemaOptions.entries,
-  value: v.message(v.pipe(v.string(), v.nonEmpty()), 'A string value is required to generate a QR code'),
+  value: v.message(v.pipe(v.string(), v.trim(), v.nonEmpty()), 'A string value is required to generate a QR code'),
 }))
 
 export default defineEventHandler(async (event) => {
