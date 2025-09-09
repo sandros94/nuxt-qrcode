@@ -63,7 +63,7 @@ export function useQrcodeRead(
   /** * detection handling */
 
   const { videoInputs: cameras } = useDevicesList({ constraints: { audio: false, video: true } })
-  const selectedCamera = ref<MediaDeviceInfo | null>(null)
+  const selectedCamera = ref<MediaDeviceInfo | undefined>(undefined)
 
   const availableFormats = reactive<BarcodeFormats>(defu(formats, defaultFormats))
   const _formats = computed<BarcodeFormat[]>(() => {
@@ -80,7 +80,7 @@ export function useQrcodeRead(
     onBeforeUnmount(() => stop())
   })
 
-  /** * track functons */
+  /** * track functions */
 
   const trackOptions = [
     { label: 'nothing (default)', value: undefined },
@@ -88,7 +88,7 @@ export function useQrcodeRead(
     { label: 'centered text', value: paintCenterText },
     { label: 'bounding box', value: paintBoundingBox },
   ]
-  const track = ref(trackOptions[1].value)
+  const track = ref(trackOptions[1]!.value)
 
   function paintOutline(detectedCodes: DetectedBarcode[], ctx: CanvasRenderingContext2D) {
     for (const detectedCode of detectedCodes) {
