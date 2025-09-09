@@ -7,7 +7,7 @@ import { type PropType, type VNode, computed, toRef, defineComponent, h, useRunt
 import { renderSVGBody } from '#qrcode/utils/qrcode/svg/render'
 import { getSize } from '#qrcode/utils/qrcode/svg/utils'
 
-export interface QrcodeProps extends RenderSVGOptions {
+export interface QrcodeProps extends Omit<RenderSVGOptions, 'onEncoded'> {
   value: string | number[]
   width?: number | string
   height?: number | string
@@ -70,9 +70,6 @@ export default defineComponent<QrcodeProps, ComponentObjectPropsOptions, string,
     minVersion: {
       type: Number as PropType<QrcodeProps['minVersion']>,
     },
-    onEncoded: {
-      type: Function as PropType<QrcodeProps['onEncoded']>,
-    },
     pixelSize: {
       type: Number as PropType<QrcodeProps['pixelSize']>,
     },
@@ -112,9 +109,6 @@ export default defineComponent<QrcodeProps, ComponentObjectPropsOptions, string,
       const result = encode(valueRef.value, {
         ...opts,
         onEncoded: (qr: QrCodeGenerateResult) => {
-          if (opts.onEncoded)
-            opts.onEncoded(qr)
-
           // Emit the encoded QR code result
           emit('encoded', qr)
         },
