@@ -48,6 +48,11 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
   ],
 
+  site: {
+    url: 'https://qrcode.s94.dev',
+    name: 'Nuxt QRCode - Docs',
+  },
+
   content: {
     experimental: {
       nativeSqlite: true,
