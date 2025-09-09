@@ -38,8 +38,8 @@ export function renderMarkers(
   let svg = ''
 
   markerPositions.forEach(([row, col]) => {
-    const ox = col * size
-    const oy = row * size
+    const ox = col! * size
+    const oy = row! * size
     const ix = ox + 2 * size
     const iy = oy + 2 * size
 

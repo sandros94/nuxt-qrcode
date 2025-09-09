@@ -12,7 +12,7 @@ export function renderDefaultPixel(
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row]?.[col]) {
         const x = col * size
         const y = row * size
         pixelPaths.push(`M${x},${y}h${size}v${size}h-${size}z`)

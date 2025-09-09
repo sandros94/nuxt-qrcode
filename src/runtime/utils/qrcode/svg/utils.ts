@@ -63,12 +63,12 @@ export function renderUtils(qrSize: number, qrBorder: number) {
 
   const isMarker = (row: number, col: number) =>
     markerPositions.some(([x, y]) =>
-      isInMarkerRange(row, x) && isInMarkerRange(col, y),
+      isInMarkerRange(row, x!) && isInMarkerRange(col, y!),
     )
 
   const isMarkerCenter = (row: number, col: number) =>
     markerPositions.some(([x, y]) =>
-      row >= x + 2 && row <= x + 4 && col >= y + 2 && col <= y + 4,
+      row >= x! + 2 && row <= x! + 4 && col >= y! + 2 && col <= y! + 4,
     )
 
   return {
@@ -81,7 +81,7 @@ export function renderUtils(qrSize: number, qrBorder: number) {
     isMarker,
     isMarkerCenter,
     markerPositions,
-    markerCenterPositions: markerPositions.map(([x, y]) => [x + 2, y + 2]),
+    markerCenterPositions: markerPositions.map(([x, y]) => [x! + 2, y! + 2]),
   }
 }
 

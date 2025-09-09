@@ -20,7 +20,7 @@ export function renderRoundedPixel(
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col] && !visited[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row]?.[col] && !visited[row]?.[col]) {
         paths.push(tracePath(result.data, visited, row, col, size, actualRadius))
       }
     }
@@ -73,19 +73,19 @@ function tracePath(
 
   while (stack.length > 0) {
     const [row, col] = stack.pop()!
-    if (row < 0 || row >= data.length || col < 0 || col >= data[0].length || !data[row][col] || visited[row][col]) {
+    if (row < 0 || row >= data.length || col < 0 || col >= data[0]!.length || !data[row]![col] || visited[row]![col]) {
       continue
     }
 
-    visited[row][col] = true
+    visited[row]![col] = true
 
     const x = col * pixelSize
     const y = row * pixelSize
 
-    const top = row > 0 && data[row - 1][col]
-    const right = col < data[0].length - 1 && data[row][col + 1]
-    const bottom = row < data.length - 1 && data[row + 1][col]
-    const left = col > 0 && data[row][col - 1]
+    const top = row > 0 && data[row - 1]![col]!
+    const right = col < data[0]!.length - 1 && data[row]![col + 1]!
+    const bottom = row < data.length - 1 && data[row + 1]![col]!
+    const left = col > 0 && data[row]![col - 1]!
 
     path.push(createPixelPath(x, y, pixelSize, cornerRadius, { top, right, bottom, left }))
 

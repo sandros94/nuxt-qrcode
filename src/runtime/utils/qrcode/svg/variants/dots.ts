@@ -29,7 +29,7 @@ export function renderDotPixel(
 
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
-      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row]?.[col]) {
         const x = col * size + actualPadding
         const y = row * size + actualPadding
         svg += createDotPixel(x, y, actualSize, actualRadius, color, clampedPadding)
@@ -63,8 +63,8 @@ export function renderDotMarker(
   const actualRadius = (clampedRadius * actualSize) / 2
 
   markerPositions.forEach(([row, col]) => {
-    const x = col * size
-    const y = row * size
+    const x = col! * size
+    const y = row! * size
     const centerSize = 3 * size
 
     // Render outer pixels
@@ -165,11 +165,11 @@ export function createDotPixel(
   const adjustedY = y + padding
   const adjustedSize = size - 2 * padding
 
-  return `<rect 
-    x="${adjustedX}" 
-    y="${adjustedY}" 
-    width="${adjustedSize}" 
-    height="${adjustedSize}" 
+  return `<rect
+    x="${adjustedX}"
+    y="${adjustedY}"
+    width="${adjustedSize}"
+    height="${adjustedSize}"
     rx="${radius}"
     fill="${color}"
   />`

@@ -13,7 +13,7 @@ export function renderPixelatedPixel(
   for (let row = 0; row < result.size; row++) {
     for (let col = 0; col < result.size; col++) {
       // Skip marker areas
-      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row][col]) {
+      if (!renderUtils(result.size, border).isMarker(row, col) && result.data[row]?.[col]) {
         const x = col * size
         const y = row * size
 
@@ -70,8 +70,8 @@ function addNotches(
   notchSize: number,
 ) {
   const checkPixel = (r: number, c: number) => {
-    if (r < 0 || r >= data.length || c < 0 || c >= data[0].length) return false
-    return data[r][c]
+    if (r < 0 || r >= data.length || c < 0 || c >= data[0]!.length) return false
+    return data[r]![c]
   }
 
   let notches = ''
