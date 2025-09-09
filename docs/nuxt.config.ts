@@ -7,7 +7,7 @@ export default defineNuxtConfig({
   modules: [
     '../src/module',
     '@nuxt/image',
-    '@nuxt/ui-pro',
+    '@nuxt/ui',
     '@nuxt/content',
     'nuxt-llms',
     'nuxt-og-image',
@@ -78,10 +78,6 @@ export default defineNuxtConfig({
     },
   },
 
-  future: {
-    compatibilityVersion: 4,
-  },
-
   experimental: {
     buildCache: true,
   },
@@ -99,7 +95,7 @@ export default defineNuxtConfig({
       '@nuxt/content',
       '@nuxt/icon',
       '@nuxt/image',
-      '@nuxt/ui-pro',
+      '@nuxt/ui',
       '@nuxtjs/color-mode',
       '@nuxtjs/mdc',
       '@nuxtjs/plausible',
