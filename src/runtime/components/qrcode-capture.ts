@@ -1,5 +1,5 @@
 import type { ComponentObjectPropsOptions } from 'vue'
-import type { BarcodeFormat, QrcodeCaptureProps } from 'vue-qrcode-reader'
+import type { BarcodeFormat, QrcodeCaptureProps, DetectedBarcode } from 'vue-qrcode-reader'
 import { QrcodeCapture } from 'vue-qrcode-reader'
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 

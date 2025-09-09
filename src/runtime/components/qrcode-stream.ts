@@ -1,5 +1,5 @@
 import type { ComponentObjectPropsOptions, ComponentOptionsMixin, SlotsType } from 'vue'
-import type { BarcodeFormat, QrcodeStreamProps, EmittedError } from 'vue-qrcode-reader'
+import type { BarcodeFormat, QrcodeStreamProps, EmittedError, DetectedBarcode } from 'vue-qrcode-reader'
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 

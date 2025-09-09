@@ -21,6 +21,7 @@ const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
   })
 })
 
+// @ts-expect-error - page.value.head has unknown structure
 useHead(page.value.head || {})
 useSeoMeta({
   ...page.value.seo,

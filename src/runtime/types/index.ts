@@ -1,4 +1,7 @@
+import type { BarcodeFormat } from 'barcode-detector'
+
 export type * from 'barcode-detector'
+
 export type * from '../utils/qrcode/svg/render'
 
 // Export props types for read components
