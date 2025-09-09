@@ -134,6 +134,21 @@ export default defineNuxtConfig({
     description: 'A Nuxt module that provides support for generating and reading QRCodes.',
   },
 
+  ogImage: {
+    fonts: [
+      {
+        name: 'Public+Sans',
+        weight: 400,
+        path: '/public/PublicSans.ttf',
+      },
+      {
+        name: 'Public+Sans:italic',
+        weight: 400,
+        path: '/public/PublicSans-Italic.ttf',
+      },
+    ],
+  },
+
   plausible: {
     apiHost: 'https://plausible.digitoolmedia.com',
   },
