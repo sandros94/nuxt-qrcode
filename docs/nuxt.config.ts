@@ -137,14 +137,9 @@ export default defineNuxtConfig({
   ogImage: {
     fonts: [
       {
-        name: 'Public+Sans',
+        name: 'Invalid-to-bypass-build-error',
         weight: 400,
-        path: '/PublicSans.ttf',
-      },
-      {
-        name: 'Public+Sans:italic',
-        weight: 400,
-        path: '/PublicSans-Italic.ttf',
+        path: '/invalid.ttf',
       },
     ],
   },
