@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <label>
+      <input v-model="invert" type="checkbox">
+      Inverted
+    </label>
     <select v-model="variant">
       <option value="default">
         Default
@@ -32,6 +36,8 @@
       :value="text"
       :variant
       :radius
+      :invert
+      @encoded="({ data }) => console.log(`Encoded: ${data.length} bytes\n`)"
     />
   </div>
 </template>
@@ -42,6 +48,7 @@ import type { SVGVariant } from 'nuxt-qrcode'
 const text = ref('https://github.com/sandros94/nuxt-qrcode')
 const variant = ref<SVGVariant>('default')
 const radius = ref(0.5)
+const invert = ref(false)
 </script>
 
 <style scoped>
