@@ -70,7 +70,10 @@
       "@tailwindcss/oxide",
       "esbuild",
       "vue-demi"
-    ]
+    ],
+    "overrides": {
+      "vite": "npm:rolldown-vite@latest"
+    }
   },
   "packageManager": "pnpm@10.15.1"
 }

@@ -18,5 +18,10 @@
     "nuxt-qrcode": "latest",
     "ofetch": "^1.4.1",
     "valibot": "^1.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@latest"
+    }
   }
 }
