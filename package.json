@@ -1,6 +1,6 @@
 {
   "name": "nuxt-qrcode",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "A Nuxt module to provide support for QR Code generation and read.",
   "repository": "https://github.com/sandros94/nuxt-qrcode",
   "homepage": "https://qrcode.s94.dev",

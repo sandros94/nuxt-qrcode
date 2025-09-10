@@ -1,6 +1,37 @@
 # Changelog
 
 
+## v0.4.8
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.7...v0.4.8)
+
+### 🩹 Fixes
+
+- Types ([0fc5147](https://github.com/sandros94/nuxt-qrcode/commit/0fc5147))
+- **composables:** Update selectedCamera type and correct track functions comment ([38b241d](https://github.com/sandros94/nuxt-qrcode/commit/38b241d))
+- Don't emit twice on upstream components ([c1f2477](https://github.com/sandros94/nuxt-qrcode/commit/c1f2477))
+- **QRCode:** Don't double emit ([2936b92](https://github.com/sandros94/nuxt-qrcode/commit/2936b92))
+- Qrcode inversion via composables and utils ([2e5559f](https://github.com/sandros94/nuxt-qrcode/commit/2e5559f))
+
+### 📖 Documentation
+
+- Fix navigation links ([9864da2](https://github.com/sandros94/nuxt-qrcode/commit/9864da2))
+- Add api route example with validation ([6739a16](https://github.com/sandros94/nuxt-qrcode/commit/6739a16))
+- Fix site settings ([637f30a](https://github.com/sandros94/nuxt-qrcode/commit/637f30a))
+
+### 🏡 Chore
+
+- Update all deps and switch to Nuxt UI v4 ([246d93b](https://github.com/sandros94/nuxt-qrcode/commit/246d93b))
+- **docs:** Use rolldown-vite ([971f83e](https://github.com/sandros94/nuxt-qrcode/commit/971f83e))
+- **docs:** Revert rolldown ([6e1d4ec](https://github.com/sandros94/nuxt-qrcode/commit/6e1d4ec))
+- **docs:** Silently make nuxt-og-image fail ([92ed993](https://github.com/sandros94/nuxt-qrcode/commit/92ed993))
+- Add seo and break ogimage to pass-builds ([067a238](https://github.com/sandros94/nuxt-qrcode/commit/067a238))
+- **docs:** Disable ogimage ([15dc7a2](https://github.com/sandros94/nuxt-qrcode/commit/15dc7a2))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.7
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.6...v0.4.7)
