@@ -118,8 +118,7 @@ function onError(err: Error) {
     error.value += 'Stream API is not supported in this browser'
   }
   else if (err.name === 'InsecureContextError') {
-    error.value
-        += 'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
+    error.value += 'Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.'
   }
   else {
     error.value += err.message
