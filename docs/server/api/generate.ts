@@ -1,5 +1,14 @@
 import * as v from 'valibot'
 
+const objAsString = <const Schema extends v.BaseSchema<unknown, unknown, v.BaseIssue<unknown>>>(schema: Schema) => v.message(
+  v.pipe(
+    v.string(),
+    v.parseJson(),
+    schema,
+  ),
+  e => `Must be a valid JSON object or array string, received: ${e.received}`,
+)
+
 const schemaStyles = v.message(
   v.picklist(['default', 'dots', 'rounded', 'pixelated', 'circle']),
   e => `Invalid style, available styles are: default, dots, rounded, pixelated, circle. Received: ${e}`,
@@ -37,19 +46,19 @@ const schemaOptions = v.partial(v.object({
   pixelSize: v.pipe(schemaNumber, v.minValue(1, 'Pixel size must be greater than 0')),
   variant: v.union([
     schemaStyles,
-    v.partial(v.object({
+    objAsString(v.partial(v.object({
       pixel: schemaStyles,
       marker: schemaStyles,
       inner: schemaStyles,
-    })),
+    }))),
   ]),
   radius: v.union([
     schemaClampValue,
-    v.partial(v.object({
+    objAsString(v.partial(v.object({
       pixel: schemaClampValue,
       marker: schemaClampValue,
       inner: schemaClampValue,
-    })),
+    }))),
   ]),
   toBase64: schemaBoolean,
   whiteColor: v.pipe(v.string(), v.nonEmpty()),
