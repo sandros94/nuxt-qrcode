@@ -11,7 +11,7 @@ const objAsString = <const Schema extends v.BaseSchema<unknown, unknown, v.BaseI
 
 const schemaStyles = v.message(
   v.picklist(['default', 'dots', 'rounded', 'pixelated', 'circle']),
-  e => `Invalid style, available styles are: default, dots, rounded, pixelated, circle. Received: ${e}`,
+  e => `Invalid style, available styles are: default, dots, rounded, pixelated, circle. Received: ${e.received}`,
 )
 const schemaNumber = v.message(
   v.union([
@@ -22,7 +22,7 @@ const schemaNumber = v.message(
     ),
     v.number(),
   ]),
-  e => `Value must be a number, received: ${e}`,
+  e => `Value must be a number, received: ${e.received}`,
 )
 const schemaClampValue = v.message(
   v.pipe(
@@ -30,7 +30,7 @@ const schemaClampValue = v.message(
     v.minValue(0),
     v.maxValue(1),
   ),
-  e => `Value must be a number between 0 and 1 (inclusive), received: ${e}`,
+  e => `Value must be a number between 0 and 1 (inclusive), received: ${e.received}`,
 )
 const schemaBoolean = v.message(v.union([
   v.pipe(
@@ -39,7 +39,7 @@ const schemaBoolean = v.message(v.union([
     v.transform(value => value === 'true'),
   ),
   v.boolean(),
-]), e => `Invalid boolean value, received: ${e}`)
+]), e => `Invalid boolean value, received: ${e.received}`)
 
 const schemaOptions = v.partial(v.object({
   pixelPadding: schemaClampValue,
@@ -66,8 +66,13 @@ const schemaOptions = v.partial(v.object({
   border: v.pipe(schemaNumber, v.minValue(0, 'Border must be greater than or equal to 0')),
   invert: schemaBoolean,
   ecc: v.message(
-    v.picklist(['L', 'M', 'Q', 'H']),
-    e => `Invalid ECC level, available levels are: L, M, Q, H. Received: ${e}`,
+    v.pipe(
+      v.string(),
+      v.trim(),
+      v.regex(/^([LMQH])$/i),
+      v.toUpperCase(),
+    ) as v.BaseSchema<string, 'L' | 'M' | 'Q' | 'H', v.BaseIssue<unknown>>,
+    e => `Invalid ECC level, available levels are: L, M, Q, H. Received: ${e.received}`,
   ),
   boostEcc: schemaBoolean,
 }))
