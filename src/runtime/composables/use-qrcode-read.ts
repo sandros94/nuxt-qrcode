@@ -52,7 +52,7 @@ export function useQrcodeRead(
     linear_codes: false,
     matrix_codes: false,
     unknown: false,
-  } as Record<BarcodeFormat, boolean>)
+  } as BarcodeFormats)
 
   const constraints = ref({ facingMode: 'environment' })
   const constraintOptions = [
@@ -65,7 +65,7 @@ export function useQrcodeRead(
   const { videoInputs: cameras } = useDevicesList({ constraints: { audio: false, video: true } })
   const selectedCamera = ref<MediaDeviceInfo | undefined>(undefined)
 
-  const availableFormats = reactive<BarcodeFormats>(defu(formats, defaultFormats))
+  const availableFormats = reactive<BarcodeFormats>(defu<BarcodeFormats, BarcodeFormats[]>(formats, defaultFormats))
   const _formats = computed<BarcodeFormat[]>(() => {
     return Object.keys(availableFormats).filter(format => availableFormats[format as BarcodeFormat]) as BarcodeFormat[]
   })

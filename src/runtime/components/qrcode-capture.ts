@@ -1,7 +1,9 @@
 import type { ComponentObjectPropsOptions } from 'vue'
-import type { BarcodeFormat, QrcodeCaptureProps, DetectedBarcode } from 'vue-qrcode-reader'
+import type { QrcodeCaptureProps } from 'vue-qrcode-reader'
 import { QrcodeCapture } from 'vue-qrcode-reader'
+
 import { defineComponent, h, useRuntimeConfig } from '#imports'
+import type { BarcodeFormat, DetectedBarcode } from '../types'
 
 export type { QrcodeCaptureProps }
 
@@ -13,9 +15,7 @@ export default defineComponent<QrcodeCaptureProps, ComponentObjectPropsOptions, 
   name: 'QrcodeCapture',
   emits: ['detect'],
   setup(props, { attrs }) {
-    const formats = (props.formats || useRuntimeConfig().public.qrcode.reader.formats)
-      .filter(f => f !== 'databar_limited' && f !== 'any') as Exclude<BarcodeFormat, 'databar_limited' | 'any'>[]
-    // TODO: check upstream if above filter is still needed
+    const formats = (props.formats || useRuntimeConfig().public.qrcode.reader.formats) as BarcodeFormat[]
 
     return () => h(QrcodeCapture, {
       ...props,

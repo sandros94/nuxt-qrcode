@@ -11,6 +11,7 @@ import {
 import defu from 'defu'
 
 import type { RenderSVGOptions } from './runtime/utils/qrcode/svg/render'
+import type { BarcodeFormat } from './runtime/types/index'
 
 export type * from './runtime/types/index'
 
