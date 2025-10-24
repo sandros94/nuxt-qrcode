@@ -85,6 +85,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-09-30',
 
   nitro: {
+    preset: 'deno-server',
     output: {
       dir: '../.output',
       serverDir: '../.output/server',
