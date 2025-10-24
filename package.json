@@ -38,9 +38,9 @@
     "release": "pnpm lint && pnpm test && pnpm prepack && changelogen --release --push --publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "vitest run",
+    "test": "pnpm lint && pnpm test:types && vitest run",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
+    "test:types": "vue-tsc --noEmit && nuxt typecheck playground && nuxt typecheck docs"
   },
   "dependencies": {
     "@nuxt/kit": "^4.1.3",
