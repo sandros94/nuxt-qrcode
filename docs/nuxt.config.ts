@@ -74,8 +74,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // uiPro: { license: 'oss' },
-
   runtimeConfig: {
     public: {
       version: pkg.version,
@@ -88,8 +86,6 @@ export default defineNuxtConfig({
     preset: 'deno-server',
     output: {
       dir: '../.output',
-      serverDir: '../.output/server',
-      publicDir: '../.output/public',
     },
   },
 
