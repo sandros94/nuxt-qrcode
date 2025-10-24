@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   imports: { autoImport: true },
 
   devtools: { enabled: true },
-  compatibilityDate: '2025-08-22',
+  compatibilityDate: '2025-09-30',
 
   qrcode: {},
 })
