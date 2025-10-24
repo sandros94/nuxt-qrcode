@@ -84,6 +84,12 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-06-09',
 
+  nitro: {
+    output: {
+      dir: '../.output',
+    },
+  },
+
   componentMeta: {
     exclude: [
       '@nuxt/content',
