@@ -2,3 +2,7 @@ packages:
   - ./
   - docs
   - playground
+
+catalog:
+  nuxt: ^4.2.2
+  "@nuxt/kit": ^4.2.2
