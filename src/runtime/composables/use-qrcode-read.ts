@@ -11,6 +11,8 @@ import {
   useRuntimeConfig,
 } from '#imports'
 
+const BARCODE_FORMATS = ['aztec', 'aztec_code', 'aztec_rune', 'code_128', 'code_39', 'code_39_standard', 'code_39_extended', 'code_32', 'pzn', 'code_93', 'codabar', 'databar', 'databar_omni', 'databar_stacked', 'databar_stacked_omni', 'databar_expanded', 'databar_expanded_stacked', 'databar_limited', 'data_matrix', 'dx_film_edge', 'ean_13', 'ean_upc', 'isbn', 'ean_8', 'itf', 'itf_14', 'maxi_code', 'micro_qr_code', 'pdf417', 'compact_pdf417', 'qr_code', 'qr_code_model_1', 'qr_code_model_2', 'rm_qr_code', 'upc_a', 'upc_e', 'other_barcode', 'linear_codes', 'matrix_codes', 'gs1_codes', 'retail_codes', 'industrial_codes', 'any', 'unknown'] as const
+
 export function useQrcodeRead(
   {
     formats,
@@ -28,31 +30,7 @@ export function useQrcodeRead(
       result.unknown = true
     }
     return result
-  }, {
-    aztec: false,
-    code_128: false,
-    code_39: false,
-    code_93: false,
-    codabar: false,
-    databar: false,
-    databar_limited: false,
-    databar_expanded: false,
-    data_matrix: false,
-    dx_film_edge: false,
-    ean_13: false,
-    ean_8: false,
-    itf: false,
-    maxi_code: false,
-    micro_qr_code: false,
-    pdf417: false,
-    qr_code: false,
-    rm_qr_code: false,
-    upc_a: false,
-    upc_e: false,
-    linear_codes: false,
-    matrix_codes: false,
-    unknown: false,
-  } as BarcodeFormats)
+  }, Object.fromEntries(BARCODE_FORMATS.map(format => [format, false])) as BarcodeFormats)
 
   const constraints = ref({ facingMode: 'environment' })
   const constraintOptions = [

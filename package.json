@@ -2,7 +2,10 @@
   "name": "nuxt-qrcode",
   "version": "0.4.8",
   "description": "A Nuxt module to provide support for QR Code generation and read.",
-  "repository": "https://github.com/sandros94/nuxt-qrcode",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandros94/nuxt-qrcode.git"
+  },
   "homepage": "https://qrcode.s94.dev",
   "license": "MIT",
   "type": "module",
@@ -35,15 +38,19 @@
     "docs": "nuxt dev docs --tunnel",
     "docs:build": "nuxt build docs",
     "docs:preview": "nuxt preview",
-    "release": "pnpm lint && pnpm test && pnpm prepack && changelogen --release --push",
+    "release": "pnpm lint && pnpm typecheck && pnpm test && pnpm prepack && changelogen --release --push",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "pnpm test:types && vitest run",
+    "fmt": "eslint . --fix",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:nuxt": "vitest run --project nuxt",
+    "test:e2e": "vitest run --project e2e",
     "test:watch": "vitest watch",
-    "test:types": "vue-tsc --noEmit && nuxt typecheck playground && nuxt typecheck docs"
+    "typecheck": "vue-tsc --noEmit && nuxt typecheck playground && nuxt typecheck docs"
   },
   "dependencies": {
-    "@nuxt/kit": "catalog:",
+    "@nuxt/kit": "^4.4.2",
     "@vueuse/core": "^14.1.0",
     "barcode-detector": "^3.0.8",
     "defu": "^6.1.4",
@@ -52,23 +59,19 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^3.1.1",
-    "@nuxt/eslint-config": "^1.12.1",
+    "@nuxt/eslint-config": "^1.15.2",
     "@nuxt/module-builder": "^1.0.2",
-    "@nuxt/test-utils": "^3.21.0",
+    "@nuxt/test-utils": "^4.0.0",
+    "@vue/test-utils": "^2.4.6",
     "changelogen": "^0.6.2",
     "eslint": "^9.39.1",
-    "happy-dom": "^20.0.11",
-    "nuxt": "catalog:",
-    "vitest": "^4.0.15",
-    "vue-tsc": "^3.1.8"
+    "happy-dom": "^20.8.4",
+    "nuxt": "^4.4.2",
+    "vitest": "^4.1.0",
+    "vue-tsc": "^3.2.6"
   },
   "resolutions": {
-    "nuxt-qrcode": "workspace:*",
-    "brace-expansion": "^2.0.2",
-    "dompurify": "^3.2.4",
-    "glob": "^10.5.0",
-    "js-yaml": "^4.1.1",
-    "node-forge": "^1.3.2"
+    "nuxt-qrcode": "workspace:*"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
@@ -81,5 +84,5 @@
       "vue-demi"
     ]
   },
-  "packageManager": "pnpm@10.25.0"
+  "packageManager": "pnpm@10.32.1"
 }

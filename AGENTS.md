@@ -51,10 +51,10 @@ Tracks current and next steps for project-specific implementations. Completed it
 - `pnpm test:unit` — unit tests only.
 - `pnpm test:nuxt` — nuxt environment tests only.
 - `pnpm test:e2e` — e2e tests only (builds the playground).
-- `pnpm test:types` — type-check the module, playground, and docs.
+- `pnpm typecheck` — type-check the module, playground, and docs.
 
 Each script is independent — `test` does **not** run lint or type-check.
-**Always run** `pnpm lint:fix` and `pnpm test:types` after making changes.
+**Always run** `pnpm lint:fix` and `pnpm typecheck` after making changes.
 
 ## Repository Structure
 
@@ -76,7 +76,7 @@ Three test types: **unit** (pure functions, no Nuxt runtime), **nuxt** (composab
 - `pnpm test:unit` — Unit tests only.
 - `pnpm test:nuxt` — Nuxt environment tests only.
 - `pnpm test:e2e` — E2E tests (builds the playground).
-- `pnpm test:types` — Type-check only.
+- `pnpm typecheck` — Type-check only.
 
 ## Development Workflow
 
@@ -84,7 +84,7 @@ Three test types: **unit** (pure functions, no Nuxt runtime), **nuxt** (composab
 
 1. Make changes in `src/`.
 2. Run `pnpm lint:fix`.
-3. Run `pnpm test:types`.
+3. Run `pnpm typecheck`.
 4. Run `pnpm test`.
 
 ## Contribution Principles

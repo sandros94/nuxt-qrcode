@@ -1,18 +1,26 @@
 # Testing
 
-This project uses three Vitest test types. Run them with:
+This project uses three Vitest test types, configured as projects in a single `vitest.config.ts`. Run them with:
 
 ```bash
-pnpm test            # all vitest tests
+pnpm test            # all vitest tests (all projects)
 pnpm test:unit       # unit only
 pnpm test:nuxt       # nuxt environment only
 pnpm test:e2e        # e2e only (builds the playground)
-pnpm test:types      # type-check only
+pnpm typecheck       # type-check only
 ```
 
 Each script is independent — `test` does **not** run lint or type-check.
 
-> **Note:** The vitest config and test scripts are still being set up. The target structure is described below. When adding a new test type, update `vitest.config.ts` (or add workspace configs) and `package.json` scripts accordingly.
+## Vitest Config
+
+All three test projects are defined in the root `vitest.config.ts` using Vitest's `projects` API:
+
+- **unit** — plain `node` environment, `test/unit/**/*.spec.ts`
+- **nuxt** — `nuxt` environment via `defineVitestProject` from `@nuxt/test-utils/config`, `test/nuxt/**/*.spec.ts`
+- **e2e** — plain `node` environment, `test/e2e/**/*.spec.ts`
+
+The nuxt project points to `test/nuxt/` as its `rootDir`, which contains a `nuxt.config.ts` loading the module from source.
 
 ## Test Types
 
@@ -50,12 +58,12 @@ Import paths must be relative — no `~/`, `#imports`, `#qrcode`, or auto-import
 
 ### Nuxt Tests
 
-**Directory:** `test/nuxt/` (config), `test/composables/`, `test/components/`
+**Directory:** `test/nuxt/` — composables in `test/nuxt/composables/`, components in `test/nuxt/components/`
 **Environment:** `nuxt` — full Nuxt runtime with plugins, auto-imports, and simulated DOM (happy-dom).
 
 Use for composables and components that depend on Nuxt features (Vue reactivity, `useRuntimeConfig`, auto-imports).
 
-The Nuxt environment is configured in `vitest.config.ts` with root at `test/nuxt/`, which contains a `nuxt.config.ts` that loads the module from source:
+The Nuxt environment is configured via `defineVitestProject` in `vitest.config.ts` with root at `test/nuxt/`, which contains a `nuxt.config.ts` that loads the module from source:
 
 ```ts
 // test/nuxt/nuxt.config.ts
@@ -74,7 +82,7 @@ Key utilities from `@nuxt/test-utils/runtime`:
 
 ```ts
 import { describe, it, expect } from 'vitest'
-import { useQrcode } from '../../src/runtime/composables/use-qrcode'
+import { useQrcode } from '../../../src/runtime/composables/use-qrcode'
 
 describe('useQrcode', () => {
   it('generates svg with default options', () => {
@@ -97,7 +105,7 @@ describe('useQrcode', () => {
 ```ts
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import Qrcode from '../../src/runtime/components/qrcode'
+import Qrcode from '../../../src/runtime/components/qrcode'
 
 describe('Qrcode component', () => {
   it('renders svg output', async () => {
@@ -124,12 +132,13 @@ The playground (`playground/`) serves as the e2e target app. It includes:
 - **Pages** — `/generate`, `/image`, `/quick`, `/full` — exercise the client-side composables and components.
 
 ```ts
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { $fetch, setup } from '@nuxt/test-utils/e2e'
 
 describe('playground e2e', async () => {
   await setup({
-    rootDir: '../playground',
+    rootDir: fileURLToPath(new URL('../../playground', import.meta.url)),
   })
 
   it('POST /api/generate returns svg base64', async () => {
@@ -145,7 +154,7 @@ describe('playground e2e', async () => {
       method: 'POST',
       body: {},
     }).catch((e: any) => e)
-    expect(error?.statusCode ?? error?.response?.status).toBe(400)
+    expect((error as any)?.statusCode).toBe(400)
   })
 
   it('GET /generate renders page', async () => {
@@ -154,8 +163,6 @@ describe('playground e2e', async () => {
   })
 })
 ```
-
-The playground `nuxt.config.ts` should use `$test` to override the production preset with `node-server` when needed for `@nuxt/test-utils` compatibility.
 
 ## Snapshots
 

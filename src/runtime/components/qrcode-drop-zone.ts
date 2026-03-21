@@ -1,11 +1,16 @@
 import type { ComponentObjectPropsOptions, ComponentOptionsMixin, SlotsType } from 'vue'
-import type { QrcodeDropZoneProps, EmittedError } from 'vue-qrcode-reader'
+import type {
+  QrcodeDropZoneProps as _QrcodeDropZoneProps,
+  EmittedError,
+} from 'vue-qrcode-reader'
 import { QrcodeDropZone } from 'vue-qrcode-reader'
 
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 import type { BarcodeFormat, DetectedBarcode } from '../types'
 
-export type { QrcodeDropZoneProps }
+export interface QrcodeDropZoneProps extends Omit<_QrcodeDropZoneProps, 'formats'> {
+  formats?: BarcodeFormat[]
+}
 
 export interface QrcodeDropZoneEmits {
   (e: 'detect', detectedCodes: DetectedBarcode[]): void
@@ -26,6 +31,7 @@ export default defineComponent<QrcodeDropZoneProps, ComponentObjectPropsOptions,
     return () => h(QrcodeDropZone, {
       ...props,
       ...attrs,
+      // @ts-expect-error - upstream type missing `aztec_code` format
       formats,
     }, slots)
   },

@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "nuxt-qrcode": "latest",
-    "nuxt": "catalog:"
+    "nuxt": "^4.4.2"
   }
 }

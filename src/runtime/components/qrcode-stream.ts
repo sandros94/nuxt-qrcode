@@ -1,11 +1,16 @@
 import type { ComponentObjectPropsOptions, ComponentOptionsMixin, SlotsType } from 'vue'
-import type { QrcodeStreamProps, EmittedError } from 'vue-qrcode-reader'
+import type {
+  QrcodeStreamProps as _QrcodeStreamProps,
+  EmittedError,
+} from 'vue-qrcode-reader'
 import { QrcodeStream } from 'vue-qrcode-reader'
 
 import { defineComponent, h, useRuntimeConfig } from '#imports'
 import type { BarcodeFormat, DetectedBarcode } from '../types'
 
-export type { QrcodeStreamProps }
+export interface QrcodeStreamProps extends Omit<_QrcodeStreamProps, 'formats'> {
+  formats?: BarcodeFormat[]
+}
 
 export interface QrcodeStreamEmits {
   /**
@@ -38,6 +43,7 @@ export default defineComponent<QrcodeStreamProps, ComponentObjectPropsOptions, s
     return () => h(QrcodeStream, {
       ...props,
       ...attrs,
+      // @ts-expect-error - upstream type missing `aztec_code` format
       formats,
     }, slots)
   },
