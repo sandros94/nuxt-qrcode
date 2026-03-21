@@ -1,6 +1,52 @@
 # Changelog
 
 
+## v0.4.9
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.8...v0.4.9)
+
+### 🩹 Fixes
+
+- Barcode-detector dependency and project structure ([5910dfd](https://github.com/sandros94/nuxt-qrcode/commit/5910dfd))
+- Emits ([9cc7ed8](https://github.com/sandros94/nuxt-qrcode/commit/9cc7ed8))
+- Correct fall attributes ([f65dea7](https://github.com/sandros94/nuxt-qrcode/commit/f65dea7))
+
+### 📖 Documentation
+
+- **api:** Accept objects as strings in query ([9b62a09](https://github.com/sandros94/nuxt-qrcode/commit/9b62a09))
+- **api:** Error handling ([c905456](https://github.com/sandros94/nuxt-qrcode/commit/c905456))
+- Move build output to root folder ([5994660](https://github.com/sandros94/nuxt-qrcode/commit/5994660))
+- Build output folder ([59f9eff](https://github.com/sandros94/nuxt-qrcode/commit/59f9eff))
+- Use new output dir for preview ([3324985](https://github.com/sandros94/nuxt-qrcode/commit/3324985))
+- Explicit nitro build preset ([91ac64c](https://github.com/sandros94/nuxt-qrcode/commit/91ac64c))
+- Build output dir ([9db9693](https://github.com/sandros94/nuxt-qrcode/commit/9db9693))
+
+### 🏡 Chore
+
+- **docs:** Update plausible ([87cae4d](https://github.com/sandros94/nuxt-qrcode/commit/87cae4d))
+- Update deps ([f1be95b](https://github.com/sandros94/nuxt-qrcode/commit/f1be95b))
+- Update compatibility date ([cc27ed7](https://github.com/sandros94/nuxt-qrcode/commit/cc27ed7))
+- Lock-file maintenance ([bedb477](https://github.com/sandros94/nuxt-qrcode/commit/bedb477))
+- Update deps ([422ed55](https://github.com/sandros94/nuxt-qrcode/commit/422ed55))
+- Init agents ([1458dbc](https://github.com/sandros94/nuxt-qrcode/commit/1458dbc))
+- Fix missing script alias ([0520e8b](https://github.com/sandros94/nuxt-qrcode/commit/0520e8b))
+- Add pkg-pr-new ([3210801](https://github.com/sandros94/nuxt-qrcode/commit/3210801))
+- Init CoC ([d5db26b](https://github.com/sandros94/nuxt-qrcode/commit/d5db26b))
+- **playground:** Update module path to use pnpm workspace ([8f2f658](https://github.com/sandros94/nuxt-qrcode/commit/8f2f658))
+
+### ✅ Tests
+
+- Fix typechecks ([d4c6a93](https://github.com/sandros94/nuxt-qrcode/commit/d4c6a93))
+- Add comprehensive QR code generation test suite ([06319b5](https://github.com/sandros94/nuxt-qrcode/commit/06319b5))
+
+### 🤖 CI
+
+- Setup publish ([9e95745](https://github.com/sandros94/nuxt-qrcode/commit/9e95745))
+
+### ❤️ Contributors
+
+- Sandro Circi <sandro.circi@digitoolmedia.com>
+
 ## v0.4.8
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.7...v0.4.8)
