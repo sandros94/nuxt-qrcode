@@ -53,7 +53,6 @@
   "dependencies": {
     "@nuxt/kit": "^4.4.2",
     "@vueuse/core": "^14.1.0",
-    "barcode-detector": "^3.0.8",
     "defu": "^6.1.4",
     "uqr": "^0.1.2",
     "vue-qrcode-reader": "^5.7.3"

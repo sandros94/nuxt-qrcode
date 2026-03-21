@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { useQrcode } from '../../../src/runtime/composables/use-qrcode'
+import { useQrcode } from '../../../src/runtime/app/composables/use-qrcode'
 
 describe('useQrcode', () => {
   const testData = 'https://github.com/sandros94/nuxt-qrcode'

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import Qrcode from '../../../src/runtime/components/qrcode'
+import Qrcode from '../../../src/runtime/app/components/qrcode.vue'
 
 describe('Qrcode component', () => {
   const testValue = 'https://github.com/sandros94/nuxt-qrcode'

@@ -92,10 +92,10 @@ export default defineNuxtModule<ModuleOptions>({
       qrcode.options.whiteColor = 'var(--ui-bg, #FFFFFF)'
     }
 
-    addImportsDir(resolve(runtimeDir, 'composables'))
+    addImportsDir(resolve(runtimeDir, 'app', 'composables'))
 
     addComponentsDir({
-      path: resolve(runtimeDir, 'components'),
+      path: resolve(runtimeDir, 'app', 'components'),
       global: qrcode.global || qrcode.reader.global,
       watch: false,
     })

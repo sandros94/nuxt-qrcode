@@ -1,6 +1,6 @@
 import { useDevicesList } from '@vueuse/core'
 import { defu } from 'defu'
-import type { DetectedBarcode, BarcodeFormat, BarcodeFormats } from '../types'
+import type { DetectedBarcode, BarcodeFormat, BarcodeFormats } from '../../types'
 import {
   computed,
   reactive,
@@ -11,7 +11,7 @@ import {
   useRuntimeConfig,
 } from '#imports'
 
-const BARCODE_FORMATS = ['aztec', 'aztec_code', 'aztec_rune', 'code_128', 'code_39', 'code_39_standard', 'code_39_extended', 'code_32', 'pzn', 'code_93', 'codabar', 'databar', 'databar_omni', 'databar_stacked', 'databar_stacked_omni', 'databar_expanded', 'databar_expanded_stacked', 'databar_limited', 'data_matrix', 'dx_film_edge', 'ean_13', 'ean_upc', 'isbn', 'ean_8', 'itf', 'itf_14', 'maxi_code', 'micro_qr_code', 'pdf417', 'compact_pdf417', 'qr_code', 'qr_code_model_1', 'qr_code_model_2', 'rm_qr_code', 'upc_a', 'upc_e', 'other_barcode', 'linear_codes', 'matrix_codes', 'gs1_codes', 'retail_codes', 'industrial_codes', 'any', 'unknown'] as const
+const BARCODE_FORMATS = ['aztec', 'code_128', 'code_39', 'code_93', 'codabar', 'databar', 'databar_expanded', 'data_matrix', 'dx_film_edge', 'ean_13', 'ean_8', 'itf', 'maxi_code', 'micro_qr_code', 'pdf417', 'qr_code', 'rm_qr_code', 'upc_a', 'upc_e', 'linear_codes', 'matrix_codes', 'unknown'] as const
 
 export function useQrcodeRead(
   {

@@ -1,4 +1,4 @@
-export type * from '../components/qrcode-capture'
-export type * from '../components/qrcode-drop-zone'
-export type * from '../components/qrcode-stream'
-export type * from '../components/qrcode'
+export type * from '../app/components/qrcode-capture.vue'
+export type * from '../app/components/qrcode-drop-zone.vue'
+export type * from '../app/components/qrcode-stream.vue'
+export type * from '../app/components/qrcode.vue'
