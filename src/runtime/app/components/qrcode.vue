@@ -18,7 +18,6 @@ export interface QrcodeProps extends Omit<RenderSVGOptions, 'onEncoded'> {
 
 export interface QrcodeEmits {
   encoded: [qr: QrCodeGenerateResult]
-  render: [qr: QrCodeGenerateResult]
 }
 </script>
 
@@ -54,10 +53,7 @@ const SVG = computed(() => {
 
   const result = encode(toRef(() => props.value).value, {
     ...opts,
-    onEncoded: (qr) => {
-      emits('encoded', qr)
-      emits('render', qr)
-    },
+    onEncoded: qr => emits('encoded', qr),
   })
   const s = getSize(result.size, pixelSize)
 
