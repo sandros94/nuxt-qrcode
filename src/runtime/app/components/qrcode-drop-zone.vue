@@ -17,9 +17,9 @@ export interface QrcodeDropZoneSlots {
 }
 
 export interface QrcodeDropZoneEmits {
-  (e: 'detect', detectedCodes: DetectedBarcode[]): void
-  (e: 'dragover', isDraggingOver: boolean): void
-  (e: 'error', error: EmittedError): void
+  detect: [detectedCodes: DetectedBarcode[]]
+  dragover: [isDraggingOver: boolean]
+  error: [error: EmittedError]
 }
 </script>
 

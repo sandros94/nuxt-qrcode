@@ -11,7 +11,7 @@ export interface QrcodeCaptureProps extends Omit<_QrcodeCaptureProps, 'formats'>
 }
 
 export interface QrcodeCaptureEmits {
-  (e: 'detect', detectedCodes: DetectedBarcode[]): void
+  detect: [detectedCodes: DetectedBarcode[]]
 }
 </script>
 

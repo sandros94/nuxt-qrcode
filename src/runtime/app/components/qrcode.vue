@@ -17,7 +17,7 @@ export interface QrcodeProps extends Omit<RenderSVGOptions, 'onEncoded'> {
 }
 
 export interface QrcodeEmits {
-  encoded: [QrCodeGenerateResult]
+  encoded: [qr: QrCodeGenerateResult]
 }
 </script>
 

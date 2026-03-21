@@ -17,10 +17,10 @@ export interface QrcodeStreamSlots {
 }
 
 export interface QrcodeStreamEmits {
-  'detect': [DetectedBarcode[]]
-  'camera-on': [Partial<MediaTrackCapabilities>]
+  'detect': [detectedCodes: DetectedBarcode[]]
+  'camera-on': [capabilities: Partial<MediaTrackCapabilities>]
   'camera-off': []
-  'error': [EmittedError]
+  'error': [error: EmittedError]
 }
 </script>
 
