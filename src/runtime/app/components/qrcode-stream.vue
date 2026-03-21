@@ -4,8 +4,9 @@ import type {
   EmittedError,
 } from 'vue-qrcode-reader'
 import { QrcodeStream } from 'vue-qrcode-reader'
+import type { VNode } from 'vue'
 
-import { computed, useRuntimeConfig, type VNode } from '#imports'
+import { computed, useRuntimeConfig } from '#imports'
 import type { BarcodeFormat, DetectedBarcode } from '../../types'
 
 export interface QrcodeStreamProps extends Omit<_QrcodeStreamProps, 'formats'> {
