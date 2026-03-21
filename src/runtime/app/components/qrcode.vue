@@ -22,8 +22,10 @@ export interface QrcodeEmits {
 </script>
 
 <script setup lang="ts">
+defineOptions({ inheritAttrs: false })
+
 const props = defineProps<QrcodeProps>()
-const emit = defineEmits<QrcodeEmits>()
+const emits = defineEmits<QrcodeEmits>()
 const attrs = useAttrs()
 
 const _options = reactivePick(props, (_, key) => key !== 'value')
@@ -51,7 +53,7 @@ const SVG = computed(() => {
 
   const result = encode(toRef(() => props.value).value, {
     ...opts,
-    onEncoded: (qr: QrCodeGenerateResult) => emit('encoded', qr),
+    onEncoded: qr => emits('encoded', qr),
   })
   const s = getSize(result.size, pixelSize)
 
