@@ -42,4 +42,7 @@ jobs:
         run: pnpm test
 
       - name: Build packages
-        run: pnpm build
+        run: pnpm prepack
+
+      - name: Publish to pkg.pr.new
+        run: pnpx pkg-pr-new publish
