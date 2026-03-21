@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['../src/module'],
+  modules: ['nuxt-qrcode'],
   imports: { autoImport: true },
 
   devtools: { enabled: true },
