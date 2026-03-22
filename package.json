@@ -33,10 +33,10 @@
   "scripts": {
     "prepack": "nuxt-module-build build",
     "build": "pnpm prepack",
-    "dev": "nuxt dev playground --tunnel",
+    "dev": "nuxt dev playground",
     "dev:build": "nuxt build playground",
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground && nuxt prepare docs",
-    "docs": "nuxt dev docs --tunnel",
+    "docs": "nuxt dev docs",
     "docs:build": "nuxt build docs",
     "docs:preview": "nuxt preview",
     "release": "pnpm lint && pnpm typecheck && pnpm test && pnpm prepack && changelogen --release --push",

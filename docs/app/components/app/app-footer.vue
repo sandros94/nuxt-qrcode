@@ -5,14 +5,18 @@ const { footer } = useAppConfig()
 <template>
   <UFooter>
     <template #left>
-      <NuxtLink
-        to="https://github.com/sandros94/nuxt-qrcode/blob/main/LICENSE"
-        target="_blank"
-        class="text-sm text-[var(--ui-text-muted)]"
-      >
-        Published under <span class="text-[var(--ui-text-highlighted)]">MIT License</span>
-      </NuxtLink>
+      <p>
+        This site is powered by <a href="https://www.netlify.com/" target="_blank" class="underline text-sm text-highlighted">Netlify</a>
+      </p>
     </template>
+
+    <NuxtLink
+      to="https://github.com/sandros94/nuxt-qrcode/blob/main/LICENSE"
+      target="_blank"
+      class="text-sm text-muted"
+    >
+      Published under <span class="text-highlighted">MIT License</span>
+    </NuxtLink>
 
     <template #right>
       <UColorModeButton v-if="footer?.colorMode" />
