@@ -90,9 +90,6 @@ export default defineNuxtConfig({
       ],
       crawlLinks: true,
     },
-    output: {
-      dir: '../.output',
-    },
   },
 
   vite: {
