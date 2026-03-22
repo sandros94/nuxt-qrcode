@@ -36,7 +36,7 @@ const route = useRoute()
 
 const name = props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? ''
 const componentName = pascalCase(name)
-const component = defineAsyncComponent(() => import(`#qrcode/components/${kebabCase(name)}.ts`))
+const component = defineAsyncComponent(() => import(`#qrcode/app/components/${kebabCase(name)}.vue`))
 
 const componentProps = reactive({ ...(props.props || {}) })
 const componentEvents = reactive({
@@ -189,22 +189,22 @@ const code = computed(() => {
 const { data: ast } = await useAsyncData(
   `component-code-${componentName}-${hash({ props: componentProps, slots: props.slots })}`,
   async () => parseMarkdown(code.value),
-  { watch: [code] },
+  { lazy: import.meta.client, watch: [code] },
 )
 </script>
 
 <template>
   <div class="my-5">
     <div>
-      <div v-if="options.length" class="flex items-center gap-2.5 border border-[var(--ui-border-muted)] border-b-0 relative rounded-t-[calc(var(--ui-radius)*1.5)] px-4 py-2.5 overflow-x-auto">
+      <div v-if="options.length" class="flex items-center gap-2.5 border border-muted border-b-0 relative rounded-t-[calc(var(--ui-radius)*1.5)] px-4 py-2.5 overflow-x-auto">
         <template v-for="option in options" :key="option.name">
           <UFormField
             :label="option.label"
             size="sm"
-            class="inline-flex ring ring-[var(--ui-border-accented)] rounded-[var(--ui-radius)]"
+            class="inline-flex ring ring-accented rounded-(--ui-radius)"
             :ui="{
-              wrapper: 'bg-[var(--ui-bg-elevated)]/50 rounded-l-[var(--ui-radius)] flex border-r border-[var(--ui-border-accented)]',
-              label: 'text-[var(--ui-text-muted)] px-2 py-1.5',
+              wrapper: 'bg-(--ui-bg-elevated)/50 rounded-l-(--ui-radius) flex border-r border-accented',
+              label: 'text-muted px-2 py-1.5',
               container: 'mt-0',
             }"
           >
@@ -215,7 +215,7 @@ const { data: ast } = await useAsyncData(
               value-key="value"
               color="neutral"
               variant="soft"
-              class="rounded-[var(--ui-radius)] rounded-l-none min-w-12"
+              class="rounded-(--ui-radius) rounded-l-none min-w-12"
               :search-input="false"
               :class="[option.name.toLowerCase().endsWith('color') && 'pl-6']"
               :ui="{ itemLeadingChip: 'size-2' }"
@@ -238,14 +238,14 @@ const { data: ast } = await useAsyncData(
               :model-value="getComponentProp(option.name)"
               color="neutral"
               variant="soft"
-              :ui="{ base: 'rounded-[var(--ui-radius)] rounded-l-none min-w-12' }"
+              :ui="{ base: 'rounded-(--ui-radius) rounded-l-none min-w-12' }"
               @update:model-value="setComponentProp(option.name, $event)"
             />
           </UFormField>
         </template>
       </div>
 
-      <div v-if="component" class="flex justify-center border border-b-0 border-[var(--ui-border-muted)] relative p-4 z-[1]" :class="[!options.length && 'rounded-t-[calc(var(--ui-radius)*1.5)]', props.class]">
+      <div v-if="component" class="flex justify-center border border-b-0 border-muted relative p-4 z-1" :class="[!options.length && 'rounded-t-[calc(var(--ui-radius)*1.5)]', props.class]">
         <component :is="component" v-bind="{ ...componentProps, ...componentEvents }">
           <template v-for="slot in Object.keys(slots || {})" :key="slot" #[slot]>
             <MDCSlot :name="slot" unwrap="div">
@@ -260,7 +260,7 @@ const { data: ast } = await useAsyncData(
       v-if="ast"
       :body="ast.body"
       :data="ast.data"
-      class="[&_pre]:!rounded-t-none [&_div.my-5]:!mt-0"
+      class="[&_pre]:rounded-t-none! [&_div.my-5]:mt-0!"
     />
   </div>
 </template>

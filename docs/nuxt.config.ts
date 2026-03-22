@@ -81,11 +81,23 @@ export default defineNuxtConfig({
     },
   },
 
-  compatibilityDate: '2025-09-30',
+  compatibilityDate: '2026-03-14',
 
   nitro: {
+    prerender: {
+      routes: [
+        '',
+      ],
+      crawlLinks: true,
+    },
     output: {
       dir: '../.output',
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      include: ['extend'],
     },
   },
 
@@ -105,8 +117,8 @@ export default defineNuxtConfig({
     metaFields: {
       type: false,
       props: true,
-      slots: true,
-      events: true,
+      slots: 'no-schema',
+      events: 'no-schema',
       exposed: false,
     },
   },
@@ -130,5 +142,9 @@ export default defineNuxtConfig({
 
   plausible: {
     apiHost: 'https://plausible.digitoolmedia.com',
+  },
+
+  qrcode: {
+    global: true,
   },
 })
