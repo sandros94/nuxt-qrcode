@@ -30,6 +30,7 @@ export default defineNuxtConfig({
       url: 'https://qrcode.s94.dev',
     },
   },
+  imports: { autoImport: true },
 
   app: {
     head: {

@@ -1,5 +1,9 @@
 <template>
-  <img class="w-full h-full" :src="qr" alt="QR Code">
+  <img
+    class="w-full h-full"
+    :src="qr"
+    alt="QR Code"
+  >
 </template>
 
 <script setup lang="ts">

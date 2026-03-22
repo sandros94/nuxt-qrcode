@@ -6,7 +6,11 @@ const { footer } = useAppConfig()
   <UFooter>
     <template #left>
       <p>
-        This site is powered by <a href="https://www.netlify.com/" target="_blank" class="underline text-sm text-highlighted">Netlify</a>
+        This site is powered by <a
+          href="https://www.netlify.com/"
+          target="_blank"
+          class="underline text-sm text-highlighted"
+        >Netlify</a>
       </p>
     </template>
 

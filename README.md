@@ -163,7 +163,7 @@ pnpm run dev
 # Build the playground
 pnpm run dev:build
 
-# Run ESLint
+# Run Lint
 pnpm run lint
 
 # Run Vitest
