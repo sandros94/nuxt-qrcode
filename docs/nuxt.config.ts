@@ -54,9 +54,6 @@ export default defineNuxtConfig({
   },
 
   content: {
-    experimental: {
-      nativeSqlite: true,
-    },
     build: {
       markdown: {
         highlight: {
@@ -84,6 +81,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-03-14',
 
   nitro: {
+    prerender: {
+      routes: [
+        '',
+      ],
+      crawlLinks: true,
+    },
     output: {
       dir: '../.output',
     },
