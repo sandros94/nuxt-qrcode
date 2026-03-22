@@ -82,7 +82,7 @@ Key utilities from `@nuxt/test-utils/runtime`:
 
 ```ts
 import { describe, it, expect } from 'vitest'
-import { useQrcode } from '../../../src/runtime/composables/use-qrcode'
+import { useQrcode } from '../../../src/runtime/app/composables/use-qrcode'
 
 describe('useQrcode', () => {
   it('generates svg with default options', () => {
@@ -105,7 +105,7 @@ describe('useQrcode', () => {
 ```ts
 import { describe, it, expect } from 'vitest'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
-import Qrcode from '../../../src/runtime/components/qrcode'
+import Qrcode from '../../../src/runtime/app/components/qrcode'
 
 describe('Qrcode component', () => {
   it('renders svg output', async () => {

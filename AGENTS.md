@@ -62,7 +62,7 @@ Each script is independent — `test` does **not** run lint or type-check.
 - `.github/` — GitHub configuration (funding, workflows).
 - `src/` — Module source code.
   - `src/module.ts` — Module definition and setup.
-  - `src/runtime/` — Runtime code shipped with the module (composables, components, server utils, types, utilities).
+  - `src/runtime/` — Runtime code shipped with the module (app, server utils, types, utilities).
 - `test/` — Tests (unit, nuxt environment, e2e).
 - `playground/` — Nuxt app for manual testing and development of the module. Also used as the target app for e2e tests.
 - `docs/` — Documentation site (Nuxt Content).
