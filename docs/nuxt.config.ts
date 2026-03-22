@@ -147,4 +147,8 @@ export default defineNuxtConfig({
   qrcode: {
     global: true,
   },
+
+  sitemap: {
+    zeroRuntime: true,
+  },
 })
