@@ -1,6 +1,36 @@
 # Changelog
 
 
+## v0.4.10
+
+[compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.9...v0.4.10)
+
+### 🩹 Fixes
+
+- Add parallel hook to qrcode component ([58f077b](https://github.com/sandros94/nuxt-qrcode/commit/58f077b))
+- Add parallel hook to qrcode component" ([a8a805b](https://github.com/sandros94/nuxt-qrcode/commit/a8a805b))
+- Add `vue-qrcode-reader` to vite optimizeDeps ([c03f3aa](https://github.com/sandros94/nuxt-qrcode/commit/c03f3aa))
+- SSR support ([a7e669b](https://github.com/sandros94/nuxt-qrcode/commit/a7e669b))
+
+### 📖 Documentation
+
+- Fix deps and configs ([f3f05e7](https://github.com/sandros94/nuxt-qrcode/commit/f3f05e7))
+- Disable prerender ([1d5fb28](https://github.com/sandros94/nuxt-qrcode/commit/1d5fb28))
+- Disable prerender" ([1635572](https://github.com/sandros94/nuxt-qrcode/commit/1635572))
+- Fix prerender homepage ([151ef5e](https://github.com/sandros94/nuxt-qrcode/commit/151ef5e))
+- Cast broken types ([2c539b3](https://github.com/sandros94/nuxt-qrcode/commit/2c539b3))
+
+### 🏡 Chore
+
+- Remove shamefully-hoist and update deps ([4e539d3](https://github.com/sandros94/nuxt-qrcode/commit/4e539d3))
+- Update eslint ([cde0956](https://github.com/sandros94/nuxt-qrcode/commit/cde0956))
+- Update agent ([0aa6ffb](https://github.com/sandros94/nuxt-qrcode/commit/0aa6ffb))
+- Update deps ([7ee4052](https://github.com/sandros94/nuxt-qrcode/commit/7ee4052))
+
+### ❤️ Contributors
+
+- Sandro Circi ([@sandros94](https://github.com/sandros94))
+
 ## v0.4.9
 
 [compare changes](https://github.com/sandros94/nuxt-qrcode/compare/v0.4.8...v0.4.9)
