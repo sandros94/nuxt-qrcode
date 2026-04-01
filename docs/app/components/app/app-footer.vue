@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { footer } = useAppConfig()
+const { footer } = useAppConfig() as { footer: any }
 </script>
 
 <template>

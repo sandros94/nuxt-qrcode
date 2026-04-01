@@ -6,7 +6,7 @@ const { version } = useRuntimeConfig().public
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 const links = useLinks()
 
-const { header } = useAppConfig()
+const { header } = useAppConfig() as { header: any }
 </script>
 
 <template>
@@ -20,7 +20,7 @@ const { header } = useAppConfig()
     <template #left>
       <NuxtLink
         :to="header.to"
-        class="flex items-end gap-2 font-bold text-xl text-[var(--ui-text-highlighted)] min-w-0 focus-visible:outline-[var(--ui-primary)]"
+        class="flex items-end gap-2 font-bold text-xl text-highlighted min-w-0 focus-visible:outline-primary"
       >
         {{ header.title }}
 

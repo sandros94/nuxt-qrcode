@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 const route = useRoute()
-const { toc, seo } = useAppConfig()
+const { toc, seo } = useAppConfig() as { toc?: any, seo?: any }
 const navigation = inject<Ref<ContentNavigationItem[]>>('navigation')
 
 const { data: page } = await useAsyncData(route.path, () => queryCollection('docs').path(route.path).first())
@@ -77,7 +77,7 @@ const links = computed(() => {
           >
             <div
               class="hidden lg:block space-y-6"
-              :class="{ '!mt-6': page.body?.toc?.links?.length }"
+              :class="{ 'mt-6!': page.body?.toc?.links?.length }"
             >
               <USeparator
                 v-if="page.body?.toc?.links?.length"

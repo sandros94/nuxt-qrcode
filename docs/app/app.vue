@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { seo, toaster } = useAppConfig()
+const { seo, toaster } = useAppConfig() as { seo?: any, toaster?: any }
 
 const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'))
 const { data: files } = useLazyAsyncData('search', () => queryCollectionSearchSections('docs'), {
