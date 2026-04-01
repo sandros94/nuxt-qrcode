@@ -56,7 +56,9 @@ function setComponentProp(name: string, value: any) {
   set(componentProps, name, value)
 }
 
-const meta = await fetchComponentMeta(componentName.value)
+const metaState = useState<Record<string, any>>('components-meta', () => ({}))
+const meta = computed(() => metaState.value[componentName.value])
+await fetchComponentMeta(componentName.value)
 
 function mapKeys(obj: object, parentKey = ''): any {
   return Object.entries(obj || {}).flatMap(([key, value]: [string, any]) => {
@@ -74,7 +76,7 @@ const options = computed(() => {
   const keys = mapKeys(props.props || {})
 
   return keys.map((key: string) => {
-    const prop = meta?.meta?.props?.find((prop: any) => prop.name === key)
+    const prop = meta.value?.meta?.props?.find((prop: any) => prop.name === key)
     const propItems = get(props.items, key, [])
     const items = propItems.length
       ? propItems.map((item: any) => ({
@@ -132,7 +134,7 @@ const code = computed(() => {
       continue
     }
 
-    const prop = meta?.meta?.props?.find((prop: any) => prop.name === key)
+    const prop = meta.value?.meta?.props?.find((prop: any) => prop.name === key)
     const keyName = kebabCase(key)
 
     if (typeof value === 'boolean') {
@@ -190,8 +192,9 @@ const code = computed(() => {
   return code
 })
 
-const { data: ast } = await useAsyncData(
-  `component-code-${componentName.value}-${hash({ props: componentProps, slots: props.slots })}`,
+const codeKey = computed(() => `component-code-${componentName.value}-${hash({ props: componentProps, slots: props.slots })}`)
+const { data: ast } = useAsyncData(
+  codeKey,
   async () => parseMarkdown(code.value),
   { lazy: import.meta.client, watch: [code] },
 )
