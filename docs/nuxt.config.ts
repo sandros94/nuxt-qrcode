@@ -49,7 +49,6 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: 'https://qrcode.s94.dev',
     name: 'Nuxt QRCode - Docs',
   },
 
@@ -81,6 +80,15 @@ export default defineNuxtConfig({
     },
   },
 
+  experimental: {
+    asyncContext: true,
+    defaults: {
+      nuxtLink: {
+        externalRelAttribute: 'noopener',
+      },
+    },
+  },
+
   compatibilityDate: '2026-03-14',
 
   nitro: {
@@ -94,7 +102,10 @@ export default defineNuxtConfig({
 
   vite: {
     optimizeDeps: {
-      include: ['extend'],
+      include: [
+        'extend',
+        '@plausible-analytics/tracker',
+      ],
     },
   },
 

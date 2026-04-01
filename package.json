@@ -38,7 +38,7 @@
     "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground && nuxt prepare docs",
     "docs": "nuxt dev docs",
     "docs:build": "nuxt build docs",
-    "docs:preview": "nuxt preview ",
+    "docs:preview": "nuxt preview docs",
     "release": "pnpm lint && pnpm typecheck && pnpm test && pnpm prepack && changelogen --release --push",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -53,7 +53,7 @@
   "dependencies": {
     "@nuxt/kit": "^4.4.2",
     "@vueuse/core": "^14.1.0",
-    "defu": "^6.1.4",
+    "defu": "^6.1.6",
     "uqr": "^0.1.2",
     "vue-qrcode-reader": "^5.7.3"
   },
