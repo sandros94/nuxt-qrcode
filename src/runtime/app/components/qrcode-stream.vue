@@ -6,6 +6,7 @@ import type {
 import { QrcodeStream } from 'vue-qrcode-reader'
 import type { VNode } from 'vue'
 
+import { ClientOnly } from '#components'
 import { computed, useRuntimeConfig } from '#imports'
 import type { BarcodeFormat, DetectedBarcode } from '../../types'
 
@@ -15,6 +16,7 @@ export interface QrcodeStreamProps extends Omit<_QrcodeStreamProps, 'formats'> {
 
 export interface QrcodeStreamSlots {
   default?: (props: {}) => VNode[]
+  fallback?: () => VNode[]
 }
 
 export interface QrcodeStreamEmits {
@@ -38,16 +40,22 @@ const resolvedFormats = computed(() =>
 </script>
 
 <template>
-  <QrcodeStream
-    v-bind="{ ...$attrs, ...$props }"
-    :formats="resolvedFormats"
-    @detect="br => emits('detect', br)"
-    @camera-on="cap => emits('camera-on', cap)"
-    @camera-off="() => emits('camera-off')"
-    @error="err => emits('error', err)"
-  >
-    <template #default="sProps">
-      <slot v-bind="sProps" />
+  <ClientOnly>
+    <template #fallback>
+      <slot name="fallback" />
     </template>
-  </QrcodeStream>
+
+    <QrcodeStream
+      v-bind="{ ...$attrs, ...$props }"
+      :formats="resolvedFormats"
+      @detect="br => emits('detect', br)"
+      @camera-on="cap => emits('camera-on', cap)"
+      @camera-off="() => emits('camera-off')"
+      @error="err => emits('error', err)"
+    >
+      <template #default="sProps">
+        <slot v-bind="sProps" />
+      </template>
+    </QrcodeStream>
+  </ClientOnly>
 </template>
