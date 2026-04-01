@@ -75,6 +75,11 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.alias['#qrcode'] = runtimeDir
 
+    nuxt.options.vite ||= {}
+    nuxt.options.vite.optimizeDeps ||= {}
+    nuxt.options.vite.optimizeDeps.include ||= []
+    nuxt.options.vite.optimizeDeps.include.push('vue-qrcode-reader')
+
     const qrcode = nuxt.options.runtimeConfig.public.qrcode = defu(
       nuxt.options.runtimeConfig.public.qrcode,
       options,
