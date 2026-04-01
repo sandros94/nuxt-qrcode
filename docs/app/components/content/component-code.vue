@@ -34,7 +34,7 @@ const props = defineProps<{
 
 const route = useRoute()
 
-const name = props.slug ?? route.params.slug?.[route.params.slug.length - 1] ?? ''
+const name = props.slug ?? route.path.split('/').pop() ?? ''
 const componentName = pascalCase(name)
 const component = defineAsyncComponent(() => import(`#qrcode/app/components/${kebabCase(name)}.vue`))
 
@@ -203,7 +203,7 @@ const { data: ast } = await useAsyncData(
             size="sm"
             class="inline-flex ring ring-accented rounded-(--ui-radius)"
             :ui="{
-              wrapper: 'bg-(--ui-bg-elevated)/50 rounded-l-(--ui-radius) flex border-r border-accented',
+              wrapper: 'bg-elevated/50 rounded-l-(--ui-radius) flex border-r border-accented',
               label: 'text-muted px-2 py-1.5',
               container: 'mt-0',
             }"
